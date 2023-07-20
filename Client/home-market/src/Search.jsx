@@ -19,7 +19,7 @@ import React from 'react';
     return (
       <MDBContainer fluid className="my-5 text-center">
         <h4 className="mt-4 mb-5">
-          <strong>Furniture All </strong>
+          <strong>Furniture All</strong>
         </h4>
   
         <MDBRow>

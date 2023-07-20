@@ -10,13 +10,14 @@ const Header = () => {
       <div className="container">
 
       {/* Logo de l'application */}
-        <a className="navbar-brand" href="/">Logo de l'application</a>
+        <a className="navbar-brand" href="/"> HOME MARKET Logo</a>
 
         <ul className="navbar-nav">
 
 
           {/* MENU COMMUN A TTE LES PAGES  */}
 
+        {/* gerer les nav et link */}
           <li className="nav-item">
             <a className="nav-link" href="/">Home</a>
           </li>
@@ -24,26 +25,26 @@ const Header = () => {
             <a className="nav-link" href="/Search">Search</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/vendre">Sell un meuble</a>
+            <a className="nav-link" href="/Selling">Sell Furniture  </a>
           </li>
 
+
+        {/* autre option avec link : ne recharge pas la page */}
           <li className="nav-item">
             <Link to="/" className="nav-link">Home1</Link>
           </li>
           <li className="nav-item">
-            <Link to="/Search" className="nav-link">Search2</Link>
+            <Link to="/Search" className="nav-link">Search2  </Link>
           </li>
       
 
-          <li className="nav-item">
-            <Link to="/Search" className="nav-link">Search</Link>
-          </li>
+          
 
         </ul>
 
             {/* module de connenexion */}
         <div className="navbar-nav">
-          <a className="nav-link" href="/signin">Se connecter</a>
+          <a className="nav-link" href="/Login">Sign In</a>
           <a className="nav-link" href="/signup">S'inscrire</a>
         </div>
 

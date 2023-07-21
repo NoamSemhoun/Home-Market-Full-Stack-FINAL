@@ -157,7 +157,6 @@ function Selling() {
                             </MDBCol>
                         </MDBRow>
 
-                        <MDBInput wrapperClass='mb-4' id='form6Example3' label='Company name' />
                         <MDBInput wrapperClass='mb-4' id='form6Example4' label='Address' />
                         <MDBInput wrapperClass='mb-4' type='email' id='form6Example5' label='Email' />
                         <MDBInput wrapperClass='mb-4' type='tel' id='form6Example6' label='Phone' />

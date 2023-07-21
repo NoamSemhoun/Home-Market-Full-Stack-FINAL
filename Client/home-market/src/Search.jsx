@@ -19,11 +19,13 @@ import React from 'react';
     return (
       <MDBContainer fluid className="my-5 text-center">
         <h4 className="mt-4 mb-5">
-          <strong>Furniture All</strong>
+          <strong>All Furniture </strong>
         </h4>
   
-        <MDBRow>
-          <MDBCol md="12" lg="4" className="mb-4">
+
+  {/* CATALOGUE  */}
+        <MDBRow className="row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" >  
+          <MDBCol xl={4}   className='mb-4'>
             <MDBCard>
               <MDBRipple
                 rippleColor="light"
@@ -62,7 +64,7 @@ import React from 'react';
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
-          <MDBCol md="6" lg="4" className="mb-4">
+          <MDBCol  xl={4}  className='mb-4'>
             <MDBCard>
               <MDBRipple
                 rippleColor="light"
@@ -78,7 +80,7 @@ import React from 'react';
                   <div className="mask">
                     <div className="d-flex justify-content-start align-items-end h-100">
                       <h5>
-                        <span className="badge bg-success ms-2">Eco</span>
+                        <span className="badge bg-success ms-2">Delivery Possible</span>
                       </h5>
                     </div>
                   </div>
@@ -95,13 +97,13 @@ import React from 'react';
                   <h5 className="card-title mb-3">Product name</h5>
                 </a>
                 <a href="#!" className="text-reset">
-                  <p>Category</p>
+                  <p>Jerusalem</p>
                 </a>
                 <h6 className="mb-3">$61.99</h6>
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
-          <MDBCol md="6" lg="4" className="mb-4">
+          <MDBCol  xl={4}   className='mb-4'>
             <MDBCard>
               <MDBRipple
                 rippleColor="light"
@@ -143,7 +145,7 @@ import React from 'react';
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
-          <MDBCol md="12" lg="4" className="mb-4">
+          <MDBCol  xl={4}  className='mb-4'>
             <MDBCard>
               <MDBRipple
                 rippleColor="light"
@@ -186,7 +188,7 @@ import React from 'react';
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
-          <MDBCol md="6" lg="4" className="mb-4">
+          <MDBCol  xl={4}  className='mb-4'>
             <MDBCard>
               <MDBRipple
                 rippleColor="light"
@@ -221,7 +223,7 @@ import React from 'react';
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
-          <MDBCol md="6" lg="4" className="mb-4">
+          <MDBCol  xl={4}   className='mb-4'>
             <MDBCard>
               <MDBRipple
                 rippleColor="light"
@@ -266,6 +268,9 @@ import React from 'react';
             </MDBCard>
           </MDBCol>
         </MDBRow>
+
+
+
       </MDBContainer>
     );
   }

@@ -11,7 +11,7 @@ const Home = () => {
         <MDBCarouselItem
           className='w-100 d-block'
           itemId={1}
-          src='https://mdbootstrap.com/img/Photos/Slides/img%20(15).jpg'
+          src='https://www.pricefactory.fr/5263/meuble-pas-cher-ensemble-design-pour-chambre-a-coucher-fulmo-lit-160x200-cm-avec-sommier-tables-de-chevet-commode.jpg'
           alt='...'
           style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }}
 
@@ -23,7 +23,7 @@ const Home = () => {
         <MDBCarouselItem
           className='w-100 d-block'
           itemId={2}
-          src='https://mdbootstrap.com/img/Photos/Slides/img%20(22).jpg'
+          src='https://i.pinimg.com/originals/e3/1e/ea/e31eead3d51e066bb336b2f69e36b4b9.jpg'
           alt='...'
           style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }}
 
@@ -34,8 +34,22 @@ const Home = () => {
 
         <MDBCarouselItem
           className='w-100 d-block'
+          itemId={2}
+          src='https://i.pinimg.com/originals/f9/f7/f7/f9f7f78e226576053fc3f9faa2f0196e.jpg'
+          alt='...'
+          style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }}
+
+        >
+          <h5>1 slide label</h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </MDBCarouselItem>
+
+
+        
+        <MDBCarouselItem
+          className='w-100 d-block'
           itemId={3}
-          src='https://mdbootstrap.com/img/Photos/Slides/img%20(23).jpg'
+          src='https://th.bing.com/th/id/R.dfb00d33b258c9042f002551fb662c83?rik=u6jf2QSV%2bjzM1Q&pid=ImgRaw&r=0'
           alt='...'
           style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }}
 
@@ -43,6 +57,44 @@ const Home = () => {
           <h5>Third slide label</h5>
           <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
         </MDBCarouselItem>
+
+        <MDBCarouselItem
+          className='w-100 d-block'
+          itemId={3}
+          src='https://i.pinimg.com/originals/f7/80/1f/f7801fcedcb649386df984d51c7e72ba.jpg'
+          alt='...'
+          style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }}
+
+        >
+          <h5>4 slide label</h5>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        </MDBCarouselItem>
+
+        <MDBCarouselItem
+          className='w-100 d-block'
+          itemId={3}
+          src='https://i.pinimg.com/originals/f9/f7/f7/f9f7f78e226576053fc3f9faa2f0196e.jpg'
+          alt='...'
+          style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }}
+
+        >
+          <h5>5 slide label</h5>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        </MDBCarouselItem>
+
+        <MDBCarouselItem
+          className='w-100 d-block'
+          itemId={3}
+          src='https://th.bing.com/th/id/R.9eed56e8d244f846b51fccc965512ca6?rik=%2bRTcmpz6f3O5dQ&riu=http%3a%2f%2flabs2.kentooz.com%2fkodok%2fwp-content%2fuploads%2f2013%2f04%2fbedroom-design-190.jpg&ehk=51SVy35yBaD3lJPi22DhM1Dj%2fmtBTTg2wco2QOPx58I%3d&risl=&pid=ImgRaw&r=0'
+          alt='...'
+          style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }}
+
+        >
+          <h5>6 slide label</h5>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        </MDBCarouselItem>
+
+        
       </MDBCarousel>
     </div>
     

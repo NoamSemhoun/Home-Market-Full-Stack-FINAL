@@ -7,8 +7,10 @@ import Footer from './Shared Components/Footer.jsx';
 
  import Home from './Home';
  import Search from './Search';
- import Login from './Login';
  import Selling from './Selling';
+ 
+ import Register from './Register';
+ import Login from './Login';
 
 
  
@@ -27,8 +29,11 @@ const App = () => {
         {/* To return to the jsx file  */}
         <Route  path="/" element={<Home />} />
         <Route  path="/Search" element={<Search />} />
-        <Route  path="/Login" element={<Login />} />
         <Route  path="/Selling" element={<Selling />} />
+
+        <Route  path="/Login" element={<Login />} />
+        <Route  path="/Register" element={<Register />} />
+
 
         
 

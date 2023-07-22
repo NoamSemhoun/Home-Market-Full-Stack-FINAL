@@ -1,30 +1,66 @@
-import logo from './Images/homeMarketLogo.png';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-function App() {
+import Header from './Shared Components/Header.jsx';
+import Footer from './Shared Components/Footer.jsx';
+
+
+ import Home from './Home';
+ import Search from './Search';
+ import Selling from './Selling';
+ 
+ import Register from './Register';
+ import Login from './Login';
+
+
+ 
+
+// import VendreMeuble from './VendreMeuble';
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          THIS IS IN CONSTRUCTION ! <br></br>
-          Home market in developpement 
-          <br></br><br></br>
-          see you ...
-        </p>
+    <Router>
+      <Header />
+      <Routes>
+
+      {/* /* composant Switch de React Router 
+      pour retourner les composants Home, Search et VendreMeuble en fonction de l'URL courante.*/}
+        
+        {/* To return to the jsx file  */}
+        <Route  path="/" element={<Home />} />
+        <Route  path="/Search" element={<Search />} />
+        <Route  path="/Selling" element={<Selling />} />
+
+        <Route  path="/Login" element={<Login />} />
+        <Route  path="/Register" element={<Register />} />
+
 
         
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+        {/* exact path si c exactement la bonne url  */}
+
+
+        {/* 
+        // autre syntax :
+        {<Route exact path="/" component={Home} /> }
+        {<Route exact path="./Search" component={Search} /> */}
+        {/* <Route path="/vendre" component={VendreMeuble} /> */} 
+
+
+      </Routes>
+     <Footer />
+    </Router>
   );
-}
+};
 
 export default App;
+
+
+
+
+// CE QUI AVAIT DE BASE 
+
+// import './App.css';
+// import logo from './Images/homeMarketLogo.png';
+
+ 

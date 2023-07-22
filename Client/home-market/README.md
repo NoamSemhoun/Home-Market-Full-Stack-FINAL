@@ -1,3 +1,63 @@
+
+# NOAM NOTES : (dont efface please) :
+pour debug : 
+    bien se mettre ds le bon repertoire avec cd
+PS C:\Users\33768\Desktop\Full Stack\PROJECT\FINAL\Home-Market-Full-Stack-FINAL\client\home-market> npm start
+
+
+STRUCTURE : 
+
+- src/
+  - shared_components/
+    - Header.jsx
+    - Footer.jsx
+    
+  - pages/
+    - Home.jsx
+    - Search.jsx
+    - Selle.jsx
+
+  - App.jsx
+  - index.js
+
+
+
+
+Header : 
+    LOGO 
+
+    MENU : 
+        Home
+        Search
+        Seller (pirsoum)
+        About Us
+
+    Sign In/Sign Up
+
+    Barre de recherche
+
+Categories : 
+    Living Room
+    Bedroom
+    Dining Room
+    Office
+    Sofas
+    Beds
+    Tables
+    Chairs
+
+
+Footer : 
+
+    chartre (takanone et pratyout)
+    reseaux
+    contact us 
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

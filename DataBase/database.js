@@ -3,6 +3,12 @@ const setup = require('./setup.js')
 
 // -------------- Database --------------
 
+/**
+ * Function To Create Database.
+ * @param {string} name The Database Name
+ * @param {boolean} toConnect True (default) to connect the database after create it, False to not.
+ * @returns {object} 'success' attribute for done successfully, and 'error' (with error message) for error.
+ */
 async function createDatabase(name,toConnect = true){
     let error = util.testConnection();
     if (error.error) return error;
@@ -19,6 +25,12 @@ async function createDatabase(name,toConnect = true){
     return {success:"Database Created and Reconnected."};
 }
 
+/**
+ * Function To Delete Database.
+ * after deleting the database, new connection will created without specify database connection.
+ * @param {string} name The Database Name
+ * @returns {object} 'success' attribute for done successfully, and 'error' (with error message) for error.
+ */
 async function deleteDatabase(name){
     let error = util.testConnection();
     if (error.error) return error;

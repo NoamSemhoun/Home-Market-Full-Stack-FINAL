@@ -10,6 +10,7 @@ const util = require('./util.js')
 
 module.exports = {
     customQuery: util.customQuery,
+    
     // setup
     connect: setup.connect,
     disconnect:setup.disconnect,
@@ -33,6 +34,5 @@ module.exports = {
     removeForeignKey:modifiers.removeForeignKey,
 
     // queries
-    getTable:queries.getTable,
-    mysql
+    getTable:queries.getTable
 }

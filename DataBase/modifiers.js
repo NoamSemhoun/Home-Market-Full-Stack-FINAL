@@ -1,7 +1,15 @@
 const util = require('./util.js')
 
 // -------------- Modifies --------------
-
+/**
+ * Function To Add Culomn To Exists Table
+ * @param {string} tableName The Table for Adding Column
+ * @param {object} column Object the define the column. (name:type)
+ * @param {Array} values list of values for each instance in the current table.
+ * @param {object} identifiers Object to specify identifire for each value in order.
+ * 
+ * @returns {object} 'success' attribute for done successfully, and 'error' (with error message) for error.
+ */
 async function addColumn(tableName, column, values, identifiers){
     const columnNameValue = Object.entries(column)[0];
     const identifiersList = Object.entries(identifiers)[0];

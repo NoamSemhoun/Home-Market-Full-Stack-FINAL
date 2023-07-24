@@ -18,21 +18,21 @@ async function run(){
     console.log(error);
     if (error.error) return;
 
+    // error = await index.deleteDatabase('HomeMarketDB');
+    // console.log(error);
+    // if (error.error) return;
 
     error = await index.createDatabase('HomeMarketDB');
     console.log(error);
     if (error.error) return;
 
     // Create Items Table
-    error = await index.createTable('items',{'id':'INT', 'imageId':'INT', 'price':'INT', 'title':'VARCHAR(80)',
+    error = await index.createTable('items',{'id':'INT', 'price':'INT', 'title':'VARCHAR(80)',
                                     'status':'VARCHAR(20)','description':'VARCHAR(400)', 'category':'VARCHAR(50)',
                                     'uploadDate':'DATETIME', 'userId':'INT'});
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('items',{'id':'INT'},['AUTO_INCREMENT','PRIMARY KEY']);
-    if (error.error) return console.log(error);
-
-    error = await index.modifyColumn('items',{'imageId':'INT'},['NOT NULL']);
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('items',{'price':'INT'},['NOT NULL']);
@@ -55,10 +55,13 @@ async function run(){
 
 
     // Create table Images
-    error = await index.createTable('images',{'id':'INT', 'imageUrl':'TEXT'});
+    error = await index.createTable('images',{'id':'INT','itemId':'INT', 'imageUrl':'TEXT'});
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('images',{'id':'INT'},['AUTO_INCREMENT','PRIMARY KEY']);
+    if (error.error) return console.log(error);
+
+    error = await index.modifyColumn('images',{'itemId':'INT'},['NOT NULL']);
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('images',{'imageUrl':'TEXT'},['NOT NULL']);
@@ -137,7 +140,7 @@ async function run(){
 
 
     // cREATE fORGIEN Keys
-    error = await index.addForeignKey('itemsImages','items','imageId','images','id')
+    error = await index.addForeignKey('imagesItems','images','itemId','items','id')
     if (error.error) return console.log(error);
 
     error = await index.addForeignKey('itemsUsers','items','userId','users','id')
@@ -154,5 +157,27 @@ async function run(){
 
     error = await index.addForeignKey('discussionsUsers2','discussions','userId2','users','id')
     if (error.error) return console.log(error);
+
+    // print all the tables information
+    const query = `
+    SELECT 
+      t.table_name,
+      c.column_name,
+      c.column_type,
+      c.column_key,
+      c.extra,
+      c.is_nullable,
+      k.constraint_name,
+      k.referenced_table_name,
+      k.referenced_column_name
+    FROM 
+      information_schema.tables t
+      JOIN information_schema.columns c ON t.table_schema = c.table_schema AND t.table_name = c.table_name
+      LEFT JOIN information_schema.key_column_usage k ON t.table_schema = k.table_schema AND t.table_name = k.table_name AND c.column_name = k.column_name
+    WHERE 
+      t.table_schema = ?;
+  `;
+    const databaseName = 'HomeMarketDB';
+    console.log(await index.customQuery(query,[databaseName]));
 }
 run();

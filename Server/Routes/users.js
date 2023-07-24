@@ -15,34 +15,13 @@ const validateScheme = Joi.object({
     'repeat-password': Joi.ref('password')
 });
 
+const noAccessFeilds = ['apiKey','userRank'];
 
-function validate(instance,requireFeilds = []){
-
-    if (requireFeilds.length === 0) return validateScheme.validate(instance);
-
-    for (const feild in requireFeilds){
-        if (!(feild in instance)) return {error: `"${feild}" is required` };
-    }
-    return validateScheme.validate(instance);
-}
-
-async function checkAccess(apiKey,userId){
-    // when call update, check that the apikey can change the userId
-    let metadata = await database.getTable('usersMetadata',{apiKey:apiKey});
-    if (metadata.error) return res.status(404).send(metadata);
-
-    data = await database.getTable('users',{metadataId:metadata.id});
-    if (data.error) return res.status(404).send(data);
-
-    return data.id === userId ?
-        {success:'Access Confirmed.'} : 
-        {error:'Access Denied'};
-}
 
 router.post('/login',async (req,res)=>{
     const {user} = req.body;
 
-    let error = validate(user, ['username','password']);
+    let error = util.validate(user, validateScheme, noAccessFeilds, ['username','password']);
     if (error.error) return res.status(400).send(error);
 
     let metadata = await database.getTable('usersMetadata',{username:user.username,password:user.password});
@@ -53,14 +32,14 @@ router.post('/login',async (req,res)=>{
     
     delete metadata.id;
 
-    return res.send({'data':{...metadata,...data}})
+    return res.send({'data':{...metadata[0],...data[0]}})
 });
 
 router.post('/signup',async (req,res)=>{
 
     const {user} = req.body;
 
-    let error = validate(user, ['username','password','repeat-password','name','phone','email','address']);
+    let error = util.validate(user, validateScheme, noAccessFeilds, ['username','password','repeat-password','name','phone','email','address']);
     if (error.error) return res.status(400).send(error);
     
     const userMetadata = {
@@ -92,32 +71,42 @@ router.post('/signup',async (req,res)=>{
 
 
 // Paths
-router.post('/update/data',async (req,res)=>{
+router.put('/',async (req,res)=>{
     const {user} = req.body;
     
-    let error = await checkAccess(user.apiKey, user.id);
+    let error = await util.checkAccess(user.apiKey, user.id);
     if (error.error) return res.status(400).send(error);
 
-    error = validate(user, []);
+    error = util.validate(user, validateScheme, noAccessFeilds, []);
     if (error.error) return res.status(400).send(error);
 
     // check for tables to update
-    // update the tables
-    // return the full updated instance
+    const usersTableFeilds = ['name','phone','email','address']
+    const metadataTableFeilds = ['username','password']
+    const usersInstance = {}
+    const usersMetaInstance = {}
 
-    let metadata = await database.updateTable('')
+    usersTableFeilds.forEach((feild)=>{
+        if (feild in user){
+            usersInstance[feild] = user[feild]
+        }
+    })
+    metadataTableFeilds.forEach((feild)=>{
+        if (feild in user){
+            usersMetaInstance[feild] = user[feild]
+        }
+    })
+
+    // update the tables
+    let metadata = await database.updateTable('users',{id:user.id},[usersInstance])
     if (metadata.error) return res.status(404).send(metadata);
 
-    return res.send({data:'Koko Lala'})
+    let data = await database.updateTable('usersMetadata',{id:user.metadataId},[usersMetaInstance])
+    if (data.error) return res.status(404).send(data);
+
+    // return the full updated instance
+    return res.send({data:user})
 });
 
-router.post('/update/metadata',(req,res)=>{
-    return res.send({data:'Koko Lala'})
-});
 
-
-module.exports = {
-    router,
-    validate,
-    checkAccess
-}
+module.exports = router

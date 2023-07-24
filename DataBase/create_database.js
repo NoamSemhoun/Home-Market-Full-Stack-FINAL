@@ -5,7 +5,7 @@ const databaseConfig = {
     user: "root",
     password: "AvishayDEV19", // change password here
     port: 3306,
-    database: 'HomeMarketDB'
+    //database: 'HomeMarketDB'
 };
 
 async function printTable(tableName){

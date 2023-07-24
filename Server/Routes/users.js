@@ -71,12 +71,13 @@ router.post('/signup',async (req,res)=>{
 
 
 // Paths
-router.put('/',async (req,res)=>{
+router.put('/:id',async (req,res)=>{
     const {user} = req.body;
     
-    let error = await util.checkAccess(user.apiKey, user.id);
+    let error = await util.checkAccess(user.apiKey, req.params.id);
     if (error.error) return res.status(400).send(error);
 
+    delete user.apiKey;
     error = util.validate(user, validateScheme, noAccessFeilds, []);
     if (error.error) return res.status(400).send(error);
 
@@ -98,7 +99,7 @@ router.put('/',async (req,res)=>{
     })
 
     // update the tables
-    let metadata = await database.updateTable('users',{id:user.id},[usersInstance])
+    let metadata = await database.updateTable('users',{id:req.params.id},[usersInstance])
     if (metadata.error) return res.status(404).send(metadata);
 
     let data = await database.updateTable('usersMetadata',{id:user.metadataId},[usersMetaInstance])

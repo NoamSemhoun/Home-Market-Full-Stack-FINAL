@@ -41,6 +41,7 @@ async function addColumn(tableName, column, values, identifiers){
 }
 
 function removeColumn(tableName,columnName){
+    // check for forgien key
     return util.customQuery(`ALTER TABLE ${tableName} DROP COLUMN ${columnName}`);
 }
 

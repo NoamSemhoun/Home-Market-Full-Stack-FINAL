@@ -9,7 +9,9 @@ const util = require('./util.js')
 // -------------- Tests --------------
 
 module.exports = {
+    // util
     customQuery: util.customQuery,
+    checkForExistence: util.checkForExistence,
     
     // setup
     connect: setup.connect,

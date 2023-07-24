@@ -6,6 +6,9 @@ let config;
 
 
 // -------------- Help Functions --------------
+function isEmptyObject(obj) {
+    return Object.keys(obj).length === 0;
+}
 
 function testConnection(){
     return databaseConnection ?
@@ -28,12 +31,22 @@ function customQuery(query, feilds = [], message = "Query Run Successfully."){
     });
 }
 
+function checkForExistence(tableName,identifiers){
+    const identifiersString = !isEmptyObject(identifiers) ? ' WHERE ' + Object.keys(identifiers).map((key)=>`${key} = ?`) : '';
+    const query = `SELECT * FROM ${tableName}` + identifiersString;
+    return customQuery(query,Object.values(identifiers))
+}
+
+
 module.exports = {
     setDatabaseConnection: (connection) => { databaseConnection = connection; },
     setConfig: (conf) => { config = conf; },
     updateConfig: (attribute,value) => {config[attribute] = value},
     getDatabaseConnection: () => databaseConnection,
     getConfig: ()=> config,
+
     testConnection,
-    customQuery
+    customQuery,
+    isEmptyObject,
+    checkForExistence
 }

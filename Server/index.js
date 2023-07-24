@@ -1,14 +1,13 @@
-const Joi = require('joi');
 const express = require('express');
 const database = require('./../DataBase/index')
 
 
-const usersRoute = require('./Routes/users')
+const users = require('./Routes/users')
 
 // Initial Variables
 const app = express();
 app.use(express.json());
-app.use('/users',usersRoute);
+app.use('/users',users.router);
 
 
 const hostname = '127.0.0.1';

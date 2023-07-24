@@ -5,7 +5,7 @@ const databaseConfig = {
     user: "root",
     password: "AvishayDEV19", // change password here
     port: 3306,
-    //database: 'HomeMarketDB'
+    database: 'HomeMarketDB'
 };
 
 async function printTable(tableName){
@@ -18,10 +18,10 @@ async function run(){
     console.log(error);
     if (error.error) return;
 
+
     error = await index.createDatabase('HomeMarketDB');
     console.log(error);
     if (error.error) return;
-
 
     // Create Items Table
     error = await index.createTable('items',{'id':'INT', 'imageId':'INT', 'price':'INT', 'title':'VARCHAR(80)',
@@ -55,13 +55,10 @@ async function run(){
 
 
     // Create table Images
-    error = await index.createTable('images',{'id':'INT', 'itemId':'INT','imageUrl':'TEXT'});
+    error = await index.createTable('images',{'id':'INT', 'imageUrl':'TEXT'});
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('images',{'id':'INT'},['AUTO_INCREMENT','PRIMARY KEY']);
-    if (error.error) return console.log(error);
-
-    error = await index.modifyColumn('images',{'itemId':'INT'},['NOT NULL']);
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('images',{'imageUrl':'TEXT'},['NOT NULL']);
@@ -97,7 +94,7 @@ async function run(){
 
     // Create table Users
     error = await index.createTable('users',{'id':'INT', 'name':'VARCHAR(50)','phone':'VARCHAR(20)',
-                                    'email':'VARCHAR(50)','address':'VARCHAR(80)'});
+                                    'email':'VARCHAR(50)','address':'VARCHAR(80)','metadataId':'INT'});
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('users',{'id':'INT'},['AUTO_INCREMENT','PRIMARY KEY']);
@@ -115,15 +112,15 @@ async function run(){
     error = await index.modifyColumn('users',{'address':'VARCHAR(80)'},['NOT NULL']);
     if (error.error) return console.log(error);
 
+    error = await index.modifyColumn('users',{'metadataId':'INT'},['NOT NULL']);
+    if (error.error) return console.log(error);
+
     // Create Table UsersMetadata
-    error = await index.createTable('usersMetadata',{'id':'INT', 'userId':'INT','username':'VARCHAR(20)',
+    error = await index.createTable('usersMetadata',{'id':'INT','username':'VARCHAR(20)',
                                     'password':'VARCHAR(20)','apiKey':'VARCHAR(20)','userRank':'VARCHAR(20)'});
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('usersMetadata',{'id':'INT'},['AUTO_INCREMENT','PRIMARY KEY']);
-    if (error.error) return console.log(error);
-
-    error = await index.modifyColumn('usersMetadata',{'userId':'INT'},['NOT NULL']);
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('usersMetadata',{'username':'VARCHAR(20)'},['UNIQUE', 'NOT NULL']);
@@ -146,7 +143,7 @@ async function run(){
     error = await index.addForeignKey('itemsUsers','items','userId','users','id')
     if (error.error) return console.log(error);
 
-    error = await index.addForeignKey('imagesItems','images','itemId','items','id')
+    error = await index.addForeignKey('usersUsersmetadata','users','metadataId','usersMetadata','id');
     if (error.error) return console.log(error);
 
     error = await index.addForeignKey('messagesDiscussions','messages','discussionId','discussions','id')
@@ -156,9 +153,6 @@ async function run(){
     if (error.error) return console.log(error);
 
     error = await index.addForeignKey('discussionsUsers2','discussions','userId2','users','id')
-    if (error.error) return console.log(error);
-
-    error = await index.addForeignKey('usersMetadataUsers','usersMetadata','userId','users','id')
     if (error.error) return console.log(error);
 }
 run();

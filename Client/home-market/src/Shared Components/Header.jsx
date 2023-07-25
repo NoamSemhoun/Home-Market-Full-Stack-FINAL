@@ -1,10 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ModalAccount from '../ModalContext';
+import { MDBBtn } from 'mdb-react-ui-kit';
 
+ 
+ 
+  
 
 const Header = () => {
+
+
+// pour gerrer le modal account : 
+
+const [showModal, setShowModal] = useState(false);
+
+const handleOpenModal = () => {
+  setShowModal(true);
+};
+
+
+
   return (
     <header className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -70,7 +88,17 @@ const Header = () => {
           <a className="nav-link" href="/Register">Sign Up</a>
         </div>
 
+        
+         
+            {/* <button type="button" class="btn btn-primary" data-bs-toggle="modal"  onClick={handleOpenModal} >
+              
+            </button> */}
 
+            <MDBBtn onClick={handleOpenModal}>Account</MDBBtn>
+            {showModal && <ModalAccount closeModal={() => setShowModal(false)} />}
+   
+
+          
       </div>
 
 

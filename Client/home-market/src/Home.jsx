@@ -36,11 +36,12 @@ const Home = () => {
           className='w-100 d-block'
           itemId={2}
           src='https://i.pinimg.com/originals/f9/f7/f7/f9f7f78e226576053fc3f9faa2f0196e.jpg'
+
           alt='...'
           style={{ width: '100%', maxHeight: '500px', objectFit: 'cover' }}
 
         >
-          <h5>1 slide label</h5>
+          <h5>d slide label</h5>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </MDBCarouselItem>
 

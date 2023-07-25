@@ -25,8 +25,9 @@ function customQuery(query, feilds = [], message = "Query Run Successfully."){
         databaseConnection.query(query, feilds,
         (err, result) => {
             if (err) return resolve({error: err.message});
-            console.log(message)
-            resolve(result);
+            console.log(message);
+            
+            resolve(result instanceof Array && result.length === 1 ? result[0] : result);
         });
     });
 }
@@ -37,6 +38,9 @@ function checkForExistence(tableName,identifiers){
     return customQuery(query,Object.values(identifiers))
 }
 
+function getAlphanum(string){
+    return string.replace(/[^a-zA-Z0-9 ]/g, '');
+}
 
 module.exports = {
     setDatabaseConnection: (connection) => { databaseConnection = connection; },
@@ -48,5 +52,6 @@ module.exports = {
     testConnection,
     customQuery,
     isEmptyObject,
-    checkForExistence
+    checkForExistence,
+    getAlphanum
 }

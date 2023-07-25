@@ -1,4 +1,4 @@
-const database = require('./../../DataBase/index')
+const database = require('./../DataBase/index.js')
 
 
 function generateRandomString(length) {
@@ -13,17 +13,28 @@ function generateRandomString(length) {
     return randomString;
 }
 
-function validate(instance, validateScheme, noAccessFeilds = [], requireFeilds = []){
+function predicatePop(list, predicate) {
+  const index = list.findIndex(predicate);
+  if (index !== -1) {
+    const removedElement = list.splice(index, 1)[0];
+    return removedElement;
+  }
+}
 
-  if (requireFeilds.length === 0) return validateScheme.validate(instance);
+function helpValidate(validateScheme,instance){
+  const validation = validateScheme.validate(instance);
+  if (validation.error) return {error:validation.error.details.map((detail)=>detail.message).join(' ')}
+  return validation
+}
+
+function validate(instance, validateScheme, requireFeilds = []){
+
+  if (requireFeilds.length === 0) return helpValidate(validateScheme,instance);
 
   for (const feild of requireFeilds){
       if (!(feild in instance)) return {error: `"${feild}" is required` };
   }
-  for (const feild of noAccessFeilds){
-      if (feild in instance) return {error: `You Can't Change ${feild} Feild!\nYou Can Ask for it from an Admin`}
-  }
-  return validateScheme.validate(instance);
+  return helpValidate(validateScheme,instance);
 }
 
 async function getUserId(apiKey){
@@ -40,26 +51,50 @@ async function getUserId(apiKey){
 }
 
 
-async function checkAccess(apiKey,userId){
+async function checkAccess(apiKey, userId){
   // when call update, check that the apikey can change the userId
   let metadata = await database.getTable('usersMetadata',{apiKey:apiKey},['userRank','id']);
   if (metadata.error) return metadata;
-  metadata = metadata[0];
   if (metadata.userRank === 'admin') return {success:'Access Confirmed.'};
 
   let data = await database.getTable('users',{metadataId:metadata.id},['id']);
   if (data.error) return data;
-  data = data[0];
 
-  return data.id === userId ?
+  return data.id === parseInt(userId) ?
       {success:'Access Confirmed.'} : 
       {error:'Access Denied'};
 }
 
 
+function updateInstance(oldInstance, updatedInstance, accessFields){
+  const newInstance = {...oldInstance};
+
+  accessFields.forEach((field)=>{
+    if (field in updatedInstance)
+      newInstance[field] = updatedInstance[field];
+  });
+
+  return newInstance;
+}
+
+function getDatetime() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
 module.exports = {
     generateRandomString,
     validate,
     checkAccess,
-    getUserId
+    getUserId,
+    predicatePop,
+    updateInstance,
+    getDatetime
 }

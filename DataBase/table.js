@@ -48,12 +48,27 @@ async function updateTable(tableName, identifiers, instances){
         {error: errors+success } ;
 }
 
+async function searchInTable(tableName,searchQuery,searchFields){
+    const searchTerms = util.getAlphanum(searchQuery).split(' ');
 
+    const orConditions = searchTerms
+    .map((term) => `(${searchFields.map((field) => `${field} LIKE ?`).join(' OR ')})`)
+    .join(' OR ');
+
+    const n = searchFields.length;
+    const duplicatedList = searchTerms.flatMap((element) => Array(n).fill(element));
+
+    const query = `SELECT * FROM ${tableName} WHERE ${orConditions}`;
+
+    return await util.customQuery(query,duplicatedList);
+
+}
 
 module.exports = {
     createTable,
     deleteTable,
     insertToTable,
     removeFromTable,
-    updateTable
+    updateTable,
+    searchInTable
 }

@@ -2,13 +2,14 @@ const express = require('express');
 const database = require('./../DataBase/index')
 
 
-const users = require('./Routes/users')
-
 // Initial Variables
 const app = express();
 app.use(express.json());
-app.use('/users',users.router);
 
+const users = require('./Routes/users');
+const items = require('./Routes/items');
+app.use('/users',users);
+app.use('/items',items);
 
 const hostname = '127.0.0.1';
 const port = process.env.PORT || 3001;
@@ -23,7 +24,7 @@ const databseConfig = {
 
 app.get('/',(req,res) => {
     res.send('Hi There!')
-})
+});
 
 async function run(){
     await database.connect(databseConfig);

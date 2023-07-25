@@ -1,5 +1,6 @@
 const express = require('express');
 const Joi = require('joi');
+const util = require('./../util')
 const router = express.Router();
 
 const validationScheme = Joi.object({
@@ -12,17 +13,10 @@ router.post('/',(req,res)=>{
 })
 
 
-function validate(instance){
 
-}
-
-function checkAccess(userId,resourceId){
+async function checkAccess(apiKey,resourceId){
     
 }
 
 
-module.exports = {
-    router,
-    validate,
-    checkAccess
-}
+module.exports = router

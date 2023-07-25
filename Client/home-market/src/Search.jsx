@@ -87,6 +87,11 @@ import { Modal, Button, Carousel } from 'react-bootstrap';
                 <p>Description : Super produit à vendre</p>
                 <p>Price : 100 €</p>
                 <p>Location : Jerusalem, Givat Mordehay</p>
+                <p>Brand : KETER</p>
+                <a href="https://il.keter.com/items/5881623-%D7%A1%D7%98-%D7%A9%D7%95%D7%9C%D7%97%D7%9F-%D7%A4%D7%95%D7%98%D7%95%D7%A8%D7%94-4-%D7%9B%D7%A1%D7%90%D7%95%D7%AA-%D7%90%D7%99%D7%91%D7%99%D7%96%D7%94-%D7%90%D7%A4%D7%95%D7%A8"
+                   target="_blank" rel="noopener noreferrer">
+                  <Button className="btn btn-success rounded-lg shadow" >Visit Origin Brand Website (Extern URL) </Button>  
+                </a>
 
                 {/* Ajoutez plus de détails sur le produit ici */}
               </div>
@@ -97,7 +102,6 @@ import { Modal, Button, Carousel } from 'react-bootstrap';
         <Modal.Footer>
           <Button onClick={props.onHide}>Close</Button>
           <a href={WhatsappURL} target="_blank" rel="noopener noreferrer">
-
              <Button >Contact seller</Button>  
           </a>
 
@@ -143,12 +147,14 @@ import { Modal, Button, Carousel } from 'react-bootstrap';
   {/* CATALOGUE  */}
         <MDBRow className="row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" >  
           <MDBCol xl={4}   className='mb-4'>
-            <MDBCard>
+            <MDBCard   onClick={handleCardClick}
+                 //  {/* ICI DEFINIR LAPPEL AU MODAL   */}
+                 > 
                 <MDBCardImage
                   src="https://th.bing.com/th/id/R.30a2d8ebdcf5bd4e09561543c4df302e?rik=HYbei9c65yZj7Q&riu=http%3a%2f%2fwww.khahomedesign.com%2fori-lit-double-en-bois-de-chene-massif-dunaj-1058.jpg&ehk=hLH3qp0tsxFTfxRlrT0EOrkpCUJlbIfzjNqfn6zDhW0%3d&risl=&pid=ImgRaw&r=0"
                   fluid
                   className="w-100"     
-                  onClick={handleCardClick}  //  {/* ICI DEFINIR LAPPEL AU MODAL   */}
+               
 
                 />
                 <a href="#!">

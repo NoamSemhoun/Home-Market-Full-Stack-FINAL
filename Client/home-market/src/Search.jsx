@@ -128,6 +128,31 @@ import { Modal, Button, Carousel } from 'react-bootstrap';
 
 
 
+// SOCLE COMMUN : 
+
+    //   <MDBContainer fluid className="my-5 text-center">
+    
+    //   <MDBRow className="row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    //     {products.map((product, index) => (
+    //       <MDBCol xl={4} className="mb-4" key={index}>
+    //         {/* Utilisez le composant Card pour chaque produit */}
+    //         <Card      // onClick={handleCardClick}
+    //           imageUrl={product.imageUrl}
+    //           isNew={product.isNew}
+    //           productName={product.productName}
+    //           category={product.category}
+    //           price={product.price}
+    //         />
+    //       </MDBCol>
+    //     ))}
+    //   </MDBRow>
+    // </MDBContainer>
+
+
+
+
+
+
 
       <MDBContainer fluid className="my-5 text-center">
 

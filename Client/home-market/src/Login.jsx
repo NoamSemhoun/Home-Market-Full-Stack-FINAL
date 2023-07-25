@@ -12,7 +12,7 @@ import {
 
 function App() {
   return (
-    <MDBContainer className="my-5 gradient-form">
+    <MDBContainer className="">
 
       <MDBRow>
 
@@ -26,7 +26,7 @@ function App() {
             </div>
 
             <p>Please login to your account :</p>
-            <br></br>
+            
 
 
             <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'/>
@@ -41,7 +41,7 @@ function App() {
             <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">
               <p className="mb-0">Don't have an account?</p>
               <MDBBtn outline className='mx-2' ripple={false} color='danger'>
-                Register
+                Sign IN
               </MDBBtn>
             </div>
 

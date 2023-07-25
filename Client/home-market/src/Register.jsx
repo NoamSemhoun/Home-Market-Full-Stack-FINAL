@@ -12,7 +12,7 @@ import {
 
 function Register() {
   return (
-    <MDBContainer className=" gradient-form">
+    <MDBContainer className=" ">
 
       <MDBRow>
 
@@ -97,12 +97,12 @@ function Register() {
         <MDBCol col='6' className="mb-5">
           <div className="d-flex flex-column  justify-content-center gradient-custom-2 h-100 mb-4">
 
-            <div className="text-white px-3 py-4 p-md-5 mx-md-4">
+            <div className="text-white px-3 py-4  mx-md-4">
             <h4 className="mt-1 mb-5 pb-1">WELCOME to The Home Market Team</h4>
-                <br></br>   <br></br>  <br></br>  <br></br>   <br></br>     <br></br>      <br></br>
+                <br></br>   <br></br>  <br></br> 
 
-              <h4 class="mb-4">We are more than just a company</h4>
-              <p class="small mb-0">Welcome to our furniture emporium, where impeccable craftsmanship 
+              <h4 class="mb-1">We are more than just a company</h4>
+              <p class="small mb-5">Welcome to our furniture emporium, where impeccable craftsmanship 
               meets timeless elegance. Explore our curated collection of handpicked furnishings to create 
               stunning interiors that reflect your unique taste and personality. 
               Redefine your home with pieces that inspire beauty and harmony

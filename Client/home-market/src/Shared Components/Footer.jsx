@@ -8,8 +8,8 @@ import {
 
 export default function App() {
   return (
-    <MDBFooter className='bg-light text-center text-dark'>
-      <MDBContainer className='p-4 pb-0'>
+    <MDBFooter className='bg-light mb-5 text-center  text-dark'>
+      <MDBContainer className='p-4 mb-5 pb-0'>
         <section className='mb-4'>
 
 

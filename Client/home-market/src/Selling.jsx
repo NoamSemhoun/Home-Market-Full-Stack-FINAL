@@ -21,7 +21,7 @@ function Selling() {
 
                  
             </div>       
-                      <h2 class="text-center display-7"> This Forms in 3 Steps </h2>
+                      <h2 class="text-center display-7"> Post your listing with this Forms in 3 Steps </h2>
 
 
             <div className="justify-content-center mt-5" style={{ minWidth: '30%'}}>
@@ -35,7 +35,8 @@ function Selling() {
 
                             <MDBCol size="4" >
                             <MDBInput size="lg" 
-                             defaultValue='Table IKEA name' 
+                             defaultValue ='Table IKEA name '          
+
                             //  style= 'color = gray'
                               id='form6Example1' label='Tittle' />
                             </MDBCol>
@@ -122,8 +123,7 @@ function Selling() {
                         </Form.Group>                        
                         
 
-                        <MDBInput wrapperClass='mb-4' textarea id='form6Example7' rows={4} label='Additional information' />
-
+ 
                         
 
                     </form>
@@ -136,14 +136,24 @@ function Selling() {
                         It enhances the listing's appeal and helps buyers make informed decisions.
                         <MDBInputGroup
                             className='mb-3 mt-5'
-                            textBefore='Upload'
+                            textBefore='Upload the main photo :'
                             textTag='label'
                             textProps={{ htmlFor: 'inputGroupFile01' }}
                         >
-                            <input className='form-control' type='file' id='inputGroupFile01' />
+                             
+                        <input className='form-control' type='file' id='inputGroupFile01' />
+                               
+                         <br></br>
+
+                           
+                            
                         </MDBInputGroup>
                     
-                    
+                        <Form.Group controlId="formImages">
+                            <Form.Label>Upload other Images</Form.Label>
+                            <Form.Control type="file" multiple  />
+                        </Form.Group>
+
                     </MDBAccordionItem>
                     <MDBAccordionItem collapseId={3} headerTitle={<><MDBIcon fas icon="question-circle" /> &nbsp; #3  Personnal Information </>}>
                         
@@ -171,7 +181,7 @@ function Selling() {
                         />
 
                         <MDBBtn className='mb-4' type='submit' block>
-                            Place order
+                            Submit Item
                         </MDBBtn>
                     </form>
 

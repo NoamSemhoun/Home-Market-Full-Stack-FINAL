@@ -5,7 +5,7 @@ const databaseConfig = {
     user: "root",
     password: "AvishayDEV19", // change password here
     port: 3306,
-    //database: 'HomeMarketDB'
+    database: 'HomeMarketDB'
 };
 
 async function printTable(tableName){
@@ -18,9 +18,9 @@ async function run(){
     console.log(error);
     if (error.error) return;
 
-    // error = await index.deleteDatabase('HomeMarketDB');
-    // console.log(error);
-    // if (error.error) return;
+    error = await index.deleteDatabase('HomeMarketDB');
+    console.log(error);
+    if (error.error) return;
 
     error = await index.createDatabase('HomeMarketDB');
     console.log(error);
@@ -55,13 +55,16 @@ async function run(){
 
 
     // Create table Images
-    error = await index.createTable('images',{'id':'INT','itemId':'INT', 'imageUrl':'TEXT'});
+    error = await index.createTable('images',{'id':'INT','itemId':'INT','main':'BOOLEAN', 'imageUrl':'TEXT'});
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('images',{'id':'INT'},['AUTO_INCREMENT','PRIMARY KEY']);
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('images',{'itemId':'INT'},['NOT NULL']);
+    if (error.error) return console.log(error);
+
+    error = await index.modifyColumn('images',{'main':'BOOLEAN'},['NOT NULL']);
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('images',{'imageUrl':'TEXT'},['NOT NULL']);
@@ -96,14 +99,17 @@ async function run(){
 
 
     // Create table Users
-    error = await index.createTable('users',{'id':'INT', 'name':'VARCHAR(50)','phone':'VARCHAR(20)',
+    error = await index.createTable('users',{'id':'INT', 'fname':'VARCHAR(50)','lname':'VARCHAR(50)','phone':'VARCHAR(20)',
                                     'email':'VARCHAR(50)','address':'VARCHAR(80)','metadataId':'INT'});
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('users',{'id':'INT'},['AUTO_INCREMENT','PRIMARY KEY']);
     if (error.error) return console.log(error);
 
-    error = await index.modifyColumn('users',{'name':'VARCHAR(50)'},['NOT NULL']);
+    error = await index.modifyColumn('users',{'fname':'VARCHAR(50)'},['NOT NULL']);
+    if (error.error) return console.log(error);
+
+    error = await index.modifyColumn('users',{'lname':'VARCHAR(50)'},['NOT NULL']);
     if (error.error) return console.log(error);
 
     error = await index.modifyColumn('users',{'phone':'VARCHAR(20)'},['NOT NULL']);
@@ -179,5 +185,6 @@ async function run(){
   `;
     const databaseName = 'HomeMarketDB';
     console.log(await index.customQuery(query,[databaseName]));
+    console.log('Done.');
 }
 run();

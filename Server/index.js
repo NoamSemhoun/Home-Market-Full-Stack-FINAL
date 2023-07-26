@@ -1,13 +1,13 @@
 const express = require('express');
-const database = require('./../DataBase/index')
+const database = require('./../DataBase/index.js')
 
 
 // Initial Variables
 const app = express();
 app.use(express.json());
 
-const users = require('./Routes/users');
-const items = require('./Routes/items');
+const users = require('./Routes/users.js');
+const items = require('./Routes/items.js');
 app.use('/users',users);
 app.use('/items',items);
 

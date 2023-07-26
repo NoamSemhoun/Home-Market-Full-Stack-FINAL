@@ -1,4 +1,3 @@
-const mysql = require('mysql2');
 const database = require('./database.js');
 const modifiers = require('./modifiers.js');
 const queries = require('./queries.js');
@@ -27,6 +26,7 @@ module.exports = {
     insertToTable:table.insertToTable,
     removeFromTable:table.removeFromTable,
     updateTable:table.updateTable,
+    searchInTable:table.searchInTable,
 
     //modifiers
     addColumn:modifiers.addColumn,

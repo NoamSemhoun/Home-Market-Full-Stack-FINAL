@@ -1,11 +1,13 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 
+
 import {
     MDBRow,
-    MDBAccordion, MDBAccordionItem, MDBIcon,
+    MDBAccordion, MDBAccordionItem, 
     MDBCol,
     MDBInput,
+    MDBIcon,
     MDBInputGroup,
     MDBCheckbox,
     MDBBtn
@@ -13,6 +15,7 @@ import {
 
 function Selling() {
     return (
+        
         <div className="container">
 
             <div class="container d-flex justify-content-center align-items-center vh-10 mt-5">
@@ -22,29 +25,31 @@ function Selling() {
                  
             </div>       
                       <h2 class="text-center display-7"> Post your listing with this Forms in 3 Steps </h2>
+                
+                   <MDBIcon icon='camera-retro' />
 
-
+ 
             <div className="justify-content-center mt-5" style={{ minWidth: '30%'}}>
             {/* d-flex   les propriétés de flexibilité   OU ::   , maxWidth: '80%' */}
 
                     <MDBAccordion initialActive={1}>
-                    <MDBAccordionItem collapseId={1} headerTitle={<><MDBIcon fas icon="question-circle" /> &nbsp; #1 Details aticle </>}>
+                    <MDBAccordionItem collapseId={1} headerTitle={<><MDBIcon icon='camera' size='xs' /> &nbsp; #1 Details aticle </>}>
                        
                     <form>
                         <MDBRow className='mb-4'>
 
                             <MDBCol size="4" >
                             <MDBInput size="lg" 
-                             defaultValue ='Table IKEA name '          
-
-                            //  style= 'color = gray'
-                              id='form6Example1' label='Tittle' />
-                            </MDBCol>
-
-                    
+                            //  defaultValue ='Table IKEA name '            //  style= 'color = gray'
+                            placeholder="Table IKEA name "   
+                            // id='validationCustom02'
+                            // required
+                             id='form6Example1'
+                               label='Tittle' />
+                            </MDBCol> 
 
                             <MDBCol size="4" >
-                            <Form.Select label='Category ' size="lg"  >
+                             <Form.Select label='Category ' size="lg"  >
                                   <option>Select Category </option> 
                                   {/* mettre par default  */}
                                 <option>Sofa </option>
@@ -70,15 +75,17 @@ function Selling() {
 
                             <MDBCol size="4" >
                             <MDBInput size="lg" 
-                            defaultValue='IKEA ' 
+                            // defaultValue='IKEA ' 
                             //  style= 'color = gray'
+                            placeholder=" IKEA "
+
                             id='form6Example1' label='Brand Name' />
                             </MDBCol>
 
 
 
                             <MDBCol size="4" >
-                            <Form.Select label='Category ' size="lg"  >
+                            <Form.Select label='Category '       size="lg"  >
                                 <option>Select State Condition </option> 
                                 {/* mettre par default  */}
                                 <option>New </option>
@@ -91,7 +98,7 @@ function Selling() {
 
 
                             </Form.Select>
-                            <br />
+                             
                             </MDBCol>
 
                             <MDBCol size="4" >
@@ -119,7 +126,7 @@ function Selling() {
 
                         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                             <Form.Label>Description area</Form.Label>
-                            <Form.Control as="textarea" rows={3} />
+                            <Form.Control as="textarea" rows={3}    placeholder=" Dimension, date, .... "/>
                         </Form.Group>                        
                         
 
@@ -144,7 +151,6 @@ function Selling() {
                         <input className='form-control' type='file' id='inputGroupFile01' />
                                
                          <br></br>
-
                            
                             
                         </MDBInputGroup>
@@ -160,7 +166,18 @@ function Selling() {
                     <form>
                         <MDBRow className='mb-4'>
                             <MDBCol>
-                            <MDBInput id='form6Example1' label='First name' />
+                            <MDBInput 
+                            // id='form6Example1' 
+                            label='First name' 
+                             id='validationCustom02'
+                             required
+                             />
+
+
+                            <div className='invalid-feedback'></div> 
+                            {/* placé directement après le champ de saisie avec lequel il est associé */}
+
+
                             </MDBCol>
                             <MDBCol>
                             <MDBInput id='form6Example2' label='Last name' />
@@ -180,7 +197,7 @@ function Selling() {
                             defaultChecked
                         />
 
-                        <MDBBtn className='mb-4' type='submit' block>
+                        <MDBBtn className='mb-4' type='submit' >
                             Submit Item
                         </MDBBtn>
                     </form>

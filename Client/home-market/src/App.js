@@ -14,7 +14,6 @@ import Footer from './Shared Components/Footer.jsx';
  import Register from './Register';
  import Login from './Login';
 
-
  
 
 // import VendreMeuble from './VendreMeuble';

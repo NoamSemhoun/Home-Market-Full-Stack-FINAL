@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { Button , Dropdown } from 'react-bootstrap';
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ModalAccount from '../ModalContext';
-import { MDBBtn } from 'mdb-react-ui-kit';
-
+import {   
+  MDBIcon,
+  MDBBtn
+ } from 'mdb-react-ui-kit';
  
  
   
@@ -94,11 +98,28 @@ const handleOpenModal = () => {
               
             </button> */}
 
-            <MDBBtn onClick={handleOpenModal}>Account</MDBBtn>
-            {showModal && <ModalAccount closeModal={() => setShowModal(false)} />}
-   
+            {/* <MDBBtn onClick={handleOpenModal}>
+              Account
+            </MDBBtn> */}
 
-          
+            {/* {showModal && <ModalAccount closeModal={() => setShowModal(false)} />} */}
+
+
+            <Dropdown>
+              <Dropdown.Toggle variant="light border" id="dropdown-basic">
+                Account👤
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {/* Ajoutez les éléments de la liste déroulante ici */}
+                <Dropdown.Item href="#Profile">⚙️ My Profile</Dropdown.Item>
+                <Dropdown.Item href="#Items">📦 My Items</Dropdown.Item>
+                <Dropdown.Item href="#LogOut">🚪 Log Out</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+              
+   
+ 
       </div>
 
 

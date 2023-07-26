@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Shared Components/style.css';
 
@@ -40,9 +42,14 @@ function App() {
 
             <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">
               <p className="mb-0">Don't have an account?</p>
-              <MDBBtn outline className='mx-2' ripple={false} color='danger'>
-                Sign IN
-              </MDBBtn>
+              
+
+
+              <Link to="/Register">           
+                <MDBBtn outline className='mx-2' ripple={false} color='danger'>
+                  Sign IN
+                </MDBBtn>
+              </Link>
             </div>
 
           </div>

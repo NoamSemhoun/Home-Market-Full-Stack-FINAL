@@ -1,5 +1,8 @@
 const database = require('./../DataBase/index.js')
+const fs = require('fs');
 
+
+const databaseRoutesPath = './../../Database/';
 
 function generateRandomString(length) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -89,6 +92,25 @@ function getDatetime() {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
+function deleteFile(filePath){
+  fs.stat(filePath, (err, stats) => {
+    if (err) {
+      if (err.code === 'ENOENT') {
+        return {error: 'File not found.'};
+      }
+      return {error: 'Error checking file status.'};
+    }
+
+    // Proceed with file deletion
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        return {error: 'Error deleting file.'};
+      }
+      return {success: 'File deleted successfully!'};
+    });
+  });
+}
+
 module.exports = {
     generateRandomString,
     validate,
@@ -96,5 +118,7 @@ module.exports = {
     getUserId,
     predicatePop,
     updateInstance,
-    getDatetime
+    getDatetime,
+    deleteFile,
+    databaseRoutesPath
 }

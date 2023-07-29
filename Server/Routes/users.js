@@ -10,21 +10,21 @@ const validateScheme = Joi.object({
     lname:  Joi.string().alphanum().min(3).max(50),
     phone: Joi.string().alphanum().min(3).max(20),
     email: Joi.string().email().min(3).max(50),
-    address: Joi.string().min(3).max(80),
-    username: Joi.string().alphanum().min(3).max(20),
+    address: Joi.string().alphanum().min(3).max(60),
+    city: Joi.string().alphanum().min(3).max(30),
     password: Joi.string().alphanum().min(3).max(20),
     'repeat-password': Joi.ref('password')
 });
 
-const usersAccessFields = ['fname','lname','phone','email','address'];
-const metadataAccessFields = ['username','password'];
+const usersAccessFields = ['fname','lname','phone','address','city'];
+const metadataAccessFields = ['email','password'];
 
 /**
  * בקשה להתחברות של משתמש על ידי שליחה של שם משתמש וסיסמא
  * דוגמא לבקשה: (body)
     {
         "user":{
-            "username":"AvishayDev",
+            "email":"avishayelihay@gmail.com",
             "password":"123" 
         }
     }
@@ -32,12 +32,12 @@ const metadataAccessFields = ['username','password'];
 router.post('/login',async (req,res)=>{
     const {user} = req.body;
 
-    let error = util.validate(user, validateScheme, ['username','password']);
+    let error = util.validate(user, validateScheme, ['email','password']);
     if (error.error) return res.status(400).send(error);
 
-    let metadata = await database.getTable('usersMetadata',{username:user.username,password:user.password});
-    if (metadata.error) return res.status(404).send(metadata);
+    let metadata = await database.getTable('usersMetadata',{email:user.email,password:user.password});
     if (metadata instanceof Array) return res.status(404).send({error:`Username ${user.username} Dosen't Exists!`});
+    if (metadata.error) return res.status(404).send(metadata);
 
     let data = await database.getTable('users',{metadataId:metadata.id});
     if (data.error) return res.status(404).send(data);
@@ -52,7 +52,7 @@ router.post('/login',async (req,res)=>{
  * דוגמא לבקשה: (body)
     {
     "user":{
-        "username":"AvishayDev",
+        "email":"avishayelihay@gmail.com",
         "password":"123",
         "repeat-password":"123",
         "name":"koko",
@@ -66,11 +66,11 @@ router.post('/signup',async (req,res)=>{
 
     const {user} = req.body;
 
-    let error = util.validate(user, validateScheme, ['username','password','repeat-password','name','phone','email','address']);
+    let error = util.validate(user, validateScheme, ['fname', 'lname','phone','address','city', 'email','password','repeat-password']);
     if (error.error) return res.status(400).send(error);
     
     const userMetadata = {
-        username: user.username,
+        email: user.email,
         password: user.password,
         apiKey: util.generateRandomString(20),
         userRank: 'user'
@@ -80,11 +80,12 @@ router.post('/signup',async (req,res)=>{
     if (metadata.error) return res.status(404).send(metadata);
 
     const userData = {
-        metadataId: metadata.insertId,
-        name: user.name,
+        fname: user.fname,
+        lname:user.lname,
         phone: user.phone,
-        email: user.email,
-        address: user.address
+        address: user.address,
+        city:user.city,
+        metadataId: metadata.insertId
     }
 
     let data = await database.insertToTable('users',[userData]);
@@ -108,8 +109,8 @@ router.put('/:id',async (req,res)=>{
     if (error.error) return res.status(400).send(error);
 
     delete user.apiKey;
-    const requireFields = 'password' in user ? ['repeat-password'] : [];
-    error = util.validate(user, validateScheme, []);
+    const requireFields = 'password' in user ? ['password', 'repeat-password'] : [];
+    error = util.validate(user, validateScheme, requireFields);
     if (error.error) return res.status(400).send(error);
 
     // check for tables to update

@@ -22,31 +22,26 @@ const lowerDataItems = ['id', 'price', 'title','uploadDate','delivery','mainImag
 const lowerDataImages = ['imageUrl'];
 const accessFields = ['price','title','delivery', 'status','description','category','brandUrl']
 
-
-//test route for images
-router.post('/test/:id', upload.fields([
+const uploadImages = upload.fields([
     {name:'images',maxCount: 9},
     {name:'main-image', maxCount:1}
-]), async (req,res)=>{
+]);
+
+//test route for images
+router.post('/test/:id',uploadImages, async (req,res)=>{
     // save images
     const {files} = req;
     if (!('main-image' in files)) return res.status(404).send({error:'Main Image is Required!'});
     
-    let mainImage = {
-        itemId:req.params.id,
-        imageUrl:files['main-image'][0]['path'],
-        main:true
-    }
 
     const instances = files['images'].map((image)=>{
         return {
             itemId:req.params.id,
-            imageUrl:image['path'],
-            main:false
+            imageUrl:image['path']
         } 
     });
 
-    error = await database.insertToTable('images', [...instances, mainImage]);
+    error = await database.insertToTable('images', instances);
     if (error.error) return res.status(404).send(error);
 
     error = await database.getTable('images', {itemId:req.params.id});
@@ -90,10 +85,7 @@ router.get('/search',async (req,res)=>{
 
 
 // עריכת אחד לפי id
-router.put('/:id', upload.fields([
-    {name:'images',maxCount: 9},
-    {name:'main-image', maxCount:1}
-]), async (req,res)=>{
+router.put('/:id', uploadImages, async (req,res)=>{
     // validate access
     const {id} = req.params;
     const {apiKey} = req.body;
@@ -167,10 +159,7 @@ router.post('/',async (req,res)=>{
 
 
 // העלאת פריט באופן מלא לשרת
-router.post('/upload', upload.fields([
-    {name:'images',maxCount: 9},
-    {name:'main-image', maxCount:1}
-]), async (req,res)=>{
+router.post('/upload', uploadImages, async (req,res)=>{
     // validate access
     const {apiKey} = req.body;
     const userId = await util.getUserId(apiKey);

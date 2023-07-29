@@ -12,7 +12,7 @@ const validateScheme = Joi.object({
     email: Joi.string().email().min(3).max(50),
     address: Joi.string().alphanum().min(3).max(60),
     city: Joi.string().alphanum().min(3).max(30),
-    password: Joi.string().alphanum().min(3).max(20),
+    password: Joi.string().alphanum().min(6).max(20),
     'repeat-password': Joi.ref('password')
 });
 
@@ -51,15 +51,15 @@ router.post('/login',async (req,res)=>{
  * בקשה להרשמה של משתמש חדש עם השדות הנדרשים.
  * דוגמא לבקשה: (body)
     {
-    "user":{
-        "email":"avishayelihay@gmail.com",
-        "password":"123",
-        "repeat-password":"123",
-        "name":"koko",
-        "phone":"0342",
-        "email":"52rf.com",
-        "address":"koko lala"
-    }
+        "user":{
+            "email":"avishayelihay@gmail.com",
+            "password":"123",
+            "repeat-password":"123",
+            "name":"koko",
+            "phone":"0342",
+            "email":"52rf.com",
+            "address":"koko lala"
+        }
     }
  */
 router.post('/signup',async (req,res)=>{
@@ -100,7 +100,16 @@ router.post('/signup',async (req,res)=>{
 /**
  * עדכון נתונים של משתמש
  * דוגמאת שימוש: (body)
- 
+     {
+    "user":{
+        "email":"avishayelihay@gmail.com",
+        "password":"123",
+        "name":"koko",
+        "phone":"0342",
+        "email":"52rf.com",
+        "address":"koko lala"
+    }
+    }
  */
 router.put('/:id',async (req,res)=>{
     const {user} = req.body;

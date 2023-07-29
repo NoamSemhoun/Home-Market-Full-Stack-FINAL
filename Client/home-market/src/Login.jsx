@@ -36,7 +36,7 @@ function App() {
 
 
             <div className="text-center pt-1 mb-5 pb-1">
-              <MDBBtn ripple={false} className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
+              <MDBBtn ripple={false} className="mb-4 w-100 gradient-custom-2">Sign UP</MDBBtn>
               <a className="text-muted" href="#!">Forgot password?</a>
             </div>
 

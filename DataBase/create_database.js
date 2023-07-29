@@ -3,9 +3,9 @@ const index = require('./index.js');
 const databaseConfig = {
     host: "localhost",
     user: "root",
-    password: "AvishayDEV19", // change password here
+    password: "NoaSQL26@", // change password here
     port: 3306,
-    database: 'HomeMarketDB'
+    // database: 'HomeMarketDB'
 };
 
 async function printTable(tableName){
@@ -18,9 +18,9 @@ async function run(){
     console.log(error);
     if (error.error) return;
 
-    error = await index.deleteDatabase('HomeMarketDB');
-    console.log(error);
-    if (error.error) return;
+    // error = await index.deleteDatabase('HomeMarketDB');
+    // console.log(error);
+    // if (error.error) return;
 
     error = await index.createDatabase('HomeMarketDB');
     console.log(error);

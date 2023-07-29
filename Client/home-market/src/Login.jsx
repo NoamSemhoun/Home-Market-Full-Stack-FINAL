@@ -47,7 +47,7 @@ function App() {
 
               <Link to="/Register">           
                 <MDBBtn outline className='mx-2' ripple={false} color='danger'>
-                  Sign IN
+                  Sign UP
                 </MDBBtn>
               </Link>
             </div>

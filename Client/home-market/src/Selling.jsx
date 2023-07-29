@@ -8,6 +8,7 @@ import {
     MDBCol,
     MDBInput,
     MDBIcon,
+    MDBContainer,
     MDBInputGroup,
     MDBCheckbox,
     MDBBtn
@@ -74,12 +75,15 @@ function Selling() {
                         <MDBRow className='mb-4'>
 
                             <MDBCol size="4" >
-                            <MDBInput size="lg" 
+                            {/* <MDBInput size="lg" 
                             // defaultValue='IKEA ' 
                             //  style= 'color = gray'
                             placeholder=" IKEA "
 
-                            id='form6Example1' label='Brand Name' />
+                            id='form6Example1' label='Brand Name' /> */}
+
+                            <MDBInput wrapperClass='mb-4' id='form6Example3' label='URL Brand ' />
+
                             </MDBCol>
 
 
@@ -103,30 +107,37 @@ function Selling() {
 
                             <MDBCol size="4" >
 
-                                <MDBCheckbox
+                                {/* <MDBCheckbox
                                 wrapperClass='d-flex justify-content-center mb-4'
                                 id='form6Example8'
                                 label=' Negociable '
                                 defaultChecked
-                               />
+                               /> */}
 
-                                <MDBCheckbox
-                                    wrapperClass='d-flex justify-content-center mb-4'
-                                    id='form6Example8'
-                                    label=' Delivery possible '
-                                    defaultChecked
-                                /> 
+                                <MDBContainer className="p-4">
+                                    <div className="form-check form-switch mb-4">
+                                        <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="formSwitch"
+                                        defaultChecked
+                                        />
+                                        <label className="form-check-label fs-4 align-middle" htmlFor="formSwitch">
+
+                                        Delivery possible
+                                        </label>
+                                    </div>
+                                    </MDBContainer>
                           
                             </MDBCol>
 
                             </MDBRow>
 
 
-                        <MDBInput wrapperClass='mb-4' id='form6Example3' label='URL Brand ' />
 
                         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                             <Form.Label>Description area</Form.Label>
-                            <Form.Control as="textarea" rows={3}    placeholder=" Dimension, date, .... "/>
+                            <Form.Control as="textarea" rows={3}    placeholder=" Dimension, date, negociable .... "/>
                         </Form.Group>                        
                         
 
@@ -144,20 +155,20 @@ function Selling() {
                         <MDBInputGroup
                             className='mb-3 mt-5'
                             textBefore='Upload the main photo :'
+
                             textTag='label'
                             textProps={{ htmlFor: 'inputGroupFile01' }}
                         >
                              
-                        <input className='form-control' type='file' id='inputGroupFile01' />
+                        <input name="main-image" className='form-control' type='file' id='inputGroupFile01' />
                                
                          <br></br>
                            
-                            
                         </MDBInputGroup>
                     
                         <Form.Group controlId="formImages">
                             <Form.Label>Upload other Images</Form.Label>
-                            <Form.Control type="file" multiple  />
+                            <Form.Control name="images" type="file" multiple  />
                         </Form.Group>
 
                     </MDBAccordionItem>

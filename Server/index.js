@@ -17,7 +17,7 @@ const port = process.env.PORT || 3001;
 const databaseConfig = {
         host: "localhost",
         user: "root",
-        password: "AvishayDEV19",
+        password: "NoaSQL26@",
         port: 3306,
         database: 'HomeMarketDB'
 }

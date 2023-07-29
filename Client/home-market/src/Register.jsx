@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import { postData } from './util';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Shared Components/style.css';
@@ -14,16 +14,42 @@ import {
   MDBInput
 }from 'mdb-react-ui-kit';
 
+
+
 function Register() {
 
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatpassword, setRepeatPassword] = useState('');
 
   const [showModal, setShowModal] = useState(false);
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Effectuez ici les vérifications de validation des champs du formulaire
-    // Si tout est valide, vous pouvez soumettre les données du formulaire
+
+
+    // Bdikot in server + on jsx
+
+    // send to server : 
+
+      const user = postData("http://127.0.0.1:3001/users/signup", 
+      {
+        fname : firstName,
+        lname: lastName,
+        email: email,
+        phone: phone,
+        address: address,
+        // city
+        password: password,
+        'repeat-password' : repeatpassword 
+        }, "user")
+
+          console.log(user);
 
     setShowModal(true);
   };
@@ -56,28 +82,28 @@ function Register() {
                 <form onSubmit={handleSubmit}>
                 <MDBRow className='mb-4'>
                     <MDBCol>
-                    <MDBInput id='form6Example1' label='First name' required />
+                    <MDBInput id='form6Example1'   onChange={(e) => setFirstName(e.target.value)}  label='First name' required />
                     </MDBCol>
                     <MDBCol>
-                    <MDBInput id='form6Example2' label='Last name' required  />
+                    <MDBInput id='form6Example2' onChange={(e) => setLastName(e.target.value)}  label='Last name' required  />
                     </MDBCol>
                 </MDBRow>
             
                 <MDBRow  >
                     <MDBCol>
-                    <MDBInput wrapperClass='mb-4' type='email' id='form6Example5' label='Email' 
-                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                    <MDBInput wrapperClass='mb-4' onChange={(e) => setEmail(e.target.value)} type='email' id='form6Example5' label='Email' 
+                    //  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                      required />
                     </MDBCol>
                     <MDBCol>
-                    <MDBInput wrapperClass='mb-4' type='tel' id='form6Example6' label='Phone' 
+                    <MDBInput wrapperClass='mb-4' onChange={(e) => setPhone(e.target.value)}  type='tel' id='form6Example6' label='Phone' 
                       pattern="[0-9]{10,15}"
                       
                       required />
                     </MDBCol>
                 </MDBRow>
 
-                <MDBInput wrapperClass='mb-4' id='form6Example4' label='Address' required/>
+                <MDBInput wrapperClass='mb-4' onChange={(e) => setAddress(e.target.value)} value={address} id='form6Example4' label='Address' required/>
 
                 
                 <MDBCol size="auto">
@@ -87,6 +113,7 @@ function Register() {
                 </MDBCol>
                 <MDBInput
                 wrapperClass='col-auto'
+                onChange={(e) => setPassword(e.target.value)}
                 label='Password'
                 type='password'
                 id='formTextExample2'
@@ -100,6 +127,8 @@ function Register() {
                 <MDBInput
                 wrapperClass='col-auto'
                 label='Repeat Password'
+                onChange={(e) => setRepeatPassword(e.target.value)}
+
                 type='password'
                 id='formTextExample2'
                 aria-describedby='textExample2'
@@ -111,7 +140,7 @@ function Register() {
 
 
                   <div className="text-center pt-1 mb-5 pb-1">
-                    <MDBBtn type="submit" ripple={false} className="mb-4 w-100 gradient-custom-2">Sign Up</MDBBtn>
+                    <MDBBtn type="submit"  className="mb-4 w-100 gradient-custom-2">Sign Up</MDBBtn>
                   </div>
 
 

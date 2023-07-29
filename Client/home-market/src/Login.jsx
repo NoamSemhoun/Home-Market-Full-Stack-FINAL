@@ -12,6 +12,9 @@ import {
   MDBInput
 }from 'mdb-react-ui-kit';
 
+// const user = postData("http://127.0.0.1:3001/users/login", {email:email, password }, "user")
+
+
 function App() {
   return (
     <MDBContainer className="">

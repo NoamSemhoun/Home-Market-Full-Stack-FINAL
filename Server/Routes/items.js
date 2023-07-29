@@ -22,31 +22,26 @@ const lowerDataItems = ['id', 'price', 'title','uploadDate','delivery','mainImag
 const lowerDataImages = ['imageUrl'];
 const accessFields = ['price','title','delivery', 'status','description','category','brandUrl']
 
-
-//test route for images
-router.post('/test/:id', upload.fields([
+const uploadImages = upload.fields([
     {name:'images',maxCount: 9},
     {name:'main-image', maxCount:1}
-]), async (req,res)=>{
+]);
+
+//test route for images
+router.post('/test/:id',uploadImages, async (req,res)=>{
     // save images
     const {files} = req;
     if (!('main-image' in files)) return res.status(404).send({error:'Main Image is Required!'});
     
-    let mainImage = {
-        itemId:req.params.id,
-        imageUrl:files['main-image'][0]['path'],
-        main:true
-    }
 
     const instances = files['images'].map((image)=>{
         return {
             itemId:req.params.id,
-            imageUrl:image['path'],
-            main:false
+            imageUrl:image['path']
         } 
     });
 
-    error = await database.insertToTable('images', [...instances, mainImage]);
+    error = await database.insertToTable('images', instances);
     if (error.error) return res.status(404).send(error);
 
     error = await database.getTable('images', {itemId:req.params.id});
@@ -58,7 +53,16 @@ router.post('/test/:id', upload.fields([
     if (error.error) return res.status(404).send(error);
 });
 
-// קבל אחד מלא לפי id
+/**
+ * קבלת מוצר יחיד לפי האיידי שלו עם כל הנתונים
+ * 
+ * Url: http://127.0.0.1:3001/items/id (the id of the item you get from the search or items/ request)
+ * Data: {}
+ * DataType: "item"
+ * 
+ * Return: {id, price, title, uploadDate, delivery, status, description, category, brandUrl, mainImage, images}
+ * 
+ */
 router.get('/:id',async (req,res)=>{
 
     // get item 
@@ -73,10 +77,20 @@ router.get('/:id',async (req,res)=>{
     //check for address, city to the item
 
     // send back data
+    delete item.userId;
     return res.send({data:item})
 });
 
 // קבל תוצאות חיפוש לפי מילות חיפוש באופן מזערי
+/**
+ * 
+ * Url: http://127.0.0.1:3001/items/search?query=... (the ... is the words the user write to search)
+ * Data: {}
+ * DataType: "item"
+ * 
+ * Return: list of - {'id', 'price', 'title','uploadDate','delivery','mainImage'}
+ * 
+ */
 router.get('/search',async (req,res)=>{
     const {query} = req.query;
 
@@ -89,11 +103,18 @@ router.get('/search',async (req,res)=>{
 });
 
 
-// עריכת אחד לפי id
-router.put('/:id', upload.fields([
-    {name:'images',maxCount: 9},
-    {name:'main-image', maxCount:1}
-]), async (req,res)=>{
+
+/**
+ * עריכת מוצר יחיד לפי האיידי שלו.
+ * 
+ * Url: http://127.0.0.1:3001/items/id (the id of the item you get from the search or items/ request)
+ * Data: {apiKey, price, title, uploadDate, delivery, status, description, category, brandUrl, mainImage, images}
+ * DataType: "item"
+ * 
+ * Return: {id, price, title, uploadDate, delivery, status, description, category, brandUrl, mainImage, images}
+ * 
+ */
+router.put('/:id', uploadImages, async (req,res)=>{
     // validate access
     const {id} = req.params;
     const {apiKey} = req.body;
@@ -149,7 +170,16 @@ router.put('/:id', upload.fields([
 });
 
 
-// קבל את כולם של משתמש באופן של תצוגה מזערית
+/**
+ *  קבל את כל המוצרים של משתמש באופן של תצוגה מזערית
+ * 
+ * Url: http://127.0.0.1:3001/items/
+ * Data: {apiKey}
+ * DataType: "item"
+ * 
+ * Return: {id, price, title, uploadDate, delivery, status, description, category, brandUrl, mainImage, images}
+ * 
+ */
 router.post('/',async (req,res)=>{
 
     // validate access
@@ -167,10 +197,17 @@ router.post('/',async (req,res)=>{
 
 
 // העלאת פריט באופן מלא לשרת
-router.post('/upload', upload.fields([
-    {name:'images',maxCount: 9},
-    {name:'main-image', maxCount:1}
-]), async (req,res)=>{
+/**
+ * העלאת פריט באופן מלא לשרת
+ * 
+ * Url: http://127.0.0.1:3001/items/upload
+ * Data: {apiKey, price, title, uploadDate, delivery, status, description, category, brandUrl, mainImage, images}
+ * DataType: "item"
+ * 
+ * Return: {id, price, title, uploadDate, delivery, status, description, category, brandUrl, mainImage, images}
+ * 
+ */
+router.post('/upload', uploadImages, async (req,res)=>{
     // validate access
     const {apiKey} = req.body;
     const userId = await util.getUserId(apiKey);

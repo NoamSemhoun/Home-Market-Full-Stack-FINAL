@@ -12,7 +12,7 @@ const validateScheme = Joi.object({
     email: Joi.string().email().min(3).max(50),
     address: Joi.string().alphanum().min(3).max(60),
     city: Joi.string().alphanum().min(3).max(30),
-    password: Joi.string().alphanum().min(3).max(20),
+    password: Joi.string().alphanum().min(6).max(20),
     'repeat-password': Joi.ref('password')
 });
 
@@ -20,14 +20,14 @@ const usersAccessFields = ['fname','lname','phone','address','city'];
 const metadataAccessFields = ['email','password'];
 
 /**
- * בקשה להתחברות של משתמש על ידי שליחה של שם משתמש וסיסמא
- * דוגמא לבקשה: (body)
-    {
-        "user":{
-            "email":"avishayelihay@gmail.com",
-            "password":"123" 
-        }
-    }
+ * בקשה להתחברות של משתמש על ידי שליחת אימייל וסיסמא
+ * 
+ * Url: http://127.0.0.1:3001/users/login
+ * Data: {email, password}
+ * DataType: "user"
+ * 
+ * Return: {id, fname, lname, phone, address, city, metadataId, email, apiKey, userRank}
+ * 
  */
 router.post('/login',async (req,res)=>{
     const {user} = req.body;
@@ -43,24 +43,20 @@ router.post('/login',async (req,res)=>{
     if (data.error) return res.status(404).send(data);
     
     delete metadata.id;
+    delete metadata.password;
 
     return res.send({'data':{...metadata,...data}})
 });
 
 /**
  * בקשה להרשמה של משתמש חדש עם השדות הנדרשים.
- * דוגמא לבקשה: (body)
-    {
-    "user":{
-        "email":"avishayelihay@gmail.com",
-        "password":"123",
-        "repeat-password":"123",
-        "name":"koko",
-        "phone":"0342",
-        "email":"52rf.com",
-        "address":"koko lala"
-    }
-    }
+ * 
+ * Url: http://127.0.0.1:3001/users/signup
+ * Data: {'fname', 'lname','phone','address','city', 'email','password','repeat-password'}
+ * DataType: "user"
+ * 
+ * Return: {id, fname, lname, phone, address, city, metadataId, email, apiKey, userRank}
+ * 
  */
 router.post('/signup',async (req,res)=>{
 
@@ -94,13 +90,20 @@ router.post('/signup',async (req,res)=>{
         return res.status(404).send(data);
     }
 
+    delete userMetadata.password;
     return res.send({'data':{id:data.insertId,...userData,...userMetadata}})
 });
 
 /**
  * עדכון נתונים של משתמש
- * דוגמאת שימוש: (body)
- 
+ * 
+ * Url: http://127.0.0.1:3001/users/id (the id of the user you get from the signup/signin request)
+ * Data: (all the fields are optional, if password sent, repeat-password shoudbe sended too)
+ * {'fname', 'lname','phone','address','city', 'email','password','repeat-password'}
+ * DataType: "user"
+ * 
+ * Return: {id, fname, lname, phone, address, city, metadataId, email, apiKey, userRank}
+ * 
  */
 router.put('/:id',async (req,res)=>{
     const {user} = req.body;
@@ -131,6 +134,7 @@ router.put('/:id',async (req,res)=>{
     if (metadata.error) return res.status(404).send(metadata);
 
     delete metadataInstance.id;
+    delete metadataInstance.password;
     // return the full updated instance
     return res.send({data:{...userInstance,...metadataInstance}})
 });

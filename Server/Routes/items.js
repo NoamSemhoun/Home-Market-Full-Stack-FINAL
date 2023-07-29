@@ -53,7 +53,16 @@ router.post('/test/:id',uploadImages, async (req,res)=>{
     if (error.error) return res.status(404).send(error);
 });
 
-// קבל אחד מלא לפי id
+/**
+ * קבלת מוצר יחיד לפי האיידי שלו עם כל הנתונים
+ * 
+ * Url: http://127.0.0.1:3001/items/id (the id of the item you get from the search or items/ request)
+ * Data: {}
+ * DataType: "item"
+ * 
+ * Return: {id, price, title, uploadDate, delivery, status, description, category, brandUrl, mainImage, images}
+ * 
+ */
 router.get('/:id',async (req,res)=>{
 
     // get item 
@@ -68,10 +77,20 @@ router.get('/:id',async (req,res)=>{
     //check for address, city to the item
 
     // send back data
+    delete item.userId;
     return res.send({data:item})
 });
 
 // קבל תוצאות חיפוש לפי מילות חיפוש באופן מזערי
+/**
+ * 
+ * Url: http://127.0.0.1:3001/items/search?query=... (the ... is the words the user write to search)
+ * Data: {}
+ * DataType: "item"
+ * 
+ * Return: list of - {'id', 'price', 'title','uploadDate','delivery','mainImage'}
+ * 
+ */
 router.get('/search',async (req,res)=>{
     const {query} = req.query;
 
@@ -84,7 +103,17 @@ router.get('/search',async (req,res)=>{
 });
 
 
-// עריכת אחד לפי id
+
+/**
+ * עריכת מוצר יחיד לפי האיידי שלו.
+ * 
+ * Url: http://127.0.0.1:3001/items/id (the id of the item you get from the search or items/ request)
+ * Data: {apiKey, price, title, uploadDate, delivery, status, description, category, brandUrl, mainImage, images}
+ * DataType: "item"
+ * 
+ * Return: {id, price, title, uploadDate, delivery, status, description, category, brandUrl, mainImage, images}
+ * 
+ */
 router.put('/:id', uploadImages, async (req,res)=>{
     // validate access
     const {id} = req.params;
@@ -141,7 +170,16 @@ router.put('/:id', uploadImages, async (req,res)=>{
 });
 
 
-// קבל את כולם של משתמש באופן של תצוגה מזערית
+/**
+ *  קבל את כל המוצרים של משתמש באופן של תצוגה מזערית
+ * 
+ * Url: http://127.0.0.1:3001/items/
+ * Data: {apiKey}
+ * DataType: "item"
+ * 
+ * Return: {id, price, title, uploadDate, delivery, status, description, category, brandUrl, mainImage, images}
+ * 
+ */
 router.post('/',async (req,res)=>{
 
     // validate access
@@ -159,6 +197,16 @@ router.post('/',async (req,res)=>{
 
 
 // העלאת פריט באופן מלא לשרת
+/**
+ * העלאת פריט באופן מלא לשרת
+ * 
+ * Url: http://127.0.0.1:3001/items/upload
+ * Data: {apiKey, price, title, uploadDate, delivery, status, description, category, brandUrl, mainImage, images}
+ * DataType: "item"
+ * 
+ * Return: {id, price, title, uploadDate, delivery, status, description, category, brandUrl, mainImage, images}
+ * 
+ */
 router.post('/upload', uploadImages, async (req,res)=>{
     // validate access
     const {apiKey} = req.body;

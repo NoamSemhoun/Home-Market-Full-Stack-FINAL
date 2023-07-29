@@ -14,7 +14,7 @@ app.use('/items',items);
 const hostname = '127.0.0.1';
 const port = process.env.PORT || 3001;
 
-const databseConfig = {
+const databaseConfig = {
         host: "localhost",
         user: "root",
         password: "AvishayDEV19",
@@ -27,7 +27,9 @@ app.get('/',(req,res) => {
 });
 
 async function run(){
-    await database.connect(databseConfig);
+    let error = await database.connect(databaseConfig);
+    console.log(error);
+    if (error.error) return;
 
     app.listen(port, hostname, () => {
         console.log(`Server running at http://${hostname}:${port}/`);

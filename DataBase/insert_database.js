@@ -19,9 +19,8 @@ async function run(){
     console.log(error);
     if (error.error) return;
 
-    await printTable('users');
-    await printTable('usersMetadata');
 
+    // default user
     error = await index.insertToTable('usersMetadata',[
         {
             username:'AvishayDev',
@@ -45,6 +44,11 @@ async function run(){
     ])
     console.log(error);
     if (error.error) return;
+
+    await printTable('users');
+    await printTable('usersMetadata');
+
+    
 
 
 

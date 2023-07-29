@@ -22,10 +22,10 @@ function insertToTable(tableName, instances){
 }
 
 function removeFromTable(tableName, identifiers){
-    const identifiersString = Object.entries(identifiers).map(([key,value])=>`${key} = ${value}`).join(' AND ');
+    const identifiersString = Object.keys(identifiers).map((key)=>`${key} = ?`).join(' AND ');
     
     const query = `DELETE FROM ${tableName} WHERE ${identifiersString}`;
-    return util.customQuery(query);
+    return util.customQuery(query,Object.values(identifiers));
 }
 
 async function updateTable(tableName, identifiers, instances){
@@ -48,7 +48,9 @@ async function updateTable(tableName, identifiers, instances){
         {error: errors+success } ;
 }
 
-async function searchInTable(tableName,searchQuery,searchFields){
+async function searchInTable(tableName,searchQuery,searchFields,columnNames=[]){
+    const columnsString = columnNames.length > 0 ? `${columnNames.join(', ')}` : '*';
+
     const searchTerms = util.getAlphanum(searchQuery).split(' ');
 
     const orConditions = searchTerms
@@ -58,7 +60,7 @@ async function searchInTable(tableName,searchQuery,searchFields){
     const n = searchFields.length;
     const duplicatedList = searchTerms.flatMap((element) => Array(n).fill(element));
 
-    const query = `SELECT * FROM ${tableName} WHERE ${orConditions}`;
+    const query = `SELECT ${columnsString} FROM ${tableName} WHERE ${orConditions}`;
 
     return await util.customQuery(query,duplicatedList);
 

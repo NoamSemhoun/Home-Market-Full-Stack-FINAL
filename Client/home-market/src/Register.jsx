@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Modal, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Shared Components/style.css';
 
@@ -11,6 +15,24 @@ import {
 }from 'mdb-react-ui-kit';
 
 function Register() {
+
+
+  const [showModal, setShowModal] = useState(false);
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Effectuez ici les vérifications de validation des champs du formulaire
+    // Si tout est valide, vous pouvez soumettre les données du formulaire
+
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+
   return (
     <MDBContainer className=" ">
 
@@ -31,31 +53,36 @@ function Register() {
             <div className="container ">
 
 
-                <form>
+                <form onSubmit={handleSubmit}>
                 <MDBRow className='mb-4'>
                     <MDBCol>
-                    <MDBInput id='form6Example1' label='First name' />
+                    <MDBInput id='form6Example1' label='First name' required />
                     </MDBCol>
                     <MDBCol>
-                    <MDBInput id='form6Example2' label='Last name' />
+                    <MDBInput id='form6Example2' label='Last name' required  />
                     </MDBCol>
                 </MDBRow>
             
-                <MDBRow className='mb-4'>
+                <MDBRow  >
                     <MDBCol>
-                    <MDBInput wrapperClass='mb-4' type='email' id='form6Example5' label='Email' />
+                    <MDBInput wrapperClass='mb-4' type='email' id='form6Example5' label='Email' 
+                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                     required />
                     </MDBCol>
                     <MDBCol>
-                    <MDBInput wrapperClass='mb-4' type='tel' id='form6Example6' label='Phone' />
+                    <MDBInput wrapperClass='mb-4' type='tel' id='form6Example6' label='Phone' 
+                      pattern="[0-9]{10,15}"
+                      
+                      required />
                     </MDBCol>
                 </MDBRow>
 
-                <MDBInput wrapperClass='mb-4' id='form6Example4' label='Address' />
+                <MDBInput wrapperClass='mb-4' id='form6Example4' label='Address' required/>
 
                 
                 <MDBCol size="auto">
                 <span id='textExample2' className='form-text'>
-                    Must be 8-20 characters long.
+                       &nbsp;&nbsp;  Must be 6-20 characters long.
                 </span>
                 </MDBCol>
                 <MDBInput
@@ -64,6 +91,9 @@ function Register() {
                 type='password'
                 id='formTextExample2'
                 aria-describedby='textExample2'
+                required 
+                minLength={6}
+                maxLength={20}
                 />
                
 
@@ -73,21 +103,46 @@ function Register() {
                 type='password'
                 id='formTextExample2'
                 aria-describedby='textExample2'
+                required 
+                minLength={6}
+                maxLength={20}
                 />
 
+
+
+                  <div className="text-center pt-1 mb-5 pb-1">
+                    <MDBBtn type="submit" ripple={false} className="mb-4 w-100 gradient-custom-2">Sign Up</MDBBtn>
+                  </div>
+
+
+                    {/* UNE FOIS CONNECTE  */}
+                    <Modal show={showModal} onHide={handleCloseModal} centered>
+                      <Modal.Header closeButton   className="bg-success text-white">
+                        <Modal.Title>Welcome to Home Market!</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <p>You have been successfully registered. </p>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseModal}>
+                          Close
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+                    
                 </form>
 
             </div>
 
-            <div className="text-center pt-1 mb-5 pb-1">
-              <MDBBtn ripple={false} className="mb-4 w-100 gradient-custom-2">Sign Up</MDBBtn>
-            </div>
-
+        
             <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">
               <p className="mb-0">You already have an account?</p>
-              <MDBBtn outline className='mx-2' ripple={false} color='danger'>
-                Login
-              </MDBBtn>
+              
+              <Link to="/Login">           
+                <MDBBtn outline className='mx-2' ripple={false} color='danger'>
+                  Login
+                </MDBBtn>
+              </Link>
             </div>
 
           </div>
@@ -123,5 +178,10 @@ export default Register;
 
 
  
-    
-    
+    // **************   validation form :       ******************
+    // required = champ obligatoire
+    // pattern = valeur doit coorespondre  motif est [0-9]{10}    ou      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+
+    // maxlength minlength = pr MDP   minLength={6}   maxLength={20}
+
+    // Vous devez également effectuer des validations côté serveur pour garantir l'intégrité des données avant de les enregistrer dans votre base de données.

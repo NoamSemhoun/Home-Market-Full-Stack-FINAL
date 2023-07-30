@@ -50,8 +50,12 @@ function modifyColumn(tableName, column, signs){
     return util.customQuery(query);
 }
 
-function addForeignKey(constraint_name, tableName, ColumnName,foreignTableName,foreignColumnName){
-    const query = `ALTER TABLE ${tableName} ADD CONSTRAINT ${constraint_name} FOREIGN KEY (${ColumnName}) REFERENCES ${foreignTableName} (${foreignColumnName})`;
+function addForeignKey(constraint_name, tableName, ColumnName,foreignTableName,foreignColumnName, deleteCascade=false){
+    /**
+     * Add 'ON DELETE CASCADE' option - delete the parent of the forgien key when deleting the instance.
+     */
+    const deleteCascadeString = deleteCascade ? ' ON DELETE CASCADE' : '';
+    const query = `ALTER TABLE ${tableName} ADD CONSTRAINT ${constraint_name} FOREIGN KEY (${ColumnName}) REFERENCES ${foreignTableName} (${foreignColumnName})` + deleteCascadeString;
     return util.customQuery(query);
 }
 

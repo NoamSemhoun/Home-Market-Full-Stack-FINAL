@@ -1,6 +1,6 @@
 const express = require('express');
-const database = require('./../DataBase/index.js')
-const cors = require('cors')
+const database = require('./../DataBase/index.js');
+const cors = require('cors');
 
 
 // Initial Variables
@@ -21,7 +21,7 @@ const port = process.env.PORT || 3001;
 const databaseConfig = {
         host: "localhost",
         user: "root",
-        password: "NoaSQL26@",
+        password: "AvishayDEV19",//NoaSQL26@
         port: 3306,
         database: 'HomeMarketDB'
 }

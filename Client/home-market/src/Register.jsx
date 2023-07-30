@@ -23,6 +23,7 @@ function Register() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
   const [password, setPassword] = useState('');
   const [repeatpassword, setRepeatPassword] = useState('');
 
@@ -30,26 +31,29 @@ function Register() {
 
 
   const handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Bdikot in server + on jsx
 
     // send to server : 
 
-      const user = await postData("http://127.0.0.1:3001/users/signup",  
+      const user = await postData("http://127.0.0.1:3001/users/signup", 
       {
         fname : firstName,
         lname: lastName,
         email: email,
         phone: phone,
         address: address,
-        // city
+        city: city,
         password: password,
         'repeat-password' : repeatpassword 
         }, "user" ,'application/json' )
 
-
-    setShowModal(true);
+    if (!user.error)
+      setShowModal(true);
+    else
+      console.log(user); //fix here to show error message
   };
 
   const handleCloseModal = () => {
@@ -101,8 +105,14 @@ function Register() {
                     </MDBCol>
                 </MDBRow>
 
-                <MDBInput wrapperClass='mb-4' onChange={(e) => setAddress(e.target.value)} value={address} id='form6Example4' label='Address' required/>
-
+                <MDBRow  >
+                    <MDBCol>
+                    <MDBInput wrapperClass='mb-4' onChange={(e) => setCity(e.target.value)} id='form6Example8' label='City' required />
+                    </MDBCol>
+                    <MDBCol>
+                    <MDBInput wrapperClass='mb-4' onChange={(e) => setAddress(e.target.value)} value={address} id='form6Example7' label='Address' required />
+                    </MDBCol>
+                </MDBRow>
                 
                 <MDBCol size="auto">
                 <span id='textExample2' className='form-text'>

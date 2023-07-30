@@ -56,9 +56,6 @@ async function run(){
     error = await index.modifyColumn('items',{'category':'VARCHAR(50)'},['NOT NULL']);
     if (error.error) return console.log(error);
 
-    error = await index.modifyColumn('items',{'brandUrl':'TEXT'},['NOT NULL']);
-    if (error.error) return console.log(error);
-
     error = await index.modifyColumn('items',{'mainImage':'TEXT'},['NOT NULL']);
     if (error.error) return console.log(error);
 

@@ -1,15 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Button , Dropdown } from 'react-bootstrap';
+ import {   Dropdown } from 'react-bootstrap';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ModalAccount from '../My_Items';
-import {   
-  MDBIcon,
-  MDBBtn
- } from 'mdb-react-ui-kit';
+ 
  
  
   
@@ -19,14 +14,7 @@ const Header = () => {
 
 // pour gerrer le modal account : 
 
-const [showModal, setShowModal] = useState(false);
-
-const handleOpenModal = () => {
-  setShowModal(true);
-};
-
-
-
+ 
   return (
     <header className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">

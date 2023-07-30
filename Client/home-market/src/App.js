@@ -9,7 +9,7 @@ import Footer from './Shared Components/Footer.jsx';
  import Search from './Search';
  import Selling from './Selling';
  import Profil from './Profil.jsx';
- import My_Items from './My_Items.jsx';
+ import MyItems from './MyItems.jsx';
 
 
  import Register from './Register';
@@ -38,7 +38,7 @@ const App = () => {
 
         <Route  path="/Login" element={<Login />} />
         <Route  path="/Register" element={<Register />} />
-        <Route  path="/My_Items" element={<My_Items />} />
+        <Route  path="/MyItems" element={<MyItems />} />
  
         <Route  path="/Profil" element={<Profil />} />
 

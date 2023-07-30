@@ -63,7 +63,7 @@ router.post('/signup',async (req,res)=>{
 
     const {user} = req.body;
 
-    let error = util.validate(user, validateScheme, ['fname', 'lname','phone','address','city', 'email','password','repeat-password']);
+    let error = util.validate(user, validateScheme, ['fname', 'lname','phone','address', 'email','city','password','repeat-password']);
     if (error.error) return res.status(400).send(error);
     
     const userMetadata = {
@@ -81,13 +81,13 @@ router.post('/signup',async (req,res)=>{
         lname:user.lname,
         phone: user.phone,
         address: user.address,
-        city:user.city,
+        city: user.city,
         metadataId: metadata.insertId
     }
 
     let data = await database.insertToTable('users',[userData]);
     if (data.error){
-        // TODO: if not goes well should delete from usersMetadata (safe delete).
+        await database.removeFromTable('usersMetadata',{id:metadata.insertId})
         return res.status(404).send(data);
     }
 

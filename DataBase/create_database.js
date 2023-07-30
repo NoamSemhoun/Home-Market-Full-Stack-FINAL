@@ -3,7 +3,7 @@ const index = require('./index.js');
 const databaseConfig = {
     host: "localhost",
     user: "root",
-    password: "NoaSQL26@", // change password here
+    password: "NoaSQL26@", // change password here 
     port: 3306,
     database: 'HomeMarketDB'
 };

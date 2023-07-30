@@ -105,7 +105,7 @@ const Home = () => {
       {/* CHIFFRE ET SATS  en bas  */}
     
     
-    <div className="vr vr-blurry" style={{ height: '250px' }}></div><section class="text-center">
+    <div className="vr vr-blurry" style={{ height: '250px' }}></div><section className="text-center">
         <div className="row">
           <div className="col-lg-3 col-md-6 mb-5 mb-md-5 mb-lg-0 position-relative">
                         {/* icone */}

@@ -19,13 +19,13 @@ function Selling() {
         
         <div className="container">
 
-            <div class="container d-flex justify-content-center align-items-center vh-10 mt-5">
-                 <h1 class="text-center display-4  mb-4">Selling Your furniture</h1>
+            <div className="container d-flex justify-content-center align-items-center vh-10 mt-5">
+                 <h1 className="text-center display-4  mb-4">Selling Your furniture</h1>
                 
 
                  
             </div>       
-                      <h2 class="text-center display-7"> Post your listing with this Forms in 3 Steps </h2>
+                      <h2 className="text-center display-7"> Post your listing with this Forms in 3 Steps </h2>
                 
                    <MDBIcon icon='camera-retro' />
 

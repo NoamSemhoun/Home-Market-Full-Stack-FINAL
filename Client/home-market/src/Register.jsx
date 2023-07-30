@@ -130,7 +130,7 @@ function Register() {
                 onChange={(e) => setRepeatPassword(e.target.value)}
 
                 type='password'
-                id='formTextExample2'
+                id='formTextExample3'
                 aria-describedby='textExample2'
                 required 
                 minLength={6}
@@ -168,7 +168,7 @@ function Register() {
               <p className="mb-0">You already have an account?</p>
               
               <Link to="/Login">           
-                <MDBBtn outline className='mx-2' ripple={false} color='danger'>
+                <MDBBtn outline className='mx-2' color='danger'>
                   Login
                 </MDBBtn>
               </Link>
@@ -185,8 +185,8 @@ function Register() {
             <h4 className="mt-1 mb-5 pb-1">WELCOME to The Home Market Team</h4>
                 <br></br>   <br></br>  <br></br> 
 
-              <h4 class="mb-1">We are more than just a company</h4>
-              <p class="small mb-5">Welcome to our furniture emporium, where impeccable craftsmanship 
+              <h4 className="mb-1">We are more than just a company</h4>
+              <p className="small mb-5">Welcome to our furniture emporium, where impeccable craftsmanship 
               meets timeless elegance. Explore our curated collection of handpicked furnishings to create 
               stunning interiors that reflect your unique taste and personality. 
               Redefine your home with pieces that inspire beauty and harmony

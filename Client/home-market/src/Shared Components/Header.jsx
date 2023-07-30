@@ -82,7 +82,7 @@ const Header = () => {
 
         
          
-            {/* <button type="button" class="btn btn-primary" data-bs-toggle="modal"  onClick={handleOpenModal} >
+            {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal"  onClick={handleOpenModal} >
               
             </button> */}
 

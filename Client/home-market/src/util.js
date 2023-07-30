@@ -2,7 +2,8 @@
 import axios from 'axios';
 
 
-export async function postData(url, instance, dataType,extra={}) {
+
+export async function callServer(url, instance, dataType,extra={}) {
 
     try {
       
@@ -13,7 +14,22 @@ export async function postData(url, instance, dataType,extra={}) {
       return data;
     } catch (error) {
       return {error:error}
-    }
+    }
 };
 
+export async function postData(url, data, dataType) {
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({[dataType]:data})
+    });
+    return await response.json();
+  } catch (error) {
+    return {error:error}
+  }
+}
  

@@ -31,7 +31,6 @@ function Register() {
 
 
   const handleSubmit = async (event) => {
-  const handleSubmit = async (event) => {
     event.preventDefault();
 
 
@@ -222,4 +221,4 @@ export default Register;
 
     // maxlength minlength = pr MDP   minLength={6}   maxLength={20}
 
-    // Vous devez également effectuer des validations côté serveur pour garantir l'intégrité des données avant de les enregistrer dans votre base de données.
+    // Vous devez également effectuer des validations côté serveur pour garantir l'intégrité des données avant de les enregistrer dans votre base de donnée

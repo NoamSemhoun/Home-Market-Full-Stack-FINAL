@@ -74,11 +74,11 @@ function Profil() {
             </div>
                  <br></br>   <br></br>  <br></br> 
 
-              <h4 class="mb-1">We are more than just a company...</h4>
+              <h4 className="mb-1">We are more than just a company...</h4>
               <br></br>
               <br></br>
 
-              <p class="small mb-5">Welcome to our furniture emporium, where impeccable craftsmanship 
+              <p className="small mb-5">Welcome to our furniture emporium, where impeccable craftsmanship 
               meets timeless elegance. Explore our curated collection of handpicked furnishings to create 
               stunning interiors that reflect your unique taste and personality. 
               Redefine your home with pieces that inspire beauty and harmony

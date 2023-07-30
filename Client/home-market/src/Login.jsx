@@ -39,7 +39,7 @@ function App() {
 
 
             <div className="text-center pt-1 mb-5 pb-1">
-              <MDBBtn ripple={false} className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
+              <MDBBtn  className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
               <a className="text-muted" href="#!">Forgot password?</a>
             </div>
 
@@ -49,7 +49,7 @@ function App() {
 
 
               <Link to="/Register">           
-                <MDBBtn outline className='mx-2' ripple={false} color='danger'>
+                <MDBBtn outline className='mx-2' color='danger'>
                   Sign UP
                 </MDBBtn>
               </Link>
@@ -63,8 +63,8 @@ function App() {
           <div className="d-flex flex-column  justify-content-center gradient-custom-2 h-100 mb-4">
 
             <div className="text-white px-3 py-4 p-md-5 mx-md-4">
-              <h4 class="mb-4">We are more than just a company</h4>
-              <p class="small mb-0">Welcome to our furniture emporium, where impeccable craftsmanship 
+              <h4 className="mb-4">We are more than just a company</h4>
+              <p className="small mb-0">Welcome to our furniture emporium, where impeccable craftsmanship 
               meets timeless elegance. Explore our curated collection of handpicked furnishings to create 
               stunning interiors that reflect your unique taste and personality. 
               Redefine your home with pieces that inspire beauty and harmony

@@ -2,12 +2,12 @@
 import axios from 'axios';
 
 
-export async function postData(url, instance, dataType,extra={}) {
+export async function postData(url, instance, dataType, ContentType , extra={}) {
 
     try {
       
       const body = {[dataType]:instance,...extra};
-      const {data} = await axios.post(url,body);
+      const {data} = await axios.post(url,  body , {headers:{'Content-Type':ContentType}} );
 
       console.log(data);
       return data;

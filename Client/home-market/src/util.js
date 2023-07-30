@@ -8,7 +8,7 @@ export async function callServer(url, instance, dataType,extra={}) {
     try {
       
       const body = {[dataType]:instance,...extra};
-      const {data} = await axios.post(url,body);
+      const {data} = await axios.post(url,  body , {headers:{'Content-Type':ContentType}} );
 
       console.log(data);
       return data;

@@ -33,7 +33,6 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-
     // Bdikot in server + on jsx
 
     // send to server : 
@@ -48,7 +47,7 @@ function Register() {
         city: city,
         password: password,
         'repeat-password' : repeatpassword 
-        }, "user")
+        }, "user" ,'application/json' )
 
     if (!user.error)
       setShowModal(true);

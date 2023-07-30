@@ -44,11 +44,9 @@ async function getUserId(apiKey){
   // when call update, check that the apikey can change the userId
   let metadata = await database.getTable('usersMetadata',{apiKey:apiKey},['id']);
   if (metadata.error) return metadata;
-  metadata = metadata[0];
 
   let data = await database.getTable('users',{metadataId:metadata.id},['id']);
   if (data.error) return data;
-  data = data[0];
 
   return data.id;
 }

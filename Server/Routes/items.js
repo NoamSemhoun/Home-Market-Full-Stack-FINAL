@@ -8,11 +8,11 @@ const router = express.Router();
 
 const validateScheme = Joi.object({
     price: Joi.number().integer().min(1),
-    title: Joi.string().alphanum().min(3).max(80),
+    title: Joi.string().min(3).max(80),
     delivery: Joi.boolean(),
-    status: Joi.string().alphanum().min(3).max(20),
-    description: Joi.string().alphanum().max(400),
-    category: Joi.string().alphanum().min(3).max(50),
+    status: Joi.string().min(3).max(20),
+    description: Joi.string().max(400),
+    category: Joi.string().min(3).max(50),
     brandUrl: Joi.string(),
     mainImage: Joi.string()
 })
@@ -136,29 +136,31 @@ router.put('/:id', uploadImages, async (req,res)=>{
 
     // update all the images
     const {files} = req;
-    const instances = files['images'].map((image)=>{
-        return {
-            itemId:updateItem.id,
-            imageUrl:image['path']
-        } 
-    });
-    error = await database.getTable('images', {itemId:updateItem.id},lowerDataImages);
-    if (error.error) return res.status(404).send(error);
-
-    error.forEach((image)=>util.deleteFile(image.imageUrl));
-
-    error = await database.removeFromTable('images',{id:updateItem.id});
-    if (error.error) return res.status(404).send(error);
-
-    error = await database.insertToTable('images',instances);
-    if (error.error) return res.status(404).send(error);   
-
-    // update the main image
-    if ('main-image' in files){
-        let mainImage = files['main-image'][0]['path'];
-        util.deleteFile(updateItem.mainImage);
-        updateItem.mainImage = mainImage;
-    } 
+    if (files){
+        const instances = files['images'].map((image)=>{
+            return {
+                itemId:updateItem.id,
+                imageUrl:image['path']
+            } 
+        });
+        error = await database.getTable('images', {itemId:updateItem.id},lowerDataImages);
+        if (error.error) return res.status(404).send(error);
+    
+        error.forEach((image)=>util.deleteFile(image.imageUrl));
+    
+        error = await database.removeFromTable('images',{itemId:updateItem.id});
+        if (error.error) return res.status(404).send(error);
+    
+        error = await database.insertToTable('images',instances);
+        if (error.error) return res.status(404).send(error);   
+    
+        // update the main image
+        if ('main-image' in files){
+            let mainImage = files['main-image'][0]['path'];
+            util.deleteFile(updateItem.mainImage);
+            updateItem.mainImage = mainImage;
+        }
+    }
 
     // update in the database
     error = await database.updateTable('items',['id'],[updateItem]);
@@ -225,7 +227,7 @@ router.post('/upload', uploadImages, async (req,res)=>{
     // save images
     const {files} = req;
 
-    if (!('main-image' in files)) return res.status(404).send({error:'Main Image is Required!'});
+    if (!files || !('main-image' in files)) return res.status(404).send({error:'Main Image is Required!'});
     item.mainImage = files['main-image'][0]['path'];
 
     error = await database.insertToTable('items',[item])
@@ -248,5 +250,39 @@ router.post('/upload', uploadImages, async (req,res)=>{
     return res.send({data:item})
 });
 
+
+// מחיקת פריט לפי איידי
+router.delete('/:id', async (req,res)=>{
+    // validate access
+    const {id} = req.params;
+    const {apiKey} = req.body;
+    const userId = await util.getUserId(apiKey);
+    if (userId.error) return res.status(404).send(userId);
+
+    // check access for the item 
+    let oldItem = await database.getTable('items', {id:id});
+    if (oldItem.error) return res.status(404).send(oldItem);
+    if (oldItem.userId !== userId) return res.status(404).send({error:'Access Denied'});
+
+    // delete the images
+    error = await database.getTable('images', {itemId:oldItem.id},lowerDataImages);
+    if (error.error) return res.status(404).send(error);
+    
+    // add the main image
+    if (error instanceof Object) error = [error,{imageUrl:oldItem.mainImage}];
+    else error.push({imageUrl:oldItem.mainImage});
+
+    error.forEach((image)=>util.deleteFile(image.imageUrl));
+
+    error = await database.removeFromTable('images',{itemId:oldItem.id});
+    if (error.error) return res.status(404).send(error);
+
+    // delete the item
+    error = await database.removeFromTable('items',{id:oldItem.id});
+    if (error.error) return res.status(404).send(error);
+
+    return res.send({data:oldItem});
+
+})
 
 module.exports = router

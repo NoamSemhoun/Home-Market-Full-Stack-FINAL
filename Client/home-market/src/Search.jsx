@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button, Carousel } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
+// import Form from 'react-bootstrap/Form';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -20,10 +20,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
     MDBBtn
   } from "mdb-react-ui-kit";
 
-  import { useState } from 'react';
-  
-
-  import ModalAccount from './My_Items';
    
 
 

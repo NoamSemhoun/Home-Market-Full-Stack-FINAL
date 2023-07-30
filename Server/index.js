@@ -1,10 +1,14 @@
 const express = require('express');
 const database = require('./../DataBase/index.js')
+const cors = require('cors')
 
 
 // Initial Variables
 const app = express();
 app.use(express.json());
+
+app.use(cors());
+app.options('*',cors());
 
 const users = require('./Routes/users.js');
 const items = require('./Routes/items.js');

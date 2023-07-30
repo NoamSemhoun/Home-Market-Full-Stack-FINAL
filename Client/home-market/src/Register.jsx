@@ -29,7 +29,7 @@ function Register() {
   const [showModal, setShowModal] = useState(false);
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
 
@@ -37,7 +37,7 @@ function Register() {
 
     // send to server : 
 
-      const user = postData("http://127.0.0.1:3001/users/signup", 
+      const user = await postData("http://127.0.0.1:3001/users/signup",  
       {
         fname : firstName,
         lname: lastName,

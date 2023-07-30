@@ -1,15 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Button , Dropdown } from 'react-bootstrap';
+ import {   Dropdown } from 'react-bootstrap';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ModalAccount from '../ModalContext';
-import {   
-  MDBIcon,
-  MDBBtn
- } from 'mdb-react-ui-kit';
+ 
  
  
   
@@ -19,14 +14,7 @@ const Header = () => {
 
 // pour gerrer le modal account : 
 
-const [showModal, setShowModal] = useState(false);
-
-const handleOpenModal = () => {
-  setShowModal(true);
-};
-
-
-
+ 
   return (
     <header className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -112,9 +100,14 @@ const handleOpenModal = () => {
 
               <Dropdown.Menu>
                 {/* Ajoutez les éléments de la liste déroulante ici */}
-                <Dropdown.Item href="#Profile">⚙️ My Profile</Dropdown.Item>
-                <Dropdown.Item href="#Items">📦 My Items</Dropdown.Item>
-                <Dropdown.Item href="#LogOut">🚪 Log Out</Dropdown.Item>
+                <Dropdown.Item href="#Profile" as={Link} to="/profil" >
+                  ⚙️ My Profile
+                </Dropdown.Item>
+                <Dropdown.Item href="#My_Items" as={Link} to="/My_Items"   >📦 My Items</Dropdown.Item>
+
+                <Dropdown.Item href="#LogOut"
+                // logout
+                >🚪 Log Out</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
               

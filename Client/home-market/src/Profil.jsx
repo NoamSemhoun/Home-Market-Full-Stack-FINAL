@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { postData } from './util';
+ import { postData } from './util';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Shared Components/style.css';
@@ -16,7 +15,7 @@ import {
 
 
 
-function Register() {
+function Profil() {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -64,17 +63,43 @@ function Register() {
 
       <MDBRow>
 
-        <MDBCol col='6' className="mb-5">
-          <div className="d-flex flex-column">
+      <MDBCol col='6' className="mb-5">
+      <div className="d-flex flex-column justify-content-center   bg-primary h-100 mb-4">
+
+            <div className="text-white px-3 py-4  mx-md-4">
 
             <div className="text-center">
               <img src="https://img.freepik.com/premium-vector/chair-house-interior-vector-logo-design-minimalist_569344-500.jpg?w=740"
                 style={{width: '185px'}} alt="logo" />
             </div>
+                 <br></br>   <br></br>  <br></br> 
 
-            <p>Please Register with this forms to join us with your account :</p>
+              <h4 class="mb-1">We are more than just a company...</h4>
+              <br></br>
+              <br></br>
+
+              <p class="small mb-5">Welcome to our furniture emporium, where impeccable craftsmanship 
+              meets timeless elegance. Explore our curated collection of handpicked furnishings to create 
+              stunning interiors that reflect your unique taste and personality. 
+              Redefine your home with pieces that inspire beauty and harmony
+              </p>
+            </div>
+
+          </div>
+
+        </MDBCol>
+        <MDBCol col='6' className="mb-5">
+          <div className="d-flex flex-column">
+
+          <br></br>
+              {/* <h1 className="display-4 text-primary font-weight-bold"></h1> */}
+              <div className="container d-flex flex-column align-items-center justify-content-center ">
+                    <h4 className="mt-1  pb-1">Your Profil</h4>
+              </div>
+
+           
+            <p>Please Eddit Your Profile with this forms to your account :</p>
      
-
 
             <div className="container ">
 
@@ -140,17 +165,17 @@ function Register() {
 
 
                   <div className="text-center pt-1 mb-5 pb-1">
-                    <MDBBtn type="submit"  className="mb-4 w-100 gradient-custom-2">Sign Up</MDBBtn>
+                    <MDBBtn type="submit"  className="mb-4 w-100 ">Save Changes</MDBBtn>
                   </div>
 
 
                     {/* UNE FOIS CONNECTE  */}
                     <Modal show={showModal} onHide={handleCloseModal} centered>
                       <Modal.Header closeButton   className="bg-success text-white">
-                        <Modal.Title>Welcome to Home Market!</Modal.Title>
+                        <Modal.Title>YOUR PROFILE </Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
-                        <p>You have been successfully registered. </p>
+                        <p>Your modifications have been successfully registered. </p>
                       </Modal.Body>
                       <Modal.Footer>
                         <Button variant="secondary" onClick={handleCloseModal}>
@@ -164,38 +189,13 @@ function Register() {
             </div>
 
         
-            <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">
-              <p className="mb-0">You already have an account?</p>
-              
-              <Link to="/Login">           
-                <MDBBtn outline className='mx-2' ripple={false} color='danger'>
-                  Login
-                </MDBBtn>
-              </Link>
-            </div>
+           
 
           </div>
 
         </MDBCol>
 
-        <MDBCol col='6' className="mb-5">
-          <div className="d-flex flex-column  justify-content-center gradient-custom-2 h-100 mb-4">
 
-            <div className="text-white px-3 py-4  mx-md-4">
-            <h4 className="mt-1 mb-5 pb-1">WELCOME to The Home Market Team</h4>
-                <br></br>   <br></br>  <br></br> 
-
-              <h4 class="mb-1">We are more than just a company</h4>
-              <p class="small mb-5">Welcome to our furniture emporium, where impeccable craftsmanship 
-              meets timeless elegance. Explore our curated collection of handpicked furnishings to create 
-              stunning interiors that reflect your unique taste and personality. 
-              Redefine your home with pieces that inspire beauty and harmony
-              </p>
-            </div>
-
-          </div>
-
-        </MDBCol>
 
       </MDBRow>
 
@@ -203,7 +203,7 @@ function Register() {
   );
 }
 
-export default Register;
+export default Profil;
 
 
  

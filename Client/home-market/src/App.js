@@ -8,7 +8,8 @@ import Footer from './Shared Components/Footer.jsx';
  import Home from './Home';
  import Search from './Search';
  import Selling from './Selling';
- import ModalAcount from './ModalContext.jsx';
+ import Profil from './Profil.jsx';
+ import My_Items from './My_Items.jsx';
 
 
  import Register from './Register';
@@ -37,7 +38,11 @@ const App = () => {
 
         <Route  path="/Login" element={<Login />} />
         <Route  path="/Register" element={<Register />} />
-        <Route  path="/ModalAcount" element={<ModalAcount />} />
+        <Route  path="/My_Items" element={<My_Items />} />
+ 
+        <Route  path="/Profil" element={<Profil />} />
+
+
 
 
 

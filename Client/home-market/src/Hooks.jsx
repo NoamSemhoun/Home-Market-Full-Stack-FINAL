@@ -29,14 +29,14 @@ export function useLoginOut(url){
 
 
 export function useForm(){
-    const [formFilesData,setFormFilesData] = useState(new FormData());
-    const [formData,setFormData] = useState({})
-
+    const [formData,setFormData] = useState(new FormData())
 
     // Handler for handling form input changes
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
+
+        formData.set(name, value);
+        setFormData(formData);
     };
 
 
@@ -46,13 +46,13 @@ export function useForm(){
 
         // For file fields, you need to loop through files and append them to the form data
         for (let i = 0; i < files.length; i++) {
-            formFilesData.append(name, files[i]);
+            formData.append(name, files[i]);
         }
-        setFormFilesData(formData);
+        setFormData(formData);
 
     };
 
-    return {handleInputChange,handleFileChange,formData,formFilesData}
+    return {handleInputChange,handleFileChange,formData}
 }
 
 

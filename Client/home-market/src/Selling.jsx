@@ -17,28 +17,17 @@ import {
   } from 'mdb-react-ui-kit';
 
 function Selling() {
-    const {handleInputChange, handleFileChange, formData, formFilesData} = useForm();
+    const {handleInputChange, handleFileChange, formData} = useForm();
     const {loggedUser} = useContext(contextProvider);
 
     const handleSubmit = async (event)=>{
         event.preventDefault();
 
-        const combinedFormData = new FormData();
-
-        // Append data from your data object to the FormData
-        Object.entries(formData).forEach(([key, value]) => {
-          combinedFormData.append(key, value);
-        });
-    
-        // Append the selected files to the FormData
-        for (let i = 0; i < formFilesData.length; i++) {
-          combinedFormData.append('files', formFilesData[i]);
-        }
 
         const item = await callServer(
             `http://127.0.0.1:3001/items/upload`, 
             'post',
-            combinedFormData, 
+            formData, 
             "item",
             'multipart/form-data',
             {apiKey: loggedUser.apiKey}

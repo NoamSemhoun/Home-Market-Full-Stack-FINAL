@@ -1,7 +1,7 @@
-import React from 'react';
+import {React, useContext} from 'react';
 import { Link } from 'react-router-dom';
  import {   Dropdown } from 'react-bootstrap';
-
+import contextProvider from '../Context';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
  
@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Header = () => {
 
-
+  const {loggedUser} = useContext(contextProvider);
 // pour gerrer le modal account : 
 
  
@@ -68,32 +68,7 @@ const Header = () => {
         </ul>
 
             {/* module de connenexion */}
-        <div className="navbar-nav border">
-          <a className="nav-link d-flex" href="/Login">
-              <span> Sign In</span>
-          </a>
-          <a className="nav-link" href="/Login">
-              <div>
-                <img style={{ width: "30px", height: "auto" }} alt="Furniture Logo" 
-                src="https://w7.pngwing.com/pngs/240/151/png-transparent-user-account-profile-elasto-ecommerce-ui-flat-outline-icons-icon.png" />
-              </div>  </a>
-          <a className="nav-link" href="/Register">Sign Up</a>
-        </div>
-
-        
-         
-            {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal"  onClick={handleOpenModal} >
-              
-            </button> */}
-
-            {/* <MDBBtn onClick={handleOpenModal}>
-              Account
-            </MDBBtn> */}
-
-            {/* {showModal && <ModalAccount closeModal={() => setShowModal(false)} />} */}
-
-
-            <Dropdown>
+        {loggedUser ? <Dropdown>
               <Dropdown.Toggle variant="light border" id="dropdown-basic">
                 Account👤
               </Dropdown.Toggle>
@@ -109,7 +84,32 @@ const Header = () => {
                 // logout
                 >🚪 Log Out</Dropdown.Item>
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> :
+            <div className="navbar-nav border">
+            <a className="nav-link d-flex" href="/Login">
+                <span> Sign In</span>
+            </a>
+            <a className="nav-link" href="/Login">
+                <div>
+                  <img style={{ width: "30px", height: "auto" }} alt="Furniture Logo" 
+                  src="https://w7.pngwing.com/pngs/240/151/png-transparent-user-account-profile-elasto-ecommerce-ui-flat-outline-icons-icon.png" />
+                </div>  </a>
+            <a className="nav-link" href="/Register">Sign Up</a>
+          </div>
+            }
+        
+
+        
+         
+            {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal"  onClick={handleOpenModal} >
+              
+            </button> */}
+
+            {/* <MDBBtn onClick={handleOpenModal}>
+              Account
+            </MDBBtn> */}
+
+            {/* {showModal && <ModalAccount closeModal={() => setShowModal(false)} />} */}
               
    
  

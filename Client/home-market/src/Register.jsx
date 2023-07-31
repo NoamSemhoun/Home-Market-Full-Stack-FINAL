@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { postData } from './util';
+import contextProvider from './Context';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Shared Components/style.css';
@@ -20,18 +21,20 @@ function Register() {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatpassword, setRepeatPassword] = useState('');
 
   const [showModal, setShowModal] = useState(false);
+  const {loggedUser,setLoggedUser} = useContext(contextProvider);
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
 
     // Bdikot in server + on jsx
 
@@ -47,10 +50,12 @@ function Register() {
         city: city,
         password: password,
         'repeat-password' : repeatpassword 
-        }, "user" ,'application/json' )
+        }, "user")
 
-    if (!user.error)
+    if (!user.error){
+      setLoggedUser(user.data);
       setShowModal(true);
+    }
     else
       console.log(user); //fix here to show error message
   };

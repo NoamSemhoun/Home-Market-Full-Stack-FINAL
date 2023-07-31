@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { postData } from './util';
+import contextProvider from './Context';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Shared Components/style.css';
@@ -12,10 +14,28 @@ import {
   MDBInput
 }from 'mdb-react-ui-kit';
 
-// const user = postData("http://127.0.0.1:3001/users/login", {email:email, password }, "user")
-
-
 function App() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const {loggedUser,setLoggedUser} = useContext(contextProvider);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const user = await postData('http://127.0.0.1:3001/users/login',{
+      email:email,
+      password:password
+    },
+    'user');
+    
+    if (!user.error){
+      setLoggedUser(user.data);
+      console.log(user.data);
+    }
+
+  };
+
   return (
     <MDBContainer className="">
 
@@ -31,29 +51,31 @@ function App() {
             </div>
 
             <p>Please login to your account :</p>
-            
 
 
-            <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'/>
-            <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'/>
-
-
-            <div className="text-center pt-1 mb-5 pb-1">
-              <MDBBtn  className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
-              <a className="text-muted" href="#!">Forgot password?</a>
-            </div>
-
-            <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">
-              <p className="mb-0">Don't have an account?</p>
+            <form onSubmit={handleSubmit}>
+                <MDBInput value={email}    onChange={(e) => setEmail(e.target.value)} wrapperClass='mb-4' label='Email address' id='form1' type='email'/>
+                <MDBInput value={password} onChange={(e) => setPassword(e.target.value)} wrapperClass='mb-4' label='Password' id='form2' type='password'/>
               
 
 
-              <Link to="/Register">           
-                <MDBBtn outline className='mx-2' color='danger'>
-                  Sign UP
-                </MDBBtn>
-              </Link>
-            </div>
+                <div className="text-center pt-1 mb-5 pb-1">
+                  <MDBBtn  type="submit"  className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
+                  <a className="text-muted" href="#!">Forgot password?</a>
+                </div>
+              </form>
+              <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">
+                <p className="mb-0">Don't have an account?</p>
+                
+
+
+                <Link to="/Register">           
+                  <MDBBtn outline className='mx-2' color='danger'>
+                    Sign UP
+                  </MDBBtn>
+                </Link>
+              </div>
+
 
           </div>
 

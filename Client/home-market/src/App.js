@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import contextProvider from './Context.jsx';
 
@@ -15,13 +15,14 @@ import Footer from './Shared Components/Footer.jsx';
 
  import Register from './Register';
  import Login from './Login';
+import { useLocalStorage } from './Hooks.jsx';
 
  
 
 // import VendreMeuble from './VendreMeuble';
 
 const App = () => {
-  const [loggedUser,setLoggedUser] = useState(undefined);
+  const [loggedUser,setLoggedUser] = useLocalStorage('user');
   
   const context = {
       loggedUser: loggedUser,

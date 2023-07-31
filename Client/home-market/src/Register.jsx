@@ -1,8 +1,7 @@
-import React, { useState,useContext } from 'react';
+import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { postData } from './util';
-import contextProvider from './Context';
+import { useLoginOut } from './Hooks';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Shared Components/style.css';
@@ -29,7 +28,7 @@ function Register() {
   const [repeatpassword, setRepeatPassword] = useState('');
 
   const [showModal, setShowModal] = useState(false);
-  const {loggedUser,setLoggedUser} = useContext(contextProvider);
+  const {login} = useLoginOut("http://127.0.0.1:3001/users/signup");
 
 
   const handleSubmit = async (event) => {
@@ -40,8 +39,7 @@ function Register() {
 
     // send to server : 
 
-      const user = await postData("http://127.0.0.1:3001/users/signup", 
-      {
+      const user = {
         fname : firstName,
         lname: lastName,
         email: email,
@@ -50,14 +48,13 @@ function Register() {
         city: city,
         password: password,
         'repeat-password' : repeatpassword 
-        }, "user")
+        }
 
-    if (!user.error){
-      setLoggedUser(user.data);
+    if (login(user)){
       setShowModal(true);
     }
     else
-      console.log(user); //fix here to show error message
+      console.log('Fail'); //fix here to show error message
   };
 
   const handleCloseModal = () => {

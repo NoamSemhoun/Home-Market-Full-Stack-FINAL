@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { postData } from './util';
-import contextProvider from './Context';
+import { useLoginOut } from './Hooks';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Shared Components/style.css';
@@ -18,21 +17,22 @@ function App() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {loggedUser,setLoggedUser} = useContext(contextProvider);
+  const {login} = useLoginOut('http://127.0.0.1:3001/users/login');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const user = await postData('http://127.0.0.1:3001/users/login',{
+    
+    const user = {
       email:email,
       password:password
-    },
-    'user');
-    
-    if (!user.error){
-      setLoggedUser(user.data);
-      console.log(user.data);
+    };
+
+    if (login(user)){
+      console.log('Login')
+    }else{
+      console.log('Fail')
     }
+
 
   };
 

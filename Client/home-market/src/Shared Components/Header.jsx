@@ -1,9 +1,9 @@
-import {React, useContext} from 'react';
+import {React} from 'react';
 import { Link } from 'react-router-dom';
  import {   Dropdown } from 'react-bootstrap';
-import contextProvider from '../Context';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useLoginOut } from '../Hooks';
  
  
  
@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Header = () => {
 
-  const {loggedUser} = useContext(contextProvider);
+  const {loggedUser,logout} = useLoginOut();
 // pour gerrer le modal account : 
 
  
@@ -68,7 +68,8 @@ const Header = () => {
         </ul>
 
             {/* module de connenexion */}
-        {loggedUser ? <Dropdown>
+        {loggedUser ? 
+        <Dropdown>
               <Dropdown.Toggle variant="light border" id="dropdown-basic">
                 Account👤
               </Dropdown.Toggle>
@@ -80,11 +81,12 @@ const Header = () => {
                 </Dropdown.Item>
                 <Dropdown.Item href="#My_Items" as={Link} to="/My_Items"   >📦 My Items</Dropdown.Item>
 
-                <Dropdown.Item href="#LogOut"
+                <Dropdown.Item href="#LogOut" onClick={logout}
                 // logout
                 >🚪 Log Out</Dropdown.Item>
               </Dropdown.Menu>
-            </Dropdown> :
+            </Dropdown> 
+            :
             <div className="navbar-nav border">
             <a className="nav-link d-flex" href="/Login">
                 <span> Sign In</span>

@@ -9,12 +9,9 @@ const methods = {
 }
 
 
-export async function callServer(url,method, instance, dataType, ContentType = 'application/json', extra = {}) {
+export async function callServer(url, method, body, ContentType = 'application/json') {
     try {
-    
-      const body = {[dataType]:instance, ...extra};
-      const {data} = await methods[method.toUpperCase()](url,  body , {headers:{'Content-Type':ContentType}} );
-
+      const {data} = await methods[method.toUpperCase()](url, body , {headers:{'Content-Type':ContentType}} );
       return data;
     } catch (error) {
       return {error:error}

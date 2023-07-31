@@ -9,7 +9,7 @@ export function useLoginOut(url){
     const navigate = useNavigate();
 
     const login = async (user) =>{
-        const {data} = await callServer(url,'post',user,'user');
+        const {data} = await callServer(url,'post',{user:user});
         // console.log(data)
 
         if (!user.error){
@@ -29,31 +29,35 @@ export function useLoginOut(url){
 
 
 export function useForm(){
-    const [formData,setFormData] = useState(new FormData())
+    const [formFilesData, setFormFilesData] = useState(new FormData());
+    const [formData,setFormData] = useState({});
+
 
     // Handler for handling form input changes
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
-
-        formData.set(name, value);
-        setFormData(formData);
+        const { name, type, checked, value } = event.target;
+        const inputValue = type === 'checkbox' ? checked : value;
+        
+        setFormData({ ...formData, [name]: inputValue });
     };
 
 
     // Handler for handling file input changes
     const handleFileChange = (event) => {
         const { name, files } = event.target;
-
+    
         // For file fields, you need to loop through files and append them to the form data
         for (let i = 0; i < files.length; i++) {
-            formData.append(name, files[i]);
+            formFilesData.append(name, files[i]);
         }
-        setFormData(formData);
-
+    
+        // Call setFormFilesData with the updated FormData object
+        setFormFilesData(formFilesData);
     };
 
-    return {handleInputChange,handleFileChange,formData}
+    return {handleInputChange,handleFileChange,formData,formFilesData}
 }
+
 
 
 export function useLocalStorage(key){

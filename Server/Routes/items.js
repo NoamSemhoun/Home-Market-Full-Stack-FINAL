@@ -20,7 +20,7 @@ const validateScheme = Joi.object({
 
 const lowerDataItems = ['id', 'price', 'title','uploadDate','delivery','mainImage'];
 const lowerDataImages = ['imageUrl'];
-const accessFields = ['price','title','delivery', 'status','description','category','brandUrl']
+const accessFields = ['price','title','delivery', 'status','description','category']
 
 const uploadImages = upload.fields([
     {name:'images',maxCount: 9},
@@ -216,7 +216,7 @@ router.post('/upload', uploadImages, async (req,res)=>{
     if (userId.error) return res.status(404).send(userId);
 
     // validate data
-    const {item} = req.body;
+    const item = JSON.parse(req.body.item);
     let error = util.validate(item, validateScheme, accessFields);
     if (error.error) return res.status(400).send(error);
 

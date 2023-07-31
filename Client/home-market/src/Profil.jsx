@@ -41,7 +41,7 @@ function Profil() {
 
       const user = await callServer(`http://127.0.0.1:3001/users/${loggedUser.id}`, 
       'put',
-      {
+      {user:{
         apiKey: loggedUser.apiKey,
         fname : firstName,
         lname: lastName,
@@ -51,7 +51,7 @@ function Profil() {
         city: city,
         password: password,
         'repeat-password' : repeatpassword 
-        }, "user");
+        }});
 
         if (!user.error){
           setShowModal(true);

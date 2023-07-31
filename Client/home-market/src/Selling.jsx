@@ -6,7 +6,8 @@ import { callServer } from './util';
 
 import {
     MDBRow,
-    MDBAccordion, MDBAccordionItem, 
+    MDBAccordion,
+    MDBAccordionItem, 
     MDBCol,
     MDBInput,
     MDBIcon,
@@ -17,21 +18,21 @@ import {
   } from 'mdb-react-ui-kit';
 
 function Selling() {
-    const {handleInputChange, handleFileChange, formData} = useForm();
+    const {handleInputChange, handleFileChange, formData,formFilesData} = useForm();
     const {loggedUser} = useContext(contextProvider);
 
     const handleSubmit = async (event)=>{
         event.preventDefault();
 
+        formFilesData.set('item',JSON.stringify(formData));
+        formFilesData.set('apiKey',loggedUser.apiKey);
+
 
         const item = await callServer(
             `http://127.0.0.1:3001/items/upload`, 
             'post',
-            formData, 
-            "item",
-            'multipart/form-data',
-            {apiKey: loggedUser.apiKey}
-
+            formFilesData, 
+            'multipart/form-data'
         );
 
         if (!item.error){

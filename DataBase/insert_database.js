@@ -19,6 +19,8 @@ async function run(){
     console.log(error);
     if (error.error) return;
 
+    error = await index.modifyColumn('items',{'brandUrl':'VARCHAR(80)'},[]);
+    return console.log(error);
 
     // default user
     error = await index.insertToTable('usersMetadata',[

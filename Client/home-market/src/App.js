@@ -1,5 +1,6 @@
-import React from 'react';
+import {React} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import contextProvider from './Context.jsx';
 
 import Header from './Shared Components/Header.jsx';
 import Footer from './Shared Components/Footer.jsx';
@@ -14,53 +15,63 @@ import Footer from './Shared Components/Footer.jsx';
 
  import Register from './Register';
  import Login from './Login';
+import { useLocalStorage } from './Hooks.jsx';
 
  
 
 // import VendreMeuble from './VendreMeuble';
 
 const App = () => {
+  const [loggedUser,setLoggedUser] = useLocalStorage('user');
+  
+  const context = {
+      loggedUser: loggedUser,
+      setLoggedUser
+  }
   return (
-    <Router>
-      <Header />
-      <Routes>
+    <contextProvider.Provider value={context}>
+      <Router>
+        <Header />
+        <Routes>
 
-      {/* /* composant Switch de React Router 
+        {/* /* composant Switch de React Router 
 
-      SERT A CREER LE PATH : lier le path de la page à une page jsx de mon code 
+        SERT A CREER LE PATH : lier le path de la page à une page jsx de mon code 
 
-      pour retourner les composants Home, Search et VendreMeuble en fonction de l'URL courante.*/}
-        
-        {/* To return to the jsx file  */}
-        <Route  path="/" element={<Home />} />
-        <Route  path="/Search" element={<Search />} />
-        <Route  path="/Selling" element={<Selling />} />
+        pour retourner les composants Home, Search et VendreMeuble en fonction de l'URL courante.*/}
+          
+          {/* To return to the jsx file  */}
+          <Route  path="/" element={<Home />} />
+          <Route  path="/Search" element={<Search />} />
+          <Route  path="/Selling" element={<Selling />} />
 
-        <Route  path="/Login" element={<Login />} />
-        <Route  path="/Register" element={<Register />} />
-        <Route  path="/MyItems" element={<MyItems />} />
- 
-        <Route  path="/Profil" element={<Profil />} />
-
-
-
+          <Route  path="/Login" element={<Login />} />
+          <Route  path="/Register" element={<Register />} />
+          <Route  path="/MyItems" element={<MyItems />} />
+  
+          <Route  path="/Profil" element={<Profil />} />
 
 
-        
-
-        {/* exact path si c exactement la bonne url  */}
 
 
-        {/* 
-        // autre syntax :
-        {<Route exact path="/" component={Home} /> }
-        {<Route exact path="./Search" component={Search} /> */}
-        {/* <Route path="/vendre" component={VendreMeuble} /> */} 
+
+          
+
+          {/* exact path si c exactement la bonne url  */}
 
 
-      </Routes>
-     <Footer />
-    </Router>
+          {/* 
+          // autre syntax :
+          {<Route exact path="/" component={Home} /> }
+          {<Route exact path="./Search" component={Search} /> */}
+          {/* <Route path="/vendre" component={VendreMeuble} /> */} 
+
+
+        </Routes>
+      <Footer />
+      </Router>
+    </contextProvider.Provider>
+  
   );
 };
 

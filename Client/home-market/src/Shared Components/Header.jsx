@@ -1,9 +1,9 @@
-import React from 'react';
+import {React} from 'react';
 import { Link } from 'react-router-dom';
  import {   Dropdown } from 'react-bootstrap';
 
-
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useLoginOut } from '../Hooks';
  
  
  
@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Header = () => {
 
-
+  const {loggedUser,logout} = useLoginOut();
 // pour gerrer le modal account : 
 
  
@@ -70,17 +70,38 @@ const Header = () => {
         </ul>
 
             {/* module de connenexion */}
-        <div className="navbar-nav border">
-          <a className="nav-link d-flex" href="/Login">
-              <span> Sign In</span>
-          </a>
-          <a className="nav-link" href="/Login">
-              <div>
-                <img style={{ width: "30px", height: "auto" }} alt="Furniture Logo" 
-                src="https://w7.pngwing.com/pngs/240/151/png-transparent-user-account-profile-elasto-ecommerce-ui-flat-outline-icons-icon.png" />
-              </div>  </a>
-          <a className="nav-link" href="/Register">Sign Up</a>
-        </div>
+        {loggedUser ? 
+        <Dropdown>
+              <Dropdown.Toggle variant="light border" id="dropdown-basic">
+                Account👤
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {/* Ajoutez les éléments de la liste déroulante ici */}
+                <Dropdown.Item href="#Profile" as={Link} to="/profil" >
+                  ⚙️ My Profile
+                </Dropdown.Item>
+                <Dropdown.Item href="#My_Items" as={Link} to="/My_Items"   >📦 My Items</Dropdown.Item>
+
+                <Dropdown.Item href="#LogOut" onClick={logout}
+                // logout
+                >🚪 Log Out</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown> 
+            :
+            <div className="navbar-nav border">
+            <a className="nav-link d-flex" href="/Login">
+                <span> Sign In</span>
+            </a>
+            <a className="nav-link" href="/Login">
+                <div>
+                  <img style={{ width: "30px", height: "auto" }} alt="Furniture Logo" 
+                  src="https://w7.pngwing.com/pngs/240/151/png-transparent-user-account-profile-elasto-ecommerce-ui-flat-outline-icons-icon.png" />
+                </div>  </a>
+            <a className="nav-link" href="/Register">Sign Up</a>
+          </div>
+            }
+        
 
         
          
@@ -93,25 +114,6 @@ const Header = () => {
             </MDBBtn> */}
 
             {/* {showModal && <ModalAccount closeModal={() => setShowModal(false)} />} */}
-
-
-            <Dropdown>
-              <Dropdown.Toggle variant="light border" id="dropdown-basic">
-                Account👤
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                {/* Ajoutez les éléments de la liste déroulante ici */}
-                <Dropdown.Item href="#Profile" as={Link} to="/profil" >
-                  ⚙️ My Profile
-                </Dropdown.Item>
-                <Dropdown.Item href="#My_Items" as={Link} to="/My_Items"   >📦 My Items</Dropdown.Item>
-
-                <Dropdown.Item href="#LogOut"
-                // logout
-                >🚪 Log Out</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
               
    
  

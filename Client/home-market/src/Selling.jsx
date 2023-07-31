@@ -1,6 +1,8 @@
-import React from 'react';
+import {React, useContext} from 'react';
 import Form from 'react-bootstrap/Form';
-
+import { useForm } from './Hooks';
+import contextProvider from './Context';
+import { callServer } from './util';
 
 import {
     MDBRow,
@@ -15,6 +17,41 @@ import {
   } from 'mdb-react-ui-kit';
 
 function Selling() {
+    const {handleInputChange, handleFileChange, formData, formFilesData} = useForm();
+    const {loggedUser} = useContext(contextProvider);
+
+    const handleSubmit = async (event)=>{
+        event.preventDefault();
+
+        const combinedFormData = new FormData();
+
+        // Append data from your data object to the FormData
+        Object.entries(formData).forEach(([key, value]) => {
+          combinedFormData.append(key, value);
+        });
+    
+        // Append the selected files to the FormData
+        for (let i = 0; i < formFilesData.length; i++) {
+          combinedFormData.append('files', formFilesData[i]);
+        }
+
+        const item = await callServer(
+            `http://127.0.0.1:3001/items/upload`, 
+            'post',
+            combinedFormData, 
+            "item",
+            'multipart/form-data',
+            {apiKey: loggedUser.apiKey}
+
+        );
+
+        if (!item.error){
+            console.log(item.data);
+        }else{
+          console.log(item.error);
+        }
+    }
+
     return (
         
         <div className="container">
@@ -45,12 +82,15 @@ function Selling() {
                             // id='validationCustom02'
                             // required
                              id='form6Example1'
-                               label='Tittle' />
+                               label='Tittle' 
+                               onChange={handleInputChange}
+                               name='title'
+                               />
                             </MDBCol> 
 
                             <MDBCol size="4" >
-                             <Form.Select label='Category ' size="lg"  >
-                                  <option>Select Category </option> 
+                             <Form.Select label='Category ' size="lg" onChange={handleInputChange} name='category'>
+                                  <option value={''}>Select Category </option> 
                                   {/* mettre par default  */}
                                 <option>Sofa </option>
                                 <option>Bed </option>
@@ -63,7 +103,7 @@ function Selling() {
 
                             <MDBCol size="4">
                                 <MDBInputGroup size="lg"   textAfter={['.00','$' ]}>
-                                    <input className='form-control' type='number' />
+                                    <input className='form-control' type='number' onChange={handleInputChange} name='price'/>
                                 </MDBInputGroup>
                                 Price
                             </MDBCol>
@@ -81,15 +121,15 @@ function Selling() {
 
                             id='form6Example1' label='Brand Name' /> */}
 
-                            <MDBInput wrapperClass='mb-4' id='form6Example3' label='URL Brand ' />
+                            <MDBInput wrapperClass='mb-4' id='form6Example3' label='URL Brand ' onChange={handleInputChange} name='brandUrl'/>
 
                             </MDBCol>
 
 
 
                             <MDBCol size="4" >
-                            <Form.Select label='Category '       size="lg"  >
-                                <option>Select State Condition </option> 
+                            <Form.Select label='Category ' size="lg"  onChange={handleInputChange} name='status'>
+                                <option value={''}>Select State Condition </option> 
                                 {/* mettre par default  */}
                                 <option>New </option>
                                 <option>Excellent / Like New  </option>
@@ -120,6 +160,8 @@ function Selling() {
                                         type="checkbox"
                                         id="formSwitch"
                                         defaultChecked
+                                        onChange={handleInputChange}
+                                        name='delivery'
                                         />
                                         <label className="form-check-label fs-4 align-middle" htmlFor="formSwitch">
 
@@ -134,9 +176,9 @@ function Selling() {
 
 
 
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1" >
                             <Form.Label>Description area</Form.Label>
-                            <Form.Control as="textarea" rows={3}    placeholder=" Dimension, date, negociable .... "/>
+                            <Form.Control as="textarea" rows={3}  name='description'  placeholder=" Dimension, date, negociable .... " onChange={handleInputChange}/>
                         </Form.Group>                        
                         
 
@@ -157,6 +199,7 @@ function Selling() {
 
                             textTag='label'
                             textProps={{ htmlFor: 'inputGroupFile01' }}
+                            onChange={handleFileChange}
                         >
                              
                         <input name="main-image" className='form-control' type='file' id='inputGroupFile01' />
@@ -165,7 +208,7 @@ function Selling() {
                            
                         </MDBInputGroup>
                     
-                        <Form.Group controlId="formImages">
+                        <Form.Group controlId="formImages" onChange={handleFileChange}>
                             <Form.Label>Upload other Images</Form.Label>
                             <Form.Control name="images" type="file" multiple  />
                         </Form.Group>
@@ -173,7 +216,7 @@ function Selling() {
                     </MDBAccordionItem>
                     <MDBAccordionItem collapseId={3} headerTitle={<><MDBIcon fas icon="question-circle" /> &nbsp; #3  Personnal Information </>}>
                         
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <MDBRow className='mb-4'>
                             <MDBCol>
                             <MDBInput 
@@ -204,6 +247,10 @@ function Selling() {
                         <MDBInput wrapperClass='mb-4' id='form6Example4' label='Address' />
                                
 
+                        <MDBInput wrapperClass='mb-4' type='email' id='form6Example5' label='Email' />
+                        <MDBInput wrapperClass='mb-4' type='tel' id='form6Example6' label='Phone' />
+
+                        <MDBInput wrapperClass='mb-4' textarea="true" id='form6Example7' rows={4} label='Additional information' />
 
                         {/* <MDBCheckbox
                             wrapperClass='d-flex justify-content-center mb-4'

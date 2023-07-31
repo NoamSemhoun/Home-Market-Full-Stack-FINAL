@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Modal, Button } from 'react-bootstrap';
- import { postData } from './util';
+import contextProvider from './Context';
+import { callServer } from './util';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Shared Components/style.css';
@@ -22,13 +23,15 @@ function Profil() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
   const [password, setPassword] = useState('');
   const [repeatpassword, setRepeatPassword] = useState('');
 
   const [showModal, setShowModal] = useState(false);
+  const {loggedUser} = useContext(contextProvider);
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
 
@@ -36,21 +39,25 @@ function Profil() {
 
     // send to server : 
 
-      const user = postData("http://127.0.0.1:3001/users/signup", 
+      const user = await callServer(`http://127.0.0.1:3001/users/${loggedUser.id}`, 
+      'put',
       {
+        apiKey: loggedUser.apiKey,
         fname : firstName,
         lname: lastName,
         email: email,
         phone: phone,
         address: address,
-        // city
+        city: city,
         password: password,
         'repeat-password' : repeatpassword 
-        }, "user")
+        }, "user");
 
-          console.log(user);
-
-    setShowModal(true);
+        if (!user.error){
+          setShowModal(true);
+        }else{
+          console.log(user.error)
+        }
   };
 
   const handleCloseModal = () => {
@@ -128,8 +135,14 @@ function Profil() {
                     </MDBCol>
                 </MDBRow>
 
-                <MDBInput wrapperClass='mb-4' onChange={(e) => setAddress(e.target.value)} value={address} id='form6Example4' label='Address' required/>
-
+                <MDBRow  >
+                    <MDBCol>
+                    <MDBInput wrapperClass='mb-4' onChange={(e) => setCity(e.target.value)} id='form6Example8' label='City' required />
+                    </MDBCol>
+                    <MDBCol>
+                    <MDBInput wrapperClass='mb-4' onChange={(e) => setAddress(e.target.value)} value={address} id='form6Example7' label='Address' required />
+                    </MDBCol>
+                </MDBRow>
                 
                 <MDBCol size="auto">
                 <span id='textExample2' className='form-text'>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { postData } from './util';
+import { useLoginOut } from './Hooks';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Shared Components/style.css';
@@ -28,6 +28,7 @@ function Register() {
   const [repeatpassword, setRepeatPassword] = useState('');
 
   const [showModal, setShowModal] = useState(false);
+  const {login} = useLoginOut("http://127.0.0.1:3001/users/signup");
   const [showModalError, setShowModalError] = useState(false);
 
 
@@ -35,12 +36,12 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+
     // Bdikot in server + on jsx
 
     // send to server : 
 
-      const user = await postData("http://127.0.0.1:3001/users/signup", 
-      {
+      const user = {
         fname : firstName,
         lname: lastName,
         email: email,
@@ -49,10 +50,11 @@ function Register() {
         city: city,
         password: password,
         'repeat-password' : repeatpassword 
-        }, "user" ,'application/json' )
+        }
 
-    if (!user.error)
+    if (login(user)){
       setShowModal(true);
+    }
     else
       setShowModalError(true); //fix here to show error message
   };
@@ -172,7 +174,7 @@ function Register() {
 
                     <Modal show={showModalError} onHide={handleCloseModal} centered>
                       <Modal.Header closeButton   className="bg-danger text-white">
-                        <Modal.Title>Error ...</Modal.Title>
+                        <Modal.Title>Error</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                         <p>Registration failed. </p>

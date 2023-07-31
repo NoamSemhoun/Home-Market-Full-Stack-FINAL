@@ -1,14 +1,10 @@
-Have To:✅
-אם הרשמה לא הצליחה אז להציג שגיאה✅
-להשאיר רק את Home1 ואת Search2✅
-להוסיף עמוד של נדרשת התחברות✅
-לשדרג את הfooter✅
-להכין את הלוגו✅
-להוריד create account✅
-להוריד Additional information✅
-להוסיף עוד אינפורמציה בעמוד הראשי✅
-- About us✅
-- לשים קצת מודעות✅
+Have To:
+לבנות דף של מוצרים שלי
+לתקן את הגדלים של המוצרים בsearch
+לתקן אנגלית באתר
+לעשות פילטרים בsearch
+להוסיף כפתור next במכירת מוצר
+לתקן את הערך של delivery הוא לא מתעדכן, רק התצוגה מתעדכנת
 
 Mybee:
 לעשות שהכפתור לא יקפוץ בהרשמה ובהתחברות
@@ -18,7 +14,6 @@ Mybee:
 
 AVISHAY:
 להוסיף נתונים עם טסטים לpath
-להוסיף context של משתמש מחובר
 לעשות קובץ הרצה עם נתונים
 לחבר את כל הסרבר עם הלקוח
 
@@ -27,4 +22,6 @@ AVISHAY:
 After the connexion : Go to Home page, print Account , delete the form
 
 לבנות דף של מוצרים שלי Serch + selling
-if not connected : code la page : "veuillez vous connecter svp"
+if not connected : code la page : "veuillez vous connecter svp"בדיקה לעדכון משתמש
+לעשות קריאה לסרבר + בדיקה (אחרי מחיקת משתמש)
+לעשות ערך התחלתי לuseForm

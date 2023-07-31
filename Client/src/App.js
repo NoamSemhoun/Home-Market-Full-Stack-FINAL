@@ -11,6 +11,7 @@ import Footer from './Shared Components/Footer.jsx';
  import Selling from './Selling';
  import Profil from './Profil.jsx';
  import MyItems from './MyItems.jsx';
+ import PleaseLogin from './PleaseLogin.jsx';
 
 
  import Register from './Register';
@@ -43,13 +44,13 @@ const App = () => {
           {/* To return to the jsx file  */}
           <Route  path="/" element={<Home />} />
           <Route  path="/Search" element={<Search />} />
-          <Route  path="/Selling" element={<Selling />} />
+          <Route  path="/Selling" element={loggedUser ? <Selling /> : <PleaseLogin/>} />
 
-          <Route  path="/Login" element={<Login />} />
-          <Route  path="/Register" element={<Register />} />
-          <Route  path="/MyItems" element={<MyItems />} />
+          <Route  path="/Login" element={!loggedUser ? <Login /> : <Home />} />
+          <Route  path="/Register" element={!loggedUser ? <Register /> : <Home />} />
+          <Route  path="/MyItems" element={loggedUser ? <MyItems /> : <PleaseLogin/>} />
   
-          <Route  path="/Profil" element={<Profil />} />
+          <Route  path="/Profil" element={loggedUser ? <Profil /> : <PleaseLogin/>} />
 
 
 

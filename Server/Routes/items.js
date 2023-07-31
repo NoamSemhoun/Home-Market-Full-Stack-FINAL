@@ -74,7 +74,6 @@ router.get('/:id',async (req,res)=>{
     if (images.error) return res.status(404).send(images);
 
     item.images = images
-    //check for address, city to the item
 
     // send back data
     delete item.userId;
@@ -122,7 +121,7 @@ router.put('/:id', uploadImages, async (req,res)=>{
     if (userId.error) return res.status(404).send(userId);
 
     // check access for the item 
-    const {item} = req.body;
+    const item = JSON.parse(req.body.item);
     let oldItem = await database.getTable('items', {id:id});
     if (oldItem.error) return res.status(404).send(oldItem);
     if (oldItem.userId !== userId) return res.status(404).send({error:'Access Denied'})
@@ -227,26 +226,30 @@ router.post('/upload', uploadImages, async (req,res)=>{
     // save images
     const {files} = req;
 
-    if (!files || !('main-image' in files)) return res.status(404).send({error:'Main Image is Required!'});
+    if (!files['main-image']) return res.status(404).send({error:'Main Image is Required!'});
     item.mainImage = files['main-image'][0]['path'];
 
     error = await database.insertToTable('items',[item])
     if (error.error) return res.status(400).send(error);
 
 
-    const instances = files['images'].map((image)=>{
-        return {
-            itemId:error.insertId,
-            imageUrl:image['path'],
-        } 
-    });
+    if (files['images']){
+        const instances = files['images'].map((image)=>{
+            return {
+                itemId:error.insertId,
+                imageUrl:image['path'],
+            } 
+        });
+    
+        error = await database.insertToTable('images',instances);
+        if (error.error) return res.status(404).send(error);
 
-    error = await database.insertToTable('images',instances);
-    if (error.error) return res.status(404).send(error);
+        // send back data
+        item.images = instances.map(instance => instance.imageUrl);
+    } else{
+        item.images = [];
+    }
 
-
-    // send back data
-    updateItem.images = instances.map(instance => instance.imageUrl);
     return res.send({data:item})
 });
 

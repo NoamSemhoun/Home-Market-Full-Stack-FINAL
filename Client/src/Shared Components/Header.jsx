@@ -81,7 +81,7 @@ const Header = () => {
                 <Dropdown.Item href="#Profile" as={Link} to="/profil" >
                   ⚙️ My Profile
                 </Dropdown.Item>
-                <Dropdown.Item href="#My_Items" as={Link} to="/My_Items"   >📦 My Items</Dropdown.Item>
+                <Dropdown.Item href="#My_Items" as={Link} to="/MyItems"   >📦 My Items</Dropdown.Item>
 
                 <Dropdown.Item href="#LogOut" onClick={logout}
                 // logout

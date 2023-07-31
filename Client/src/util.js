@@ -17,3 +17,8 @@ export async function callServer(url, method, body, ContentType = 'application/j
       return {error:error}
     }
 };
+
+
+export function callServerPromise(url, method, body, ContentType = 'application/json'){
+  return methods[method.toUpperCase()](url, body , {headers:{'Content-Type':ContentType}} );
+}

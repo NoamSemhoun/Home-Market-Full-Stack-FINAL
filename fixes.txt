@@ -16,6 +16,12 @@ AVISHAY:
 להוסיף נתונים עם טסטים לpath
 לעשות קובץ הרצה עם נתונים
 לחבר את כל הסרבר עם הלקוח
-בדיקה לעדכון משתמש
+
+
+
+After the connexion : Go to Home page, print Account , delete the form
+
+לבנות דף של מוצרים שלי Serch + selling
+if not connected : code la page : "veuillez vous connecter svp"בדיקה לעדכון משתמש
 לעשות קריאה לסרבר + בדיקה (אחרי מחיקת משתמש)
 לעשות ערך התחלתי לuseForm

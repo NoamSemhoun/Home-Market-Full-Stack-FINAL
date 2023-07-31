@@ -54,7 +54,6 @@ function Selling() {
             </div>       
                       <h2 className="text-center display-7"> Post your listing with this Forms in 3 Steps </h2>
                 
-                   <MDBIcon icon='camera-retro' />
 
  
             <div className="justify-content-center mt-5" style={{ minWidth: '30%'}}>
@@ -217,10 +216,8 @@ function Selling() {
                              required
                              />
 
-
                             <div className='invalid-feedback'></div> 
                             {/* placé directement après le champ de saisie avec lequel il est associé */}
-
 
                             </MDBCol>
                             <MDBCol>
@@ -228,18 +225,29 @@ function Selling() {
                             </MDBCol>
                         </MDBRow>
 
+                        <MDBRow className='mb-4'>
+                            <MDBCol>
+                            <MDBInput wrapperClass='mb-4' type='email' id='form6Example5' label='Email' />
+                            </MDBCol>
+                            <MDBCol>
+                            <MDBInput wrapperClass='mb-4' type='tel' id='form6Example6' label='Phone' />
+                            </MDBCol>
+                        </MDBRow>
+
                         <MDBInput wrapperClass='mb-4' id='form6Example4' label='Address' />
+                               
+
                         <MDBInput wrapperClass='mb-4' type='email' id='form6Example5' label='Email' />
                         <MDBInput wrapperClass='mb-4' type='tel' id='form6Example6' label='Phone' />
 
                         <MDBInput wrapperClass='mb-4' textarea="true" id='form6Example7' rows={4} label='Additional information' />
 
-                        <MDBCheckbox
+                        {/* <MDBCheckbox
                             wrapperClass='d-flex justify-content-center mb-4'
                             id='form6Example8'
                             label='Create an account?'
                             defaultChecked
-                        />
+                        /> */}
 
                         <MDBBtn className='mb-4' type='submit' >
                             Submit Item

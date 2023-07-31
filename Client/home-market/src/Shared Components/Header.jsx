@@ -31,34 +31,36 @@ const Header = () => {
           <li className="nav-item">
             <a className="nav-link" href="/">Home</a>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/Search">Search</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/Selling">Sell Furniture  </a>
-          </li> 
+          
 
-          {/* autre option avec link : ne recharge pas la page */}
+          {/* autre option avec link : ne recharge pas la page 
+          Mias pr l'instant Home me fait des pblm   
+          */}
+          {/* <li className="nav-item">
+            <Link to="/" className="nav-link">Home</Link>
+          </li> */}
           <li className="nav-item">
-            <Link to="/" className="nav-link">Home1</Link>
+            <Link to="/Search" className="nav-link">Search</Link>
           </li>
           <li className="nav-item">
-            <Link to="/Search" className="nav-link">Search2  </Link>
+            <Link to="/Selling" className="nav-link">Sell Furniture </Link>
           </li>
+
 
 
               {/* favorites withe logo lev  */}
-          <li className="nav-item">
-            <a className="nav-link d-flex " href="/Home">
-              <div>
-                <img style={{ width: "30px", height: "auto" }} alt="Furniture Logo" 
-                src="https://e7.pngegg.com/pngimages/546/849/png-clipart-heart-logo-heart-love-text.png" />
-              </div>   
-                
-              <span>Favorites</span>
-            </a>
-          </li>
-          
+              <li className="nav-item">
+                <a className="nav-link d-flex " href="/Register">
+                  {/* coder cette partie  */}
+                  <div>
+                    <img style={{ width: "30px", height: "auto" }} alt="Furniture Logo" 
+                    src="https://e7.pngegg.com/pngimages/546/849/png-clipart-heart-logo-heart-love-text.png" />
+                  </div>   
+                    
+                  <span>Favorites</span>
+                </a>
+              </li>
+              
 
        
       

@@ -22,3 +22,25 @@
       border-bottom-right-radius: .3rem;
     }
   }
+
+
+
+  .custom-title {
+    font-family:  Georgia, serif;  
+    font-size: 2rem; /* Adjust the font size as needed */
+    font-style: italic;
+    font-weight: 200;
+    color: #74331cb4; /* Replace with the desired color (orange in this case) */
+    margin-top: 35%;
+    margin-bottom: 30%;
+  }
+
+  .TitleAbout{
+  font-family: cursive;
+  color: #74331cb4;
+ 
+}
+
+.OKAbout{
+  margin-right: 5%;
+}

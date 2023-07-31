@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 
-export async function callServer(url, instance, dataType,extra={}) {
+export async function callServer(url, instance, dataType,ContentType,extra={}) {
 
     try {
       

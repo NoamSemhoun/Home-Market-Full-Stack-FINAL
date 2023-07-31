@@ -1,15 +1,14 @@
-Have To:
-אם הרשמה לא הצליחה אז להציג שגיאה
-להשאיר רק את Home1 ואת Search2
-להוסיף עמוד של נדרשת התחברות
-לשדרג את הfooter
-להכין את הלוגו
-להוריד create account
-להוריד Additional information
-להוסיף עוד אינפורמציה בעמוד הראשי
-- About us
-- לשים קצת מודעות
-לבנות דף של מוצרים שלי
+Have To:✅
+אם הרשמה לא הצליחה אז להציג שגיאה✅
+להשאיר רק את Home1 ואת Search2✅
+להוסיף עמוד של נדרשת התחברות✅
+לשדרג את הfooter✅
+להכין את הלוגו✅
+להוריד create account✅
+להוריד Additional information✅
+להוסיף עוד אינפורמציה בעמוד הראשי✅
+- About us✅
+- לשים קצת מודעות✅
 
 Mybee:
 לעשות שהכפתור לא יקפוץ בהרשמה ובהתחברות
@@ -22,3 +21,10 @@ AVISHAY:
 להוסיף context של משתמש מחובר
 לעשות קובץ הרצה עם נתונים
 לחבר את כל הסרבר עם הלקוח
+
+
+
+After the connexion : Go to Home page, print Account , delete the form
+
+לבנות דף של מוצרים שלי Serch + selling
+if not connected : code la page : "veuillez vous connecter svp"

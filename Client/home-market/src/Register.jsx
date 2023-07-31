@@ -28,6 +28,8 @@ function Register() {
   const [repeatpassword, setRepeatPassword] = useState('');
 
   const [showModal, setShowModal] = useState(false);
+  const [showModalError, setShowModalError] = useState(false);
+
 
 
   const handleSubmit = async (event) => {
@@ -52,11 +54,12 @@ function Register() {
     if (!user.error)
       setShowModal(true);
     else
-      console.log(user); //fix here to show error message
+      setShowModalError(true); //fix here to show error message
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setShowModalError(false);
   };
 
 
@@ -151,13 +154,28 @@ function Register() {
                   </div>
 
 
-                    {/* UNE FOIS CONNECTE  */}
+                    {/* On CONNECTED  E  */}
                     <Modal show={showModal} onHide={handleCloseModal} centered>
                       <Modal.Header closeButton   className="bg-success text-white">
                         <Modal.Title>Welcome to Home Market!</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                         <p>You have been successfully registered. </p>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseModal}>
+                          Close
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+
+
+                    <Modal show={showModalError} onHide={handleCloseModal} centered>
+                      <Modal.Header closeButton   className="bg-danger text-white">
+                        <Modal.Title>Error ...</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <p>Registration failed. </p>
                       </Modal.Body>
                       <Modal.Footer>
                         <Button variant="secondary" onClick={handleCloseModal}>

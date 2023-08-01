@@ -1,4 +1,52 @@
 Have To:
+
+/ show 
+Upload date
+
+Page 
+
+TO DO LIST 
+
+Ithoul motsarim  (create items, tmounot, akol yafe)
+
+AVISHAY : 
+- Search                
+        - images    Tmounot in the database 
+        - Hibour kol MOTSARIM 
+
+        - leadken item card SIZE 
+        - create component for 'details items'    +  HIBOUR
+        - filters button    
+        - create button for next page 20/20 items   X pages
+
+- footer 
+    - Footer Query to server 
+
+
+
+NOAM : 
+- my profil             
+        - atsagat netounim user 
+        - user changes hibour laserver
+
+- my items               
+        -tmounot  
+        update ITEM button
+            Edit
+            delete
+        design arranger click to upload 
+    
+  
+
+
+- Favorites        
+        coming soon 
+
+
+
+
+
+
 לתקן את הגדלים של המוצרים בsearch
 
 לעשות פילטרים בsearch

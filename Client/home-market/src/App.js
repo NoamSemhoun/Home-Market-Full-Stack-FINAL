@@ -23,7 +23,7 @@ import { useLocalStorage } from './Hooks.jsx';
 // import VendreMeuble from './VendreMeuble';
 
 const App = () => {
-  const [loggedUser,setLoggedUser] = useLocalStorage('user');
+  const [loggedUser,setLoggedUser] = useLocalStorage('user');  //   PBLM
   
   const context = {
       loggedUser: loggedUser,

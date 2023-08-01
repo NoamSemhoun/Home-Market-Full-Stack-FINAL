@@ -18,8 +18,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
     MDBInputGroup,
     MDBCarousel,
     MDBCarouselItem,
-    MDBCheckbox,
-    // MDBIcon,
     MDBBtn
   } from "mdb-react-ui-kit";
 
@@ -127,20 +125,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
       setModalShow(true)
     };
 
-    useEffect(() => {
-      // This effect runs only once when the component mounts
-      fetchDataFromServer();
-    }, []); // Empty dependency array
+    // useEffect(() => {
+    //   // This effect runs only once when the component mounts
+    //   fetchDataFromServer();
+    // }, []); // Empty dependency array
   
-    const fetchDataFromServer = async () => {
-      try {
-        const response = await callServer('http://127.0.0.1:3001/items/','post',{apiKey:loggedUser.apiKey});
-        setData(response.data);
-        console.log(response.data)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+    // const fetchDataFromServer = async () => {
+    //   try {
+    //     const response = await callServer('http://127.0.0.1:3001/items/','post',{apiKey:loggedUser.apiKey});
+    //     setData(response.data);
+    //     console.log(response.data)
+    //   } catch (error) {
+    //     console.error('Error fetching data:', error);
+    //   }
+    // };
 
     const handleSubmit = async (event) =>{
 
@@ -220,7 +218,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
         </div>
 
         <ul className="navbar-nav  align-items-center">
-        <a > Filters:</a>
+        <li> Filters:</li>
           <li className="nav-item mx-3">
           <select onChange={handleInputChange} name='status' id="condition" className="form-select">
               <option value={undefined}>Select State Condition</option>

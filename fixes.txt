@@ -24,28 +24,26 @@ AVISHAY:
 לחבר את כל הסרבר עם הלקוח
 אחרי כל הטסטים לעשות נתונים חדשים על הכל
 
+בדיקה לעדכון משתמש
+לעשות קריאה לסרבר + בדיקה (אחרי מחיקת משתמש)
+לעשות ערך התחלתי לuseForm
+
+
+
 
 
 
 After the connexion : Go to Home page, print Account , delete the form
 
 לבנות דף של מוצרים שלי Serch + selling
-if not connected : code la page : "veuillez vous connecter svp"בדיקה לעדכון משתמש
-לעשות קריאה לסרבר + בדיקה (אחרי מחיקת משתמש)
-לעשות ערך התחלתי לuseForm
 
 
+    // initialValue = initialValue ? JSON.parse(initialValue) : '';     Hooks LINE65
 
-עשיתי:
-- השתפרתי  הדף של נדרשת התחברות  
-- במכירת מוצר להוסיף כפתור next,previous כדי לעבור בין הforms השונים.
 
 
 
 מה חסר:
 - לתקן את האנגלית באתר
-- לעשות פילטרים מוצגים בצורה יפה ונוחה בsearch 
 - לתקן תמונות של footer
-- לבדוק שכל הלינקים בfooter עובדים. 
-- לתקן את הגדלים של המוצרים בsearch
 - לתת לכל המוצרים

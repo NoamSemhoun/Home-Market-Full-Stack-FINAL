@@ -1,6 +1,7 @@
 import {React, useContext} from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from './Hooks';
+import  { useState } from 'react';
 import contextProvider from './Context';
 import { callServer } from './util';
 
@@ -42,6 +43,20 @@ function Selling() {
         }
     }
 
+
+    // FOR THE NEXT STEP BOUTTON IN ACCORDION ITEM 
+    const [activeItem, setActiveItem] = useState(1);
+
+    const toggleAccordion = (itemIndex) => {
+      setActiveItem(itemIndex);
+    };
+  
+    const handleNext = () => {
+      if (activeItem < 3) {
+        toggleAccordion(activeItem + 1);
+      }
+    };
+
     return (
         
         <div className="container">
@@ -60,7 +75,7 @@ function Selling() {
             {/* d-flex   les propriétés de flexibilité   OU ::   , maxWidth: '80%' */}
 
                     <MDBAccordion initialActive={1}>
-                    <MDBAccordionItem collapseId={1} headerTitle={<><MDBIcon icon='camera' size='xs' /> &nbsp; #1 Details aticle </>}>
+                    <MDBAccordionItem show={activeItem === 1} collapseId={1} headerTitle={<> &nbsp; #1 Details aticle </>}>
                        
                     <form>
                         <MDBRow className='mb-4'>
@@ -99,7 +114,6 @@ function Selling() {
                             </MDBCol>
                             
                         </MDBRow>
-
 
                         <MDBRow className='mb-4'>
 
@@ -164,21 +178,18 @@ function Selling() {
 
                             </MDBRow>
 
-
-
                         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1" >
                             <Form.Label>Description area</Form.Label>
                             <Form.Control as="textarea" rows={3}  name='description'  placeholder=" Dimension, date, negociable .... " onChange={handleInputChange}/>
                         </Form.Group>                        
                         
-
- 
                         
+                        {/* <button onClick={handleNext}>Next</button> */}
 
                     </form>
 
                     </MDBAccordionItem>
-                    <MDBAccordionItem collapseId={2} headerTitle={<><MDBIcon fas icon="question-circle" /> &nbsp; #2 Photos article </>}>
+                    <MDBAccordionItem show={activeItem === 2} collapseId={2} headerTitle={<><MDBIcon fas icon="question-circle" /> &nbsp; #2 Photos article </>}>
                         
                         Including photos in a furniture listing is essential for attracting potential buyers, 
                         building trust, and providing visual information. 
@@ -203,8 +214,11 @@ function Selling() {
                             <Form.Control name="images" type="file" multiple  />
                         </Form.Group>
 
+
+                        {/* <button onClick={handleNext}>Next</button> */}
+
                     </MDBAccordionItem>
-                    <MDBAccordionItem collapseId={3} headerTitle={<><MDBIcon fas icon="question-circle" /> &nbsp; #3  Personnal Information </>}>
+                    <MDBAccordionItem show={activeItem === 3} collapseId={3} headerTitle={<><MDBIcon fas icon="question-circle" /> &nbsp; #3  Personnal Information </>}>
                         
                     <form onSubmit={handleSubmit}>
                         <MDBRow className='mb-4'>
@@ -237,11 +251,6 @@ function Selling() {
                         <MDBInput wrapperClass='mb-4' id='form6Example4' label='Address' />
                                
 
-                        <MDBInput wrapperClass='mb-4' type='email' id='form6Example5' label='Email' />
-                        <MDBInput wrapperClass='mb-4' type='tel' id='form6Example6' label='Phone' />
-
-                        <MDBInput wrapperClass='mb-4' textarea="true" id='form6Example7' rows={4} label='Additional information' />
-
                         {/* <MDBCheckbox
                             wrapperClass='d-flex justify-content-center mb-4'
                             id='form6Example8'
@@ -256,6 +265,8 @@ function Selling() {
 
 
                     </MDBAccordionItem>
+
+
                  </MDBAccordion>
 
          </div>

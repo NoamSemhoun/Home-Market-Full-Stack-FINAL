@@ -16,6 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
     MDBInputGroup,
     MDBCarousel,
     MDBCarouselItem,
+    MDBCheckbox,
     // MDBIcon,
     MDBBtn
   } from "mdb-react-ui-kit";
@@ -163,20 +164,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
        
 
 
-        <h4 className="mt-4 ">
+        <h4 className="mt-4 mb-5">
           <strong>All Furniture </strong>
         </h4>
   
   <MDBNavbar className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
 
-      {/* Logo de l'application */}
-        <a className="navbar-brand" href="/"> Filter :</a>
-
-        <ul className="navbar-nav">
+        <div className="navbar-brand d-flex ml-5">
     
+          <MDBInputGroup className='me-2'>
+            <input className='form-control' placeholder="Type query 🔍" aria-label="Search" type='Search' />
+          </MDBInputGroup>
+          <MDBBtn outline>Search</MDBBtn>
+
+        </div>
+
+        <ul className="navbar-nav  align-items-center">
+        <a > Filters :</a>
           <li className="nav-item mx-3">
-          <select id="category" className="form-select form-select-lg">
+          <select id="category" className="form-select">
               <option>Select State Condition</option>
               <option>New</option>
               <option>Excellent / Like New</option>
@@ -188,14 +195,42 @@ import 'bootstrap/dist/css/bootstrap.min.css';
             </select>
           </li>
 
-          <li className="d-flex">
-            
-          <MDBInputGroup className='me-2'>
-            <input className='form-control' placeholder="Type query 🔍" aria-label="Search" type='Search' />
-          </MDBInputGroup>
-          <MDBBtn outline>Search</MDBBtn>
-        
+          <li className="nav-item mx-3">
+          <select id="category" className="form-select ">
+              <option>Select Category</option>
+              <option>Sofa</option>
+              <option>Bed</option>
+              <option>Chair</option>
+              <option>Table</option>
+              <option>Desk</option>
+              <option>TV Stand</option>
+            </select>
           </li>
+
+          <li className=" mr-5 ml-5 d-flex form-check form-check-lg">
+           {/* <MDBCheckbox name='inlineCheck' id='inlineCheckbox1'
+           className="form-check-lg"
+            value='option1' label='Delivery Possible' inline /> */}
+         
+          <MDBContainer  >
+              <div className="form-check form-switch ">
+                  <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="formSwitch"
+                  defaultChecked
+                  // onChange={handleInputChange}
+                  name='delivery'
+                  />
+                  <label className="form-check-label align-middle" htmlFor="formSwitch">
+                  Delivery possible
+                  </label>
+              </div>
+              </MDBContainer>
+              </li>
+
+
+        
           </ul>
 
       </div>
@@ -209,14 +244,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
   {/* CATALOGUE  */}
         <MDBRow className="row-cols-1 row-cols-md-2 row-cols-lg-3 g-4  mx-5 " >  
           <MDBCol xl={4}   className='mb-4'>
-            <MDBCard   onClick={handleCardClick}
+            <MDBCard     className='h-100' onClick={handleCardClick}
                  //  {/* ICI DEFINIR LAPPEL AU MODAL   */}
                  > 
                 <MDBCardImage
                   src="https://th.bing.com/th/id/R.30a2d8ebdcf5bd4e09561543c4df302e?rik=HYbei9c65yZj7Q&riu=http%3a%2f%2fwww.khahomedesign.com%2fori-lit-double-en-bois-de-chene-massif-dunaj-1058.jpg&ehk=hLH3qp0tsxFTfxRlrT0EOrkpCUJlbIfzjNqfn6zDhW0%3d&risl=&pid=ImgRaw&r=0"
                   fluid
-                  className="w-100"     
-               
+                  // className="w-25"  
+                  position='top'   
+                  className='img-fluid' style={{ objectFit: 'cover', height: '68%' }}
 
                 />
                 <a href="#!">
@@ -247,12 +283,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
             </MDBCard>
           </MDBCol>
           <MDBCol  xl={4}  className='mb-4'>
-            <MDBCard>
+
+            <MDBCard     className='h-100' onClick={handleCardClick}>
            
                 <MDBCardImage
                   src="https://th.bing.com/th/id/R.d009712e46d74573e5a6d40b75818f56?rik=bSIY921YIo9mXQ&pid=ImgRaw&r=0"
                   fluid
-                  className="w-100"
+                  // className="w-100"
+                  position='top'
+                  className='img-fluid' style={{ objectFit: 'cover', height: '68%' }}
+
                 />
                 <a href="#!"  >
                  
@@ -284,12 +324,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
             </MDBCard>
           </MDBCol>
           <MDBCol  xl={4}   className='mb-4'>
-            <MDBCard>
+            <MDBCard className='h-100' onClick={handleCardClick}>
             
                 <MDBCardImage
                   src="https://th.bing.com/th/id/OIP.WVN9I8vMi79iELJAnl705AHaEK?w=292&h=129&c=7&r=0&o=5&pid=1.7"
                   fluid
-                  className="w-100"
+                  // className="w-100"
+                  position='top'  
+                  className='img-fluid' style={{ objectFit: 'cover', height: '68%' }}
+ 
+
                 />
                 <a href="#!">
                   <div className="mask">
@@ -322,12 +366,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
             </MDBCard>
           </MDBCol>
           <MDBCol  xl={4}  className='mb-4'>
-            <MDBCard>
+            <MDBCard className='h-100' onClick={handleCardClick}>
               
                 <MDBCardImage
                   src="https://th.bing.com/th/id/OIP.y710FCWjEhgUlGsHOS87TAHaE6?w=282&h=187&c=7&r=0&o=5&pid=1.7"
                   fluid
-                  className="w-100"
+                  className='img-fluid' style={{ objectFit: 'cover', height: '68%' }}
                 />
                 <a href="#!">
                   <div className="mask">
@@ -361,12 +405,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
             </MDBCard>
           </MDBCol>
           <MDBCol  xl={4}  className='mb-4'>
-            <MDBCard>
+            <MDBCard className='h-100' onClick={handleCardClick}>
            
                 <MDBCardImage
                   src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/img%20(17).webp"
                   fluid
-                  className="w-100"
+                  className='img-fluid' style={{ objectFit: 'cover', height: '68%' }}
                 />
                 <a href="#!">
                   <div className="mask">
@@ -391,12 +435,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
             </MDBCard>
           </MDBCol>
           <MDBCol  xl={4}   className='mb-4'>
-            <MDBCard>
+            <MDBCard className='h-100' onClick={handleCardClick}>
          
                 <MDBCardImage
                   src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/img%20(30).webp"
                   fluid
-                  className="w-100"
+                  className='img-fluid' style={{ objectFit: 'cover', height: '68%' }}
                 />
                 <a href="#!">
                   <div className="mask">

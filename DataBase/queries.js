@@ -20,8 +20,16 @@ function count(tableName, identifiers = {}){
 
 }
 
+function getOrderBy(tableName, columnOrder, page, pageSize){
+    const startIndex = page*pageSize;
+    const query = `SELECT * FROM ${tableName} ORDER BY ${columnOrder} DESC LIMIT ${startIndex}, ${pageSize}`
+
+    return util.customQuery(query);
+}
+
 
 module.exports = {
     getTable,
-    count
+    count,
+    getOrderBy
 }

@@ -1,7 +1,8 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import { Modal, Button, Carousel } from 'react-bootstrap';
 import { callServer } from './util';
-import {useForm} from './Hooks'
+import {useForm} from './Hooks';
+import ItemCard from './itemCard';
 // import Form from 'react-bootstrap/Form';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -120,6 +121,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
     const {handleInputChange,formData} = useForm();
     const [modalShow, setModalShow] = useState(false);
+    const [page, setPage] = useState(0);
+    const [data, setData] = useState([]);
+
 
     // pour gerrer le modal account : 
     const handleCardClick = () => {
@@ -134,7 +138,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
   
     const fetchDataFromServer = async () => {
       try {
-        const response = await callServer('http://127.0.0.1:3001/items/','post',{apiKey:loggedUser.apiKey});
+        const response = await callServer(`http://127.0.0.1:3001/items/show?page=${page}`,'get',{});
         setData(response.data);
         console.log(response.data)
       } catch (error) {
@@ -281,6 +285,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
       <br></br>
 
   {/* CATALOGUE  */}
+      {data && data.map((item => <ItemCard itemData={item}></ItemCard>))}
+
         <MDBRow className="row-cols-1 row-cols-md-2 row-cols-lg-3 g-4  mx-5 " >  
           <MDBCol xl={4}   className='mb-4'>
             <MDBCard     className='h-100' onClick={handleCardClick}

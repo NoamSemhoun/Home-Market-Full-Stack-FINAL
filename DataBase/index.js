@@ -37,5 +37,6 @@ module.exports = {
 
     // queries
     getTable:queries.getTable,
-    count:queries.count
+    count:queries.count,
+    getOrderBy:queries.getOrderBy
 }

@@ -44,11 +44,14 @@ router.get('/:id',async (req,res)=>{
     if (item.error) return res.status(500).send(item);
     if (item.length === 0) return res.status(404).send({data: item});
 
+    item.mainImage = '..\\' + item.mainImage;
     // get images
     let images = await database.getTable('images',{itemId:item.id},lowerDataImages);
     if (images.error) return res.status(500).send(images);
 
-    item.images = images;
+    item.images = images.map((image)=>{
+        return '..\\' + image.imageUrl;
+    });
 
     let favorites = await database.count('favorites',{itemId:item.id});
     if (favorites.error) return res.status(500).send(favorites);
@@ -94,11 +97,15 @@ router.get('/search',async (req,res)=>{
 });
 
 
-router.get('/show',(req,res)=>{
+router.get('/show', async (req,res)=>{
     const {page} = req.query;
-    if (!query) return res.status(400).send({error:'please send query field'});
+    const pageSize = 12;
+    if (!page) return res.status(400).send({error:'please send query field'});
 
-    
+    let items = await database.getOrderBy('items','uploadDate', page, pageSize);
+    if (items.error) return res.status(500).send(items);
+
+    return res.status(200).send({data:items});
 })
 
 

@@ -94,6 +94,13 @@ router.get('/search',async (req,res)=>{
 });
 
 
+router.get('/show',(req,res)=>{
+    const {page} = req.query;
+    if (!query) return res.status(400).send({error:'please send query field'});
+
+    
+})
+
 
 /**
  * עריכת מוצר יחיד לפי האיידי שלו.

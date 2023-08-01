@@ -14,6 +14,7 @@ Have To:
 
 Mybee:
 לעשות שהכפתור לא יקפוץ בהרשמה ובהתחברות
+RESPONSIVE FOR IPHONE in all PAGES and ALL Components
 לעשות אנימציה של טעינה בכל בקשה לסרבר
 להוסיף Favorites
 להוסיף ביקורות
@@ -33,9 +34,11 @@ AVISHAY:
 
 
 
-After the connexion : Go to Home page, print Account , delete the form
+After the connexion : Go to Home page, delete the form from signup
+Print information 
+My Account : NOAM
 
-לבנות דף של מוצרים שלי Serch + selling
+MY ITEMS   לבנות דף של מוצרים שלי Serch + selling
 
 
     // initialValue = initialValue ? JSON.parse(initialValue) : '';     Hooks LINE65

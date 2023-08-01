@@ -36,5 +36,6 @@ module.exports = {
     removeForeignKey:modifiers.removeForeignKey,
 
     // queries
-    getTable:queries.getTable
+    getTable:queries.getTable,
+    count:queries.count
 }

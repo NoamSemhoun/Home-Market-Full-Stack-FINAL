@@ -1,4 +1,5 @@
-import React from "react";
+import React, {  useState } from "react";
+import {callServer} from './util'
 
 import {
     MDBCol,
@@ -13,9 +14,29 @@ import {
 function ItemCard(params){
 
     const {itemData} = params;
+    const [item,setItem] = useState(null);
+
+    const handleClick = async (event) =>{
+
+      const response = await callServer(
+        `http://127.0.0.1:3001/items/${itemData.id}`, 
+        'get',
+      );
+
+      if (!response.error){
+          console.log(response.data);
+          setItem(response.data);
+      }else{
+        console.log(item.error);
+        // show error
+      }
+
+      // TODO: setItem to null when press on screen, get the data from the response and display it as we do.
+
+    }
 
     return (
-        <MDBCol  xl={4}  className='mb-4'>
+        <MDBCol  xl={4}  className='mb-4' onClick={handleClick}>
             <MDBCard>
            
                 <MDBCardImage

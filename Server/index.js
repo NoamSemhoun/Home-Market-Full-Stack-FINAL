@@ -12,8 +12,10 @@ app.options('*',cors());
 
 const users = require('./Routes/users.js');
 const items = require('./Routes/items.js');
+const favorites = require('./Routes/favorites.js')
 app.use('/users',users);
 app.use('/items',items);
+app.use('/favorites',favorites);
 
 const hostname = '127.0.0.1';
 const port = process.env.PORT || 3001;

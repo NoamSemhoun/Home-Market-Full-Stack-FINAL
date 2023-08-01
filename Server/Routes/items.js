@@ -27,32 +27,6 @@ const uploadImages = upload.fields([
     {name:'main-image', maxCount:1}
 ]);
 
-//test route for images
-router.post('/test/:id',uploadImages, async (req,res)=>{
-    // save images
-    const {files} = req;
-    if (!('main-image' in files)) return res.status(404).send({error:'Main Image is Required!'});
-    
-
-    const instances = files['images'].map((image)=>{
-        return {
-            itemId:req.params.id,
-            imageUrl:image['path']
-        } 
-    });
-
-    error = await database.insertToTable('images', instances);
-    if (error.error) return res.status(404).send(error);
-
-    error = await database.getTable('images', {itemId:req.params.id});
-    if (error.error) return res.status(404).send(error);
-
-    error.forEach((image)=>util.deleteFile(image.imageUrl));
-
-    error = await database.removeFromTable('images',{id:req.params.id});
-    if (error.error) return res.status(404).send(error);
-});
-
 /**
  * קבלת מוצר יחיד לפי האיידי שלו עם כל הנתונים
  * 
@@ -67,17 +41,22 @@ router.get('/:id',async (req,res)=>{
 
     // get item 
     let item = await database.getTable('items',{id:req.params.id});
-    if (item.error) return res.status(404).send(item);
+    if (item.error) return res.status(500).send(item);
+    if (item.length === 0) return res.status(404).send({data: item});
 
     // get images
     let images = await database.getTable('images',{itemId:item.id},lowerDataImages);
-    if (images.error) return res.status(404).send(images);
+    if (images.error) return res.status(500).send(images);
 
-    item.images = images
+    item.images = images;
 
+    let favorites = await database.count('favorites',{itemId:item.id});
+    if (favorites.error) return res.status(500).send(favorites);
+
+    item.favorites = favorites;
     // send back data
     delete item.userId;
-    return res.send({data:item})
+    return res.status(200).send({data:item})
 });
 
 // קבל תוצאות חיפוש לפי מילות חיפוש באופן מזערי
@@ -92,13 +71,26 @@ router.get('/:id',async (req,res)=>{
  */
 router.get('/search',async (req,res)=>{
     const {query} = req.query;
+    if (!query) return res.status(400).send({error:'please send query field'});
 
     // get items by key-words
     let items = await database.searchInTable('items', query ,['title','category','description'],lowerDataItems);
-    if (items.error) return res.status(404).send(items);
+    if (items.error) return res.status(500).send(items);
+    const statusCode = items.length === 0 ? 204 : 200;
+
+    const {category, status, delivery} = req.query;
+
+    items = items.filter(item => {
+        let inside = false;
+        if (category) inside = item.category === category || inside;
+        if (status) inside = item.status === status || inside;
+        if (delivery) inside = item.delivery === delivery || inside;
+        
+        return inside;
+    })
 
     // send back data
-    return res.send({data:items});
+    return res.status(statusCode).send({data:items});
 });
 
 
@@ -117,14 +109,18 @@ router.put('/:id', uploadImages, async (req,res)=>{
     // validate access
     const {id} = req.params;
     const {apiKey} = req.body;
+    if (!apiKey) return res.status(400).send({error:'please send apiKey field'});
+
     const userId = await util.getUserId(apiKey);
-    if (userId.error) return res.status(404).send(userId);
+    if (userId.error) return res.status(500).send(userId);
 
     // check access for the item 
     const item = JSON.parse(req.body.item);
+    if (!item) return res.status(400).send({error:'please send item fields'});
+
     let oldItem = await database.getTable('items', {id:id});
-    if (oldItem.error) return res.status(404).send(oldItem);
-    if (oldItem.userId !== userId) return res.status(404).send({error:'Access Denied'})
+    if (oldItem.error) return res.status(500).send(oldItem);
+    if (oldItem.userId !== userId) return res.status(403).send({error:'Access Denied'})
 
     // validate data
     let error = util.validate(item, validateScheme);
@@ -143,15 +139,15 @@ router.put('/:id', uploadImages, async (req,res)=>{
             } 
         });
         error = await database.getTable('images', {itemId:updateItem.id},lowerDataImages);
-        if (error.error) return res.status(404).send(error);
+        if (error.error) return res.status(500).send(error);
     
         error.forEach((image)=>util.deleteFile(image.imageUrl));
     
         error = await database.removeFromTable('images',{itemId:updateItem.id});
-        if (error.error) return res.status(404).send(error);
+        if (error.error) return res.status(500).send(error);
     
         error = await database.insertToTable('images',instances);
-        if (error.error) return res.status(404).send(error);   
+        if (error.error) return res.status(500).send(error);   
     
         // update the main image
         if ('main-image' in files){
@@ -163,11 +159,11 @@ router.put('/:id', uploadImages, async (req,res)=>{
 
     // update in the database
     error = await database.updateTable('items',['id'],[updateItem]);
-    if (error.error) return res.status(404).send(error);
+    if (error.error) return res.status(500).send(error);
 
     // send back data
     updateItem.images = instances.map(instance => instance.imageUrl);
-    return res.send({data:updateItem});
+    return res.status(201).send({data:updateItem});
 });
 
 
@@ -185,17 +181,63 @@ router.post('/',async (req,res)=>{
 
     // validate access
     const {apiKey} = req.body;
+    if (!apiKey) return res.status(400).send({error:'please send apiKey field'});
+
     const userId = await util.getUserId(apiKey);
-    if (userId.error) return res.status(404).send(userId);
+    if (userId.error) return res.status(500).send(userId);
 
     // get all the items and there images (lower-data)
     let items = await database.getTable('items',{userId:userId},lowerDataItems);
-    if (items.error) return res.status(404).send(items);
+    if (items.error) return res.status(500).send(items);
+
+    const statusCode = items.length === 0 ? 204 : 200;
 
     // send back data
-    return res.send({data:items})
+    return res.status(statusCode).send({data:items});
+
 });
 
+
+/**
+ *  קבל את כל המוצרים המועדפים של משתמש
+ * 
+ * Url: http://127.0.0.1:3001/items/favorites
+ * Data: {apiKey}
+ * 
+ * Return: list of {id, price, title, uploadDate, delivery, mainImage}
+ * 
+ */
+router.post('/favorites',async (req,res)=>{
+
+    // validate access
+    const {apiKey} = req.body;
+    if (!apiKey) return res.status(400).send({error:'please send apiKey field'});
+
+    const userId = await util.getUserId(apiKey);
+    if (userId.error) return res.status(500).send(userId);
+
+    // get all the favorite items
+    let favorites = await database.getTable('favorites',{userId:userId},['itemId']);
+    if (items.error) return res.status(500).send(items);
+    if (favorites.length === 0) return res.status(204).send({data:favorites});
+    if (favorites instanceof Object) favorites = [favorites];
+
+    // get all the items (lower-data)
+    const errors = [];
+    let items = favorites.map(async (fav)=>{
+        const item = await database.getTable('items',{id:fav.itemId},lowerDataItems);
+        if (items.error) errors.push(items);
+        return item;
+    })
+    if (errors.length > 0) return res.status(500).send({error:errors});
+    Promise.all(items);
+
+    const statusCode = items.length === 0 ? 204 : 200;
+
+    // send back data
+    return res.status(statusCode).send({data:items});
+
+});
 
 // העלאת פריט באופן מלא לשרת
 /**
@@ -211,11 +253,15 @@ router.post('/',async (req,res)=>{
 router.post('/upload', uploadImages, async (req,res)=>{
     // validate access
     const {apiKey} = req.body;
+    if (!apiKey) return res.status(400).send({error:'please send apiKey field'});
+
     const userId = await util.getUserId(apiKey);
-    if (userId.error) return res.status(404).send(userId);
+    if (userId.error) return res.status(500).send(userId);
 
     // validate data
     const item = JSON.parse(req.body.item);
+    if (!item) return res.status(400).send({error:'please send item fields'});
+
     let error = util.validate(item, validateScheme, accessFields);
     if (error.error) return res.status(400).send(error);
 
@@ -226,11 +272,11 @@ router.post('/upload', uploadImages, async (req,res)=>{
     // save images
     const {files} = req;
 
-    if (!files['main-image']) return res.status(404).send({error:'Main Image is Required!'});
+    if (!files['main-image']) return res.status(400).send({error:'Main Image is Required!'});
     item.mainImage = files['main-image'][0]['path'];
 
     error = await database.insertToTable('items',[item])
-    if (error.error) return res.status(400).send(error);
+    if (error.error) return res.status(500).send(error);
 
 
     if (files['images']){
@@ -242,7 +288,7 @@ router.post('/upload', uploadImages, async (req,res)=>{
         });
     
         error = await database.insertToTable('images',instances);
-        if (error.error) return res.status(404).send(error);
+        if (error.error) return res.status(500).send(error);
 
         // send back data
         item.images = instances.map(instance => instance.imageUrl);
@@ -250,7 +296,7 @@ router.post('/upload', uploadImages, async (req,res)=>{
         item.images = [];
     }
 
-    return res.send({data:item})
+    return res.status(201).send({data:item})
 });
 
 
@@ -259,17 +305,19 @@ router.delete('/:id', async (req,res)=>{
     // validate access
     const {id} = req.params;
     const {apiKey} = req.body;
+    if (!apiKey) return res.status(400).send({error:'please send apiKey field'});
+
     const userId = await util.getUserId(apiKey);
-    if (userId.error) return res.status(404).send(userId);
+    if (userId.error) return res.status(500).send(userId);
 
     // check access for the item 
     let oldItem = await database.getTable('items', {id:id});
-    if (oldItem.error) return res.status(404).send(oldItem);
-    if (oldItem.userId !== userId) return res.status(404).send({error:'Access Denied'});
+    if (oldItem.error) return res.status(500).send(oldItem);
+    if (oldItem.userId !== userId) return res.status(403).send({error:'Access Denied'});
 
     // delete the images
     error = await database.getTable('images', {itemId:oldItem.id},lowerDataImages);
-    if (error.error) return res.status(404).send(error);
+    if (error.error) return res.status(500).send(error);
     
     // add the main image
     if (error instanceof Object) error = [error,{imageUrl:oldItem.mainImage}];
@@ -278,14 +326,17 @@ router.delete('/:id', async (req,res)=>{
     error.forEach((image)=>util.deleteFile(image.imageUrl));
 
     error = await database.removeFromTable('images',{itemId:oldItem.id});
-    if (error.error) return res.status(404).send(error);
+    if (error.error) return res.status(500).send(error);
+
+    // remove all the favorites
+    error = await database.removeFromTable('favorites',{itemId:oldItem.id});
+    if (error.error) return res.status(500).send(error);
 
     // delete the item
     error = await database.removeFromTable('items',{id:oldItem.id});
-    if (error.error) return res.status(404).send(error);
+    if (error.error) return res.status(500).send(error);
 
-    return res.send({data:oldItem});
-
+    return res.status(200).send({data:oldItem});
 })
 
 module.exports = router

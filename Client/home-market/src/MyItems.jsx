@@ -9,6 +9,7 @@ import ItemCard from './itemCard';
 import contextProvider from './Context';
 import { callServer } from './util';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
   function MyItems() {
@@ -38,10 +39,10 @@ import axios from 'axios';
           <h4 className="mt-4 mb-5">
             <strong>All My items Furniture </strong>
           </h4>
-    
+          <Link to='/Selling'>Click Here To Upload One!</Link>
 
           {/* CATALOGUE  */}
-          {data.map((item => <ItemCard itemData={item}></ItemCard>))}
+          {data && data.map((item => <ItemCard itemData={item}></ItemCard>))}
 
         </MDBContainer>
       );

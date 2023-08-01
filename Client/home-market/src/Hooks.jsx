@@ -62,7 +62,7 @@ export function useForm(){
 
 export function useLocalStorage(key){
     let initialValue = localStorage.getItem(key);
-    // initialValue = initialValue ? JSON.parse(initialValue) : '';    // ******************************************** 
+    initialValue = initialValue ? JSON.parse(initialValue) : '';    // ******************************************** 
     // ATTENTION    I CHANGE THIS LINE  IN COMMENT FOR NO BUG IN COMPILED
     // ******************************************** 
     

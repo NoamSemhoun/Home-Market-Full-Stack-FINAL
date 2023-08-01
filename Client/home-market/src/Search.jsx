@@ -1,5 +1,7 @@
 import {React, useState} from 'react';
 import { Modal, Button, Carousel } from 'react-bootstrap';
+import { callServer } from './util';
+import {useForm} from './Hooks'
 // import Form from 'react-bootstrap/Form';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -116,12 +118,34 @@ import 'bootstrap/dist/css/bootstrap.min.css';
   function Search() {
 
 
+    const {handleInputChange,formData} = useForm();
+
     // pour gerrer le modal account : 
     const handleCardClick = () => {
       //  logique pour gérer le clic ici...
       setModalShow(true)
     };
     const [modalShow, setModalShow] = useState(false);
+
+    const handleSubmit = async (event) =>{
+
+      const { value } = event.target;
+
+
+      const item = await callServer(
+        `http://127.0.0.1:3001/items/search`, 
+        'get',
+        {...formData, query:value}, 
+      );
+
+      if (!item.error){
+          console.log(item.data);
+      }else{
+        console.log(item.error);
+      }
+
+    }
+
 
 
     return (
@@ -174,17 +198,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
         <div className="navbar-brand d-flex ml-5">
     
           <MDBInputGroup className='me-2'>
-            <input className='form-control' placeholder="Type query 🔍" aria-label="Search" type='Search' />
+            <input className='form-control' name='search' placeholder="Type query 🔍" aria-label="Search" type='Search' />
           </MDBInputGroup>
-          <MDBBtn outline>Search</MDBBtn>
+          <MDBBtn outline onSubmit={handleSubmit}>Search</MDBBtn>
 
         </div>
 
         <ul className="navbar-nav  align-items-center">
-        <a > Filters :</a>
+        <a > Filters:</a>
           <li className="nav-item mx-3">
-          <select id="category" className="form-select">
-              <option>Select State Condition</option>
+          <select onChange={handleInputChange} name='status' id="condition" className="form-select">
+              <option value={undefined}>Select State Condition</option>
               <option>New</option>
               <option>Excellent / Like New</option>
               <option>Good</option>
@@ -196,8 +220,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
           </li>
 
           <li className="nav-item mx-3">
-          <select id="category" className="form-select ">
-              <option>Select Category</option>
+          <select onChange={handleInputChange} name='category' id="category" className="form-select">
+              <option value={undefined}>Select Category</option>
               <option>Sofa</option>
               <option>Bed</option>
               <option>Chair</option>
@@ -219,7 +243,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
                   type="checkbox"
                   id="formSwitch"
                   defaultChecked
-                  // onChange={handleInputChange}
+                  onChange={handleInputChange}
                   name='delivery'
                   />
                   <label className="form-check-label align-middle" htmlFor="formSwitch">

@@ -31,22 +31,24 @@ const metadataAccessFields = ['email','password'];
  * 
  */
 router.post('/login',async (req,res)=>{
+
     const {user} = req.body;
+    if (!user) return res.status(400).send({error:'please send user fields'});
 
     let error = util.validate(user, validateScheme, ['email','password']);
     if (error.error) return res.status(400).send(error);
 
     let metadata = await database.getTable('usersMetadata',{email:user.email,password:user.password});
     if (metadata instanceof Array) return res.status(404).send({error:`email ${user.email} Dosen't Exists!`});
-    if (metadata.error) return res.status(404).send(metadata);
+    if (metadata.error) return res.status(500).send(metadata);
 
     let data = await database.getTable('users',{metadataId:metadata.id});
-    if (data.error) return res.status(404).send(data);
+    if (data.error) return res.status(500).send(data);
     
     delete metadata.id;
     delete metadata.password;
 
-    return res.send({'data':{...metadata,...data}})
+    return res.status(200).send({'data':{...metadata,...data}})
 });
 
 /**
@@ -62,6 +64,8 @@ router.post('/login',async (req,res)=>{
 router.post('/signup',async (req,res)=>{
 
     const {user} = req.body;
+    if (!user) return res.status(400).send({error:'please send user fields'});
+
 
     let error = util.validate(user, validateScheme, ['fname', 'lname','phone','address', 'email','city','password','repeat-password']);
     if (error.error) return res.status(400).send(error);
@@ -74,7 +78,7 @@ router.post('/signup',async (req,res)=>{
     }
 
     let metadata = await database.insertToTable('usersMetadata',[userMetadata]);
-    if (metadata.error) return res.status(404).send(metadata);
+    if (metadata.error) return res.status(500).send(metadata);
 
     const userData = {
         fname: user.fname,
@@ -88,11 +92,11 @@ router.post('/signup',async (req,res)=>{
     let data = await database.insertToTable('users',[userData]);
     if (data.error){
         await database.removeFromTable('usersMetadata',{id:metadata.insertId})
-        return res.status(404).send(data);
+        return res.status(500).send(data);
     }
 
     delete userMetadata.password;
-    return res.send({'data':{id:data.insertId,...userData,...userMetadata}})
+    return res.status(201).send({'data':{id:data.insertId,...userData,...userMetadata}})
 });
 
 /**
@@ -108,9 +112,10 @@ router.post('/signup',async (req,res)=>{
  */
 router.put('/:id',async (req,res)=>{
     const {user} = req.body;
+    if (!user) return res.status(400).send({error:'please send user fields'});
     
     let error = await util.checkAccess(user.apiKey, req.params.id);
-    if (error.error) return res.status(400).send(error);
+    if (error.error) return res.status(403).send(error);
 
     delete user.apiKey;
     const requireFields = 'password' in user ? ['password', 'repeat-password'] : [];
@@ -119,38 +124,40 @@ router.put('/:id',async (req,res)=>{
 
     // check for tables to update
     let data = await database.getTable('users',{id:req.params.id})
-    if (data.error) return res.status(404).send(data);
+    if (data.error) return res.status(500).send(data);
 
     let metadata = await database.getTable('usersMetadata', {id:data.metadataId})
-    if (metadata.error) return res.status(404).send(metadata);
+    if (metadata.error) return res.status(500).send(metadata);
 
     const userInstance = util.updateInstance(data,user,usersAccessFields);
     const metadataInstance = util.updateInstance(metadata,user,metadataAccessFields);
     
     // update the tables
     data = await database.updateTable('users', ['id'], [userInstance])
-    if (data.error) return res.status(404).send(data);
+    if (data.error) return res.status(500).send(data);
 
     metadata = await database.updateTable('usersMetadata', ['id'], [metadataInstance])
-    if (metadata.error) return res.status(404).send(metadata);
+    if (metadata.error) return res.status(500).send(metadata);
 
     delete metadataInstance.id;
     delete metadataInstance.password;
     // return the full updated instance
-    return res.send({data:{...userInstance,...metadataInstance}})
+    return res.status(201).send({data:{...userInstance,...metadataInstance}})
 });
 
 router.delete('/:id',async (req,res)=>{
+
     const {id} = req.params;
     const {user} = req.body;
-    
+    if (!user) return res.status(400).send({error:'please send user fields'});
+
     //check access for deleting this user
     let error = await util.checkAccess(user.apiKey, id);
-    if (error.error) return res.status(400).send(error);
+    if (error.error) return res.status(403).send(error);
     
     // remove all his items (if exists)
     let items = await database.getTable('items',{userId:id});
-    if (items.error) return res.status(404).send(items);
+    if (items.error) return res.status(500).send(items);
     if (items instanceof Object) items = [items];
     
     const errors = [];
@@ -161,16 +168,18 @@ router.delete('/:id',async (req,res)=>{
         if (response.error) errors.push(response);
     });
 
-    if (errors) return res.status(404).send(errors);
+    if (errors) return res.status(500).send({error:errors});
     await Promise.all(itemsPromises);
 
     // remove the user from 'users' table
     error = await database.removeFromTable('users',{id:id});
-    if (error.error) return res.status(404).send(error);
+    if (error.error) return res.status(500).send(error);
 
     // remove user from 'usersMetadata' table
     error = await database.removeFromTable('usersMetadata',{id:user.metadataId});
-    if (error.error) return res.status(404).send(error);
+    if (error.error) return res.status(500).send(error);
+
+    return res.status(200).send({data:user})
 })
 
 

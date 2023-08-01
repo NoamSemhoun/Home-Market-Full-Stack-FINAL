@@ -12,6 +12,7 @@ import Footer from './Shared Components/Footer.jsx';
  import Profil from './Profil.jsx';
  import MyItems from './MyItems.jsx';
  import PleaseLogin from './PleaseLogin.jsx';
+ import Favorites from './Favorites.jsx';
 
 
  import Register from './Register';
@@ -51,6 +52,7 @@ const App = () => {
           <Route  path="/MyItems" element={loggedUser ? <MyItems /> : <PleaseLogin/>} />
   
           <Route  path="/Profil" element={loggedUser ? <Profil /> : <PleaseLogin/>} />
+          <Route  path="/Favorites" element={loggedUser ? <Favorites /> : <PleaseLogin/>} />
 
 
 

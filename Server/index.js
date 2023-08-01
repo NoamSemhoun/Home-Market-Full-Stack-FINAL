@@ -12,8 +12,10 @@ app.options('*',cors());
 
 const users = require('./Routes/users.js');
 const items = require('./Routes/items.js');
+const favorites = require('./Routes/favorites.js')
 app.use('/users',users);
 app.use('/items',items);
+app.use('/favorites',favorites);
 
 const hostname = '127.0.0.1';
 const port = process.env.PORT || 3001;
@@ -21,7 +23,7 @@ const port = process.env.PORT || 3001;
 const databaseConfig = {
         host: "localhost",
         user: "root",
-        password: "NoaSQL26@",//NoaSQL26@ AvishayDEV19
+        password: "AvishayDEV19",//NoaSQL26@ AvishayDEV19
         port: 3306,
         database: 'HomeMarketDB'
 }

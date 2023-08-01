@@ -12,7 +12,7 @@ export function useLoginOut(url){
         const {data} = await callServer(url,'post',{user:user});
         // console.log(data)
 
-        if (!user.error){
+        if (data){
             setLoggedUser(data);
             navigate('/');
             return true;
@@ -21,7 +21,7 @@ export function useLoginOut(url){
     }
 
     const logout = () =>{
-        setLoggedUser(null);
+        setLoggedUser('');
     }
 
     return {login,logout,loggedUser};
@@ -62,7 +62,7 @@ export function useForm(){
 
 export function useLocalStorage(key){
     let initialValue = localStorage.getItem(key);
-    // initialValue = initialValue ? JSON.parse(initialValue) : '';    // ******************************************** 
+    initialValue = initialValue ? JSON.parse(initialValue) : '';    // ******************************************** 
     // ATTENTION    I CHANGE THIS LINE  IN COMMENT FOR NO BUG IN COMPILED
     // ******************************************** 
     
@@ -71,7 +71,7 @@ export function useLocalStorage(key){
 
     const setValue = (value)=>{
         localStorage.setItem(key, JSON.stringify(value));
-        setData(value)
+        setData(value);
     }
 
     return [data,setValue];

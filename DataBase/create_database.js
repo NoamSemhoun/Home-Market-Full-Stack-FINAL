@@ -76,33 +76,6 @@ async function run(){
     error = await index.modifyColumn('images',{'imageUrl':'TEXT'},['NOT NULL']);
     if (error.error) return console.log(error);
 
-    // // Create table Messages
-    // error = await index.createTable('messages',{'id':'INT', 'text':'TEXT','imageUrl':'TEXT','sendDate':'DATETIME','discussionId':'INT'});
-    // if (error.error) return console.log(error);
-
-    // error = await index.modifyColumn('messages',{'id':'INT'},['AUTO_INCREMENT','PRIMARY KEY']);
-    // if (error.error) return console.log(error);
-
-    // error = await index.modifyColumn('messages',{'sendDate':'DATETIME'},['NOT NULL']);
-    // if (error.error) return console.log(error);
-
-    // error = await index.modifyColumn('messages',{'discussionId':'INT'},['NOT NULL']);
-    // if (error.error) return console.log(error);
-
-
-    // // Create table Discussion
-    // error = await index.createTable('discussions',{'id':'INT', 'userId1':'INT','userId2':'INT'});
-    // if (error.error) return console.log(error);
-
-    // error = await index.modifyColumn('discussions',{'id':'INT'},['AUTO_INCREMENT','PRIMARY KEY']);
-    // if (error.error) return console.log(error);
-
-    // error = await index.modifyColumn('discussions',{'userId1':'INT'},['NOT NULL']);
-    // if (error.error) return console.log(error);
-
-    // error = await index.modifyColumn('discussions',{'userId2':'INT'},['NOT NULL']);
-    // if (error.error) return console.log(error);
-
 
     // Create table Users
     error = await index.createTable('users',{'id':'INT', 'fname':'VARCHAR(30)','lname':'VARCHAR(30)','phone':'VARCHAR(20)',
@@ -151,6 +124,19 @@ async function run(){
     error = await index.modifyColumn('usersMetadata',{'userRank':'VARCHAR(20)'},['NOT NULL']);
     if (error.error) return console.log(error);
 
+    // Create table Images
+    error = await index.createTable('favorites',{'id':'INT','itemId':'INT', 'userId':'INT'});
+    if (error.error) return console.log(error);
+
+    error = await index.modifyColumn('favorites',{'id':'INT'},['AUTO_INCREMENT','PRIMARY KEY']);
+    if (error.error) return console.log(error);
+
+    error = await index.modifyColumn('favorites',{'itemId':'INT'},['UNIQUE','NOT NULL']);
+    if (error.error) return console.log(error);
+
+    error = await index.modifyColumn('favorites',{'userId':'INT'},['UNIQUE','NOT NULL']);
+    if (error.error) return console.log(error);
+
 
     // cREATE fORGIEN Keys
     error = await index.addForeignKey('imagesItems','images','itemId','items','id')
@@ -162,14 +148,12 @@ async function run(){
     error = await index.addForeignKey('usersUsersmetadata','users','metadataId','usersMetadata','id');
     if (error.error) return console.log(error);
 
-    // error = await index.addForeignKey('messagesDiscussions','messages','discussionId','discussions','id')
-    // if (error.error) return console.log(error);
+    error = await index.addForeignKey('favoritesItems','favorites','itemId','items','id');
+    if (error.error) return console.log(error);
 
-    // error = await index.addForeignKey('discussionsUsers1','discussions','userId1','users','id')
-    // if (error.error) return console.log(error);
+    error = await index.addForeignKey('favoritesUsers','favorites','userId','users','id');
+    if (error.error) return console.log(error);
 
-    // error = await index.addForeignKey('discussionsUsers2','discussions','userId2','users','id')
-    // if (error.error) return console.log(error);
 
     // print all the tables information
     const query = `

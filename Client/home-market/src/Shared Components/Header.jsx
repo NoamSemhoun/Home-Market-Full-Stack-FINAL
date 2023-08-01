@@ -50,7 +50,7 @@ const Header = () => {
 
               {/* favorites withe logo lev  */}
               <li className="nav-item">
-                <a className="nav-link d-flex " href="/Register">
+                <Link className="nav-link d-flex " to='/Favorites'>
                   {/* coder cette partie  */}
                   <div>
                     <img style={{ width: "30px", height: "auto" }} alt="Furniture Logo" 
@@ -58,7 +58,7 @@ const Header = () => {
                   </div>   
                     
                   <span>Favorites</span>
-                </a>
+                </Link>
               </li>
               
 

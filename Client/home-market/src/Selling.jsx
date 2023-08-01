@@ -97,9 +97,12 @@ function Selling() {
                              <Form.Select label='Category ' size="lg" onChange={handleInputChange} name='category'>
                                   <option value={''}>Select Category </option> 
                                   {/* mettre par default  */}
-                                <option>Sofa </option>
-                                <option>Bed </option>
-                                <option>Table </option>
+                                    <option>Sofa</option>
+                                    <option>Bed</option>
+                                    <option>Chair</option>
+                                    <option>Table</option>
+                                    <option>Desk</option>
+                                    <option>TV Stand</option>
 
                             </Form.Select>
                             <br />

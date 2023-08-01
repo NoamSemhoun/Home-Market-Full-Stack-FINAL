@@ -18,20 +18,20 @@ import { Button } from 'react-bootstrap';
     const {loggedUser} = useContext(contextProvider);
     const [data, setData] = useState([]);
 
-    // useEffect(() => {
-    //   // This effect runs only once when the component mounts
-    //   fetchDataFromServer();
-    // }, []); // Empty dependency array
+    useEffect(() => {
+      // This effect runs only once when the component mounts
+      fetchDataFromServer();
+    }, []); // Empty dependency array
   
-    // const fetchDataFromServer = async () => {
-    //   try {
-    //     const response = await callServer('http://127.0.0.1:3001/items/','post',{apiKey:loggedUser.apiKey});
-    //     setData(response.data);
-    //     console.log(response.data)
-    //   } catch (error) {
-    //     console.error('Error fetching data:', error);
-    //   }
-    // };
+    const fetchDataFromServer = async () => {
+      try {
+        const response = await callServer('http://127.0.0.1:3001/items/','post',{apiKey:loggedUser.apiKey});
+        setData(response.data);
+        console.log(response.data)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
   return (
 
         <MDBContainer fluid className="my-5 text-center mx-auto  ">

@@ -17,8 +17,9 @@ import {
 
 
 function Profil() {
+  const {loggedUser,setLoggedUser} = useContext(contextProvider);
 
-  const [firstName, setFirstName] = useState('');
+  const [firstName, setFirstName] = useState(loggedUser.firstName);
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -28,7 +29,6 @@ function Profil() {
   const [repeatpassword, setRepeatPassword] = useState('');
 
   const [showModal, setShowModal] = useState(false);
-  const {loggedUser} = useContext(contextProvider);
 
 
   const handleSubmit = async (event) => {
@@ -55,6 +55,7 @@ function Profil() {
 
         if (!user.error){
           setShowModal(true);
+          setLoggedUser(user.data);
         }else{
           console.log(user.error)
         }
@@ -114,7 +115,7 @@ function Profil() {
                 <form onSubmit={handleSubmit}>
                 <MDBRow className='mb-4'>
                     <MDBCol>
-                    <MDBInput id='form6Example1'   onChange={(e) => setFirstName(e.target.value)}  label='First name' required />
+                    <MDBInput id='form6Example1' value={firstName} onChange={(e) => setFirstName(e.target.value)}  label='First name' required />
                     </MDBCol>
                     <MDBCol>
                     <MDBInput id='form6Example2' onChange={(e) => setLastName(e.target.value)}  label='Last name' required  />

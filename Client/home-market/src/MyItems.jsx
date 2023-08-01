@@ -8,7 +8,6 @@ import ItemCard from './itemCard';
   } from "mdb-react-ui-kit";
 import contextProvider from './Context';
 import { callServer } from './util';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 
@@ -39,7 +38,7 @@ import { Link } from 'react-router-dom';
           <h4 className="mt-4 mb-5">
             <strong>All My items Furniture </strong>
           </h4>
-          <Link to='/Selling'>Click Here To Upload One!</Link>
+          {!data && <Link to='/Selling'>Click Here To Upload One!</Link>}
 
           {/* CATALOGUE  */}
           {data && data.map((item => <ItemCard itemData={item}></ItemCard>))}
@@ -47,6 +46,5 @@ import { Link } from 'react-router-dom';
         </MDBContainer>
       );
 }
-  
 
 export default MyItems;

@@ -119,13 +119,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
     const {handleInputChange,formData} = useForm();
+    const [modalShow, setModalShow] = useState(false);
 
     // pour gerrer le modal account : 
     const handleCardClick = () => {
       //  logique pour gérer le clic ici...
       setModalShow(true)
     };
-    const [modalShow, setModalShow] = useState(false);
+
+    useEffect(() => {
+      // This effect runs only once when the component mounts
+      fetchDataFromServer();
+    }, []); // Empty dependency array
+  
+    const fetchDataFromServer = async () => {
+      try {
+        const response = await callServer('http://127.0.0.1:3001/items/','post',{apiKey:loggedUser.apiKey});
+        setData(response.data);
+        console.log(response.data)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
     const handleSubmit = async (event) =>{
 

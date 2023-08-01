@@ -1,5 +1,6 @@
 import React, {  useState } from "react";
 import {callServer} from './util'
+import {Button } from 'react-bootstrap';
 
 import {
     MDBCol,
@@ -72,6 +73,19 @@ function ItemCard(params){
                   <p>{itemData.status}</p>
                 </a>
                 <h6 className="mb-3">{itemData.price}</h6>
+
+                <div className="hover-overlay  d-flex justify-content-between">
+                  <Button 
+                  // onClick={}
+                  >Eddit</Button>
+                      <a 
+                      // href={WhatsappURL} 
+                        >
+                          <Button >Delete</Button>  
+                      </a>
+                    </div>
+
+          
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

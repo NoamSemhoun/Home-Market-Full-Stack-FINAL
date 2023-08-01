@@ -310,10 +310,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
             
               <MDBCardBody>
                 <a href="#!" className="text-reset">
-                  <h5 className="card-title mb-3">Product name</h5>
+                  <h5 className="card-title mb-3">Our Bed Product name</h5>
                 </a>
                 <a href="#!" className="text-reset">
-                  <p>Category</p>
+                  <p>Bed</p>
                 </a>
                 <h6 className="mb-3">$61.99</h6>
               </MDBCardBody>
@@ -351,12 +351,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
           
               <MDBCardBody>
                 <a href="#!" className="text-reset">
-                  <h5 className="card-title mb-3">Product name</h5>
+                  <h5 className="card-title mb-3">Stand FOR tv Product name</h5>
                 </a>
                 <a href="#!" className="text-reset">
-                  <p>Jerusalem</p>
+                  <p>TV Stand</p>
                 </a>
-                <h6 className="mb-3">$61.99</h6>
+                <h6 className="mb-3">$399</h6>
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
@@ -390,15 +390,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
               
               <MDBCardBody>
                 <a href="#!" className="text-reset">
-                  <h5 className="card-title mb-3">Product name</h5>
+                  <h5 className="card-title mb-3">Desk 199  name</h5>
                 </a>
                 <a href="#!" className="text-reset">
-                  <p>Category</p>
+                  <p>Chair</p>
                 </a>
                 <h6 className="mb-3">
                   <s>$61.99</s>
                   <strong className="ms-2 text-danger">$50.99</strong>
                 </h6>
+
+
+            
+
+
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
@@ -445,7 +450,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
             <MDBCard className='h-100' onClick={handleCardClick}>
            
                 <MDBCardImage
-                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/img%20(17).webp"
+                  src="data:image/jpeg;base64,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"
                   fluid
                   className='img-fluid' style={{ objectFit: 'cover', height: '68%' }}
                 />
@@ -465,7 +470,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
                   <h5 className="card-title mb-3">Product name</h5>
                 </a>
                 <a href="#!" className="text-reset">
-                  <p>Category</p>
+                  <p>Sofa</p>
                 </a>
                 <h6 className="mb-3">$61.99</h6>
               </MDBCardBody>
@@ -475,7 +480,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
             <MDBCard className='h-100' onClick={handleCardClick}>
          
                 <MDBCardImage
-                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/img%20(30).webp"
+                  src="https://th.bing.com/th?id=OIP.65_ZS5TmzNmR05f_vQTlzgHaFd&w=291&h=214&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2"
                   fluid
                   className='img-fluid' style={{ objectFit: 'cover', height: '68%' }}
                 />
@@ -502,7 +507,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
                   <h5 className="card-title mb-3">Product name</h5>
                 </a>
                 <a href="#!" className="text-reset">
-                  <p>Category</p>
+                  <p>Sofa</p>
                 </a>
                 <h6 className="mb-3">
                   <s>$61.99</s>

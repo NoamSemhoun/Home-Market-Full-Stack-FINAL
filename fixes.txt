@@ -34,7 +34,7 @@ NOAM :
         update ITEM button
             Edit
             delete
-        design arranger click to upload 
+        design arranger click to upload ✅
     
   
 
